@@ -1,0 +1,2 @@
+module SlacksHelper
+end

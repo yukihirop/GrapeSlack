@@ -1,0 +1,27 @@
+<%= form_with(model: summary, local: true) do |form| %>
+  <% if summary.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(summary.errors.count, "error") %> prohibited this summary from being saved:</h2>
+
+      <ul>
+      <% summary.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title, id: :summary_title %>
+  </div>
+
+  <div class="field">
+    <%= form.label :slack_id %>
+    <%= form.text_field :slack_id, id: :summary_slack_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

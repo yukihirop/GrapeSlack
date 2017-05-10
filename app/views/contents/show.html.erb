@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>First name:</strong>
+  <%= @content.first_name %>
+</p>
+
+<p>
+  <strong>Last name:</strong>
+  <%= @content.last_name %>
+</p>
+
+<p>
+  <strong>Slack url:</strong>
+  <%= @content.slack_url %>
+</p>
+
+<p>
+  <strong>Slack message:</strong>
+  <%= @content.slack_message %>
+</p>
+
+<p>
+  <strong>Summary:</strong>
+  <%= @content.summary %>
+</p>
+
+<%= link_to 'Edit', edit_content_path(@content) %> |
+<%= link_to 'Back', contents_path %>
