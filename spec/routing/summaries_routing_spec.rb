@@ -15,10 +15,6 @@ RSpec.describe SummariesController, type: :routing do
       expect(:get => "/summaries/1").to route_to("summaries#show", :id => "1")
     end
 
-    it "routes to #edit" do
-      expect(:get => "/summaries/1/edit").to route_to("summaries#edit", :id => "1")
-    end
-
     it "routes to #create" do
       expect(:post => "/summaries").to route_to("summaries#create")
     end

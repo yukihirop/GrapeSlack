@@ -17,10 +17,6 @@ class SummariesController < ApplicationController
     @summary = Summary.new
   end
 
-  # GET /summaries/1/edit
-  def edit
-  end
-
   # POST /summaries
   # POST /summaries.json
   def create

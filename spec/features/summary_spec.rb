@@ -3,18 +3,7 @@ require 'rails_helper'
 describe 'Summariesページ', :js => true do
 
   before do
-    visit '/summaries'
-  end
-
-  context '外観' do
-
-    specify 'タイトルの表示の確認' do
-      expect(page).to have_css('h1', text: 'Summaries')
-    end
-
-    specify 'New Summaryリンクの表示の確認' do
-      expect(page).to have_link(text: 'New Summary', href: '/summaries/new')
-    end
+    visit summaries_path
   end
 
   context '正常系(ボタンクリックなどによる外観の変化)' do
@@ -34,14 +23,14 @@ describe 'Summariesページ', :js => true do
     end
 
     specify 'Showリンクが表示される' do
-      expect(page).to have_link(text: 'Show', href:"/summaries/#{Summary.last.id}")
+      expect(page).to have_link(text: 'Show', href:summary_path(Summary.last.id))
     end
 
     specify 'Destroyリンクが表示される' do
-      expect(page).to have_link(text: 'Destroy', href: "/summaries/#{Summary.last.id}")
+      expect(page).to have_link(text: 'Destroy', href:summary_path(Summary.last.id))
     end
 
-    context 'Showリンクをクリックする' do
+    context 'まとめを閲覧する' do
 
       before do
         click_link 'Show'
@@ -56,20 +45,16 @@ describe 'Summariesページ', :js => true do
         expect(page).to have_css('strong', text: 'Slack:')
       end
 
-      specify 'Editリンクの表示確認' do
-        expect(page).to have_link(text: 'Edit', href:"/summaries/#{Summary.last.id}/edit")
-      end
-
       specify 'Backリンクの表示確認' do
-        expect(page).to have_link(text: 'Back', href:"/summaries")
+        expect(page).to have_link(text: 'Back', href:summaries_path)
       end
 
     end
 
-    context 'Destroyリンクをクリックする' do
+    context 'まとめを削除する' do
 
       specify 'コンファームメッセージの表示確認' do
-        expect(page).to have_link(text: 'Destroy', href:"/summaries/#{Summary.last.id}")
+        expect(page).to have_link(text: 'Destroy', href:summary_path(Summary.last.id))
         link = find_link 'Destroy'
         expect(link['data-confirm']).to eq('Are you sure?')
       end
@@ -80,7 +65,7 @@ describe 'Summariesページ', :js => true do
           page.accept_confirm 'Are you sure' do
             click_link 'Destroy'
           end
-          expect(current_path).to eq("/summaries")
+          expect(current_path).to eq(summaries_path)
         end
 
         specify 'Notificationメッセージの表示確認' do
@@ -101,15 +86,14 @@ describe 'Summariesページ', :js => true do
           page.dismiss_confirm 'Are you sure' do
             click_link 'Destroy'
           end
-          expect(current_path).to eq("/summaries")
+          expect(current_path).to eq(summaries_path)
         end
 
-        specify 'テーブルの行にTitleがTest Titleの行を持つことを確認' do
+        specify '作成したまとめのタイトル(Test Title)が表示されていることを確認' do
           expect(page).to have_css('td', text: 'Test Title')
         end
 
       end
-
 
     end
 
@@ -120,34 +104,8 @@ end
 describe 'New Summaryページ' do
 
   before do
-    visit '/summaries'
+    visit summaries_path
     click_link 'New Summary'
-  end
-
-  context '外観' do
-
-    specify 'タイトルの表示の確認' do
-      expect(page).to have_css('h1', text: 'New Summary')
-    end
-
-    specify 'Titleテキストボックスの確認' do
-      expect(page).to have_css('label', text: 'Title')
-      expect(page).to have_xpath("//input[@id='summary_title']")
-    end
-
-    specify 'Slackテキストボックスの確認' do
-      expect(page).to have_css('label', text: 'Slack')
-      expect(page).to have_xpath("//input[@id='summary_slack_id']")
-    end
-
-    specify 'Create Summaryボタンの確認' do
-      expect(page).to have_xpath("//input[@value='Create Summary']")
-    end
-
-    specify 'Backリンクの確認' do
-      expect(page).to have_link(text: 'Back', href: '/summaries')
-    end
-
   end
 
   context '正常系(ボタンクリックなどによる外観の変化)' do
@@ -162,7 +120,7 @@ describe 'New Summaryページ' do
 
 
     specify '新しいSummaryを作成できたらSummariesページに遷移する' do
-      expect(current_path).to eq("/summaries/#{Summary.last.id}")
+      expect(current_path).to eq(summary_path(Summary.last.id))
     end
 
     specify '遷移先にメッセージが表示される' do
@@ -173,17 +131,14 @@ describe 'New Summaryページ' do
       expect(page).to have_css('p', text: 'Test Title')
     end
 
-    specify '遷移先にEditリンクがある' do
-      expect(page).to have_link(text: 'Edit', href: "/summaries/#{Summary.last.id}/edit")
-    end
-
     specify '遷移先にBackリンクがある' do
-      expect(page).to have_link(text: 'Back', href: "/summaries")
+      expect(page).to have_link(text: 'Back', href:summaries_path)
     end
 
   end
 
   context '異常系(ボタンクリックなどによる外観の変化)' do
+
     context '存在しないslack.idを打った場合' do
 
       let!(:slack_user){ create(:slack_user) }
@@ -202,8 +157,7 @@ describe 'New Summaryページ' do
         expect(page).to have_css('li', text:'Slack must exist')
       end
 
-      specify '新しいSummaryを作成できたらSummariesページに遷移しない' do
-        expect(current_path).not_to eq("/summaries/-1")
+      specify '新しいSummaryを作成できなかったのでSummariesページに遷移しない' do
         expect(current_path).to eq("/summaries")
       end
     end
