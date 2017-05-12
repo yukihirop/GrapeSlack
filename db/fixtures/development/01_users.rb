@@ -1,7 +1,7 @@
-Slack.destroy_all
+User.destroy_all
 
 10.times do |i|
-  Slack.seed(:id) do |s|
+  User.seed(:id) do |s|
     s.id              = i+1
     s.first_name      = "first_name_#{i+1}"
     s.last_name       = "last_name_#{i+1}"

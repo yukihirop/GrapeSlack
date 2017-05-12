@@ -10,9 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170510095511) do
+ActiveRecord::Schema.define(version: 20170512060552) do
 
-  create_table "slacks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "summaries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "title", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_summaries_on_user_id"
+  end
+
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "first_name", null: false
     t.string "last_name", null: false
     t.string "email", null: false
@@ -22,13 +30,5 @@ ActiveRecord::Schema.define(version: 20170510095511) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "summaries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "title", null: false
-    t.bigint "slack_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["slack_id"], name: "index_summaries_on_slack_id"
-  end
-
-  add_foreign_key "summaries", "slacks"
+  add_foreign_key "summaries", "users"
 end

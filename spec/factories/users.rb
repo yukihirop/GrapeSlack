@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :slack_user, class: Slack do
+  factory :user do
     first_name      'first_name'
     last_name       'last_name'
     email           'name_1@example.com'

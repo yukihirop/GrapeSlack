@@ -65,6 +65,6 @@ class SummariesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def summary_params
-      params.require(:summary).permit(:title, :slack_id)
+      params.require(:summary).permit(:title, :user_id)
     end
 end
