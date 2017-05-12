@@ -1,3 +1,3 @@
 class Summary < ApplicationRecord
-  belongs_to :slack
+  belongs_to :user
 end
