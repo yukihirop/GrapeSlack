@@ -1,0 +1,5 @@
+<% require 'json' %>
+
+<h1>Users#show</h1>
+<p>callbackからのHTTPリクエスト:</p>
+<p><%= request.env['omniauth.auth'].to_json %></p>
