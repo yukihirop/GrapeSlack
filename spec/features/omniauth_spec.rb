@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'OmniAuth interface' do
 
-  before { OmniAuth.config.mock_auth[:slack] = nil}
+  after { OmniAuth.config.mock_auth[:slack] = nil}
 
   context '新規ユーザーorSlack非登録ユーザー' do
 
@@ -10,34 +10,38 @@ feature 'OmniAuth interface' do
 
     context '正常系' do
 
-      before do
-        visit root_path
-        set_omniauth
-        click_link(submit)
-      end
+      let(:provider) { 'slack' }
 
       context '認証成功' do
 
+        before do
+          visit root_path
+          set_omniauth
+          click_link(submit)
+        end
+
         specify 'Users#showページに遷移する' do
-          expect(page).to have_css('h1', text:'Users#show')
+          expect(current_path).to eq("/auth/#{provider}/callback")
+        end
+
+        specify 'ユーザー情報を取得出来る' do
+          expect(page).to have_content('Mock User')
         end
 
       end
 
-    end
+      context '認証失敗' do
 
-    context '異常系' do
+        before do
+          visit root_path
+          set_invalid_omniauth
+          click_link(submit)
+        end
 
-      before do
-        visit root_path
-        set_invalid_omniauth
-        click_link(submit)
-      end
+        specify 'Users#indexページに遷移する' do
+          expect(page).to have_css('h1', text: 'Users#index')
+        end
 
-      context '認証失敗'
-
-      specify 'Users#indexページに遷移する' do
-        expect(page).to have_css('h1', text: 'Users#index')
       end
 
     end
