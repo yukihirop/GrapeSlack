@@ -272,7 +272,7 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
 
-  config.omniauth :slack, ENV['SLACK_APP_KEY'], ENV['SLACK_APP_SECRET'], scope: 'client'
+  config.omniauth :slack, ENV['SLACK_API_KEY'], ENV['SLACK_API_SECRET'], scope: 'client'
 
   # viewをscope毎に生成する
   config.scoped_views = true

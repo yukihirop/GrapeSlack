@@ -1,20 +1,28 @@
 class Users::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
+  skip_before_action :require_no_authentication, :only => [ :new, :create, :destroy]
 
   # GET /resource/sign_in
-  # def new
-  #   super
-  # end
+  def new
+    if current_user
+      flash[:notice] = I18n.t 'devise.sessions.signed_in'
+      redirect_to user_path(id:current_user.id)
+    else
+      redirect_to user_slack_omniauth_authorize_path
+    end
+  end
 
   # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  def create
+  end
 
   # DELETE /resource/sign_out
-  # def destroy
-  #   super
-  # end
+  def destroy
+    flash[:notice] = I18n.t 'devise.sessions.signed_out'
+    current_user = nil
+    reset_session
+    redirect_to root_path
+  end
 
   # protected
 

@@ -1,5 +1,7 @@
 <% require 'json' %>
 
 <h1>Users#show</h1>
-<p>callbackからのHTTPリクエスト:</p>
-<p><%= request.env['omniauth.auth'].to_json %></p>
+<p>現在のユーザー情報:</p>
+<p><%= current_user.to_json %></p>
+
+<%= link_to 'ログアウト', destroy_user_session_path, :method => :delete %>
