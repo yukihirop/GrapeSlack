@@ -39,7 +39,7 @@ feature 'OmniAuth interface' do
         end
 
         specify 'Users#indexページに遷移する' do
-          expect(page).to have_css('h1', text: 'Users#index')
+          expect(current_path).to eq(root_path)
         end
 
       end
