@@ -14,7 +14,7 @@ describe 'Summariesページ', :js => true do
       click_link 'New Summary'
       fill_in 'Title',  with: 'Test Title'
       fill_in 'User',  with: "#{user.id}"
-      click_button 'Create Summary'
+      click_button '登録する'
       click_link 'Back'
     end
 

@@ -13,47 +13,39 @@ RSpec.describe 'OmniAuth-Slack Authorization', :type => :request do
 
         before do
           set_omniauth
-          get "/auth/#{provider}/callback"
+          visit user_slack_omniauth_authorize_path
+        end
+
+        subject do
+          JSON.parse(current_user.to_json)
         end
 
         example 'ユーザー情報を取得できる' do
-          expect(request.env['omniauth.auth']).to eq ({
-              "provider"  => "slack",
-              "uid"       => "mock_uid_1234",
-              "info"      => {
-                  "name"          => "Mock User",
-                  "description"   => "Mock description"
-              },
-              "credentials" => {
-                  "token"   => "mock_credentials_token",
-                  "expires" => false
-              },
-              "extra" => {
-                  "raw_info" => {
-                      "ok"    => "Mock User",
-                      "team"  => "Mock Team"
-                  }
-              }
+          expect(subject).to include ({
+              'provider'  => 'slack',
+              'uid'       => 'mock_uid_1234',
+              'first_name'    => 'Mock first',
+              'last_name'     => 'Mock last',
+              'name'          => 'Mock User',
+              'profile_img_url' => 'http://mock-image.png',
+              'email'         => 'Mock@example.com'.downcase
           })
         end
 
       end
 
-      # Capybaraでテスト
-      context '認証失敗' do
+      # Capybaraのドライバーをrack_test(Capybaraデフォルトのドライバ)から
+      # Infinite Redirectを無視するドライバー(rack_test_non_redirect)へ変更
+      # omniauth-slack(もしくはSlack?)の仕様で認証できないとリダイレクトループするのを回避
+      context '認証失敗', :rack_test_non_redirect => true do
 
         before do
-          page.driver.options[:follow_redirects] = false
           set_invalid_omniauth
-          visit "/auth/#{provider}/callback"
+          visit user_slack_omniauth_authorize_path
         end
 
         example 'ステータス 302が返る' do
           expect(page.status_code).to eq 302
-        end
-
-        example 'ルートにリダイレクト' do
-          expect(page.response_headers['Location']).to match(auth_failure_path)
         end
 
       end

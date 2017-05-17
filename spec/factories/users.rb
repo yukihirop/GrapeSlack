@@ -5,5 +5,8 @@ FactoryGirl.define do
     email           'name_1@example.com'
     password        '12345'
     profile_img_url 'http://wwww.profile_img_1'
+    provider        'Slack'
+    uid             'uid_1234'
+    name            'first last'
   end
 end

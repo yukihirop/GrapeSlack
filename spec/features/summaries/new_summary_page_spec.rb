@@ -14,7 +14,7 @@ describe 'New Summaryページ' do
     before do
       fill_in 'Title', with: 'Test Title'
       fill_in 'User', with: "#{user.id}"
-      click_button 'Create Summary'
+      click_button '登録する'
     end
 
 
@@ -45,7 +45,7 @@ describe 'New Summaryページ' do
       before do
         fill_in 'Title', with: 'Test Title'
         fill_in 'User', with: '-1'
-        click_button 'Create Summary'
+        click_button '登録する'
       end
 
       specify 'エラーメッセージが表示される(タイトル)' do
@@ -53,7 +53,7 @@ describe 'New Summaryページ' do
       end
 
       specify 'エラーメッセージが表示される(内容)' do
-        expect(page).to have_css('li', text:'User must exist')
+        expect(page).to have_css('li', text:'Userを入力してください')
       end
 
       specify '新しいSummaryを作成できなかったのでSummariesページに遷移しない' do

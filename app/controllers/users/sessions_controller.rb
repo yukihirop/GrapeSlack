@@ -20,7 +20,6 @@ class Users::SessionsController < Devise::SessionsController
   def destroy
     flash[:notice] = I18n.t 'devise.sessions.signed_out'
     current_user = nil
-    reset_session
     redirect_to root_path
   end
 
