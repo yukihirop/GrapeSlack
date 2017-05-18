@@ -8,8 +8,10 @@ Rails.application.routes.draw do
   root 'users#index'
   get '/user/info', to: 'users#show'
 
-  resources :summaries, except: :edit
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  scope :user do
+    resources :summaries, except: :edit
+  end
+
   get '*anything' => 'application#routing_error'
 
 end

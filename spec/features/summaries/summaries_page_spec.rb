@@ -3,37 +3,36 @@ require 'rails_helper'
 describe 'Summariesページ', :js => true do
 
   before do
+    set_omniauth
+    visit user_slack_omniauth_authorize_path
     visit summaries_path
   end
 
   context '正常系(ボタンクリックなどによる外観の変化)' do
 
-    let!(:user){ create(:user) }
-
     before do
-      click_link 'New Summary'
+      click_link 'まとめ作成'
       fill_in 'Title',  with: 'Test Title'
-      fill_in 'User',  with: "#{user.id}"
       click_button '登録する'
-      click_link 'Back'
+      click_link '戻る'
     end
 
     specify '作成したまとめがテーブルに挿入される' do
       expect(page).to have_css('td', text: 'Test Title')
     end
 
-    specify 'Showリンクが表示される' do
-      expect(page).to have_link(text: 'Show', href:summary_path(Summary.last.id))
+    specify '表示リンクが表示される' do
+      expect(page).to have_link(text: '表示', href:summary_path(Summary.last.id))
     end
 
-    specify 'Destroyリンクが表示される' do
-      expect(page).to have_link(text: 'Destroy', href:summary_path(Summary.last.id))
+    specify '削除リンクが表示される' do
+      expect(page).to have_link(text: '削除', href:summary_path(Summary.last.id))
     end
 
     context 'まとめを閲覧する' do
 
       before do
-        click_link 'Show'
+        click_link '表示'
       end
 
       specify 'Titleのパラグラフの表示確認' do
@@ -45,8 +44,8 @@ describe 'Summariesページ', :js => true do
         expect(page).to have_css('strong', text: 'User:')
       end
 
-      specify 'Backリンクの表示確認' do
-        expect(page).to have_link(text: 'Back', href:summaries_path)
+      specify '戻るリンクの表示確認' do
+        expect(page).to have_link(text: '戻る', href:summaries_path)
       end
 
     end
@@ -54,16 +53,16 @@ describe 'Summariesページ', :js => true do
     context 'まとめを削除する' do
 
       specify 'コンファームメッセージの表示確認' do
-        expect(page).to have_link(text: 'Destroy', href:summary_path(Summary.last.id))
-        link = find_link 'Destroy'
-        expect(link['data-confirm']).to eq('Are you sure?')
+        expect(page).to have_link(text: '削除', href:summary_path(Summary.last.id))
+        link = find_link '削除'
+        expect(link['data-confirm']).to eq('本当に削除しますか?')
       end
 
       context 'コンファームOKの場合' do
 
         before do
-          page.accept_confirm 'Are you sure' do
-            click_link 'Destroy'
+          page.accept_confirm  do
+            click_link '削除'
           end
           expect(current_path).to eq(summaries_path)
         end
@@ -83,8 +82,8 @@ describe 'Summariesページ', :js => true do
       context 'コンファームCancelの場合' do
 
         before do
-          page.dismiss_confirm 'Are you sure' do
-            click_link 'Destroy'
+          page.dismiss_confirm  do
+            click_link '削除'
           end
           expect(current_path).to eq(summaries_path)
         end
