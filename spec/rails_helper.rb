@@ -89,6 +89,15 @@ RSpec.configure do |config|
     Capybara.use_default_driver
   end
 
+  # モックオブジェクトにnilが設定されることを許容するか？
+  config.mock_with :rspec do |mocks|
+    mocks.allow_message_expectations_on_nil = true
+  end
+
+  # Deviseの設定
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Devise::Test::IntegrationHelpers, type: :feature
+
 end
 
 
