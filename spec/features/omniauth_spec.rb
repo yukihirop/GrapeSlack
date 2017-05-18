@@ -1,12 +1,10 @@
 require 'rails_helper'
 
-feature 'OmniAuth interface', :type => :feature  do
+feature 'OmniAuth interface'  do
 
   after { OmniAuth.config.mock_auth[:slack] = nil}
 
   context '新規ユーザーorSlack非登録ユーザー' do
-
-    let(:submit) { 'Slackで新規登録/ログイン' }
 
     context '正常系' do
 
@@ -18,7 +16,7 @@ feature 'OmniAuth interface', :type => :feature  do
           visit new_user_session_path
         end
 
-        specify 'Users#showページに遷移する' do
+        specify '自分のユーザー情報ページに遷移する' do
           expect(current_path).to eq(user_info_path)
         end
 
@@ -39,7 +37,7 @@ feature 'OmniAuth interface', :type => :feature  do
           visit new_user_session_path
         end
 
-        specify 'Users#indexページに遷移する' do
+        specify 'ルートページに遷移する' do
           expect(current_path).to eq(new_user_session_path)
         end
 
