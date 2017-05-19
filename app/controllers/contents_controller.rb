@@ -1,6 +1,6 @@
 class ContentsController < ApplicationController
   before_action :build_content, only: :create
-  before_action :set_summary, only: :new
+  before_action :set_summary, only: [:new, :create]
 
   def new
     @content = @summary.contents.build
@@ -8,6 +8,7 @@ class ContentsController < ApplicationController
 
   def create
     if @content.save
+      redirect_to summary_path(@summary.id)
     end
   end
 
