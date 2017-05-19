@@ -7,9 +7,12 @@ Rails.application.routes.draw do
 
   root 'users#index'
   get '/user/info', to: 'users#show'
+  get '/users/auth/failure', to: 'users#index'
 
   scope :user do
-    resources :summaries, except: :edit
+    resources :summaries, except: :edit do
+      resources :contents, only: [:new,:create]
+    end
   end
 
   get '*anything' => 'application#routing_error'

@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong>Title:</strong>
   <%= @summary.title %>
@@ -9,5 +7,24 @@
   <strong>User:</strong>
   <%= @summary.user.name %>
 </p>
+
+<h2>持ってるまとめ一覧:</h2>
+<table>
+  <thead>
+  <tr>
+    <th>Slack URL</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @contents.each do |content| %>
+      <tr>
+        <td><%= content.slack_url %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
 
 <%= link_to '戻る', summaries_path %>

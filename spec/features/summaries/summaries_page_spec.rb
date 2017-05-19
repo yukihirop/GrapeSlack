@@ -68,9 +68,7 @@ describe 'Summariesページ', :js => true do
         end
 
         specify 'Notificationメッセージの表示確認' do
-          within 'p' do
-            expect(page).to have_content 'Summary was successfully destroyed.'
-          end
+          expect(page).to have_content ('Summary was successfully destroyed.')
         end
 
         specify 'テーブルの行にTitleがTest Titleの行を持たないことを確認' do

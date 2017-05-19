@@ -7,6 +7,7 @@ class SummariesController < ApplicationController
   end
 
   def show
+    @contents = @summary.contents
   end
 
   def new

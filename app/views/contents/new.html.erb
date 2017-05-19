@@ -1,0 +1,24 @@
+<%= "#{@summary.title}の内容" %>
+
+<%= form_for([@summary,@content]) do |f| %>
+    <% if @content.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@content.errors.count, "error") %> prohibited this summary from being saved:</h2>
+
+          <ul>
+            <% @content.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="field" style="width:auto;">
+      <%= f.label :slack_url %>
+      <%= f.text_field :slack_url %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+<% end %>

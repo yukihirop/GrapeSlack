@@ -22,7 +22,7 @@ describe 'New Summaryページ' do
     end
 
     specify '遷移先にメッセージが表示される' do
-      expect(page).to have_css('p', text: 'Summary was successfully created.')
+      expect(page).to have_content('Summary was successfully created.')
     end
 
     specify '遷移先のタイトルが作成したものが表示されている' do
