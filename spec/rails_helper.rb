@@ -75,12 +75,30 @@ RSpec.configure do |config|
     DatabaseRewinder.clean
   end
 
-
   #Capybara
   config.include Capybara::DSL
-  Capybara.javascript_driver = :webkit
 
-  # OmniAuthをテストモードにセット
-  OmniAuth.config.test_mode = true
+  # spec/support/env.rbに記載
+  # 各テスト毎に webkit_non_redirectのブーリアンを調べてドライバーを使い分ける
+  # [参考] http://web-k.github.io/blog/2012/11/07/capybara-driver/
+  config.before(:all, :rack_test_non_redirect => true) do
+    Capybara.current_driver = :rack_test_non_redirect
+  end
+
+  config.after(:all, :rack_test_non_redirect => true) do
+    Capybara.use_default_driver
+  end
+
+  # モックオブジェクトにnilが設定されることを許容するか？
+  config.mock_with :rspec do |mocks|
+    mocks.allow_message_expectations_on_nil = true
+  end
+
+  # Deviseの設定
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Devise::Test::IntegrationHelpers, type: :feature
 
 end
+
+
+

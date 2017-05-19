@@ -19,5 +19,9 @@ module GrapeSlack
       g.text_framework = 'rspec'
       g.fixture_replacement :factory_girl, dir: 'spec/factories'
     end
+
+    # デフォルトを日本語にする
+    config.i18n.default_locale = :ja
+
   end
 end
