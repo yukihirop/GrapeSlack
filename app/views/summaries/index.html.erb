@@ -1,6 +1,4 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Summaries</h1>
+<h1>まとめ</h1>
 
 <table>
   <thead>
@@ -15,9 +13,10 @@
     <% @summaries.each do |summary| %>
       <tr>
         <td><%= summary.title %></td>
-        <td><%= summary.user %></td>
-        <td><%= link_to 'Show', summary %></td>
-        <td><%= link_to 'Destroy', summary, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= summary.user.name %></td>
+        <td><%= link_to '表示', summary %></td>
+        <td><%= link_to '削除', summary, method: :delete, data: { confirm: '本当に削除しますか?' } %></td>
+        <td><%= link_to '追加', new_summary_content_path(summary.id) %></td>
       </tr>
     <% end %>
   </tbody>
@@ -25,4 +24,8 @@
 
 <br>
 
-<%= link_to 'New Summary', new_summary_path %>
+<ul>
+  <li><%= link_to 'まとめ作成', new_summary_path %></li>
+  <li><%= link_to 'ログアウト', destroy_user_session_path , method: :delete %></li>
+</ul>
+

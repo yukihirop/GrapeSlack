@@ -10,7 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170516072428) do
+ActiveRecord::Schema.define(version: 20170518084107) do
+
+  create_table "contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "summary_id"
+    t.string "name"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "nickname"
+    t.string "slack_url"
+    t.string "slack_message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["summary_id"], name: "index_contents_on_summary_id"
+  end
 
   create_table "summaries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "title", null: false
@@ -38,5 +51,6 @@ ActiveRecord::Schema.define(version: 20170516072428) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "contents", "summaries"
   add_foreign_key "summaries", "users"
 end

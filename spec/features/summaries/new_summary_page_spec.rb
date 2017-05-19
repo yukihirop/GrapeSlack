@@ -3,17 +3,16 @@ require 'rails_helper'
 describe 'New Summaryページ' do
 
   before do
+    set_omniauth
+    visit user_slack_omniauth_authorize_path
     visit summaries_path
-    click_link 'New Summary'
+    click_link 'まとめ作成'
   end
 
   context '正常系(ボタンクリックなどによる外観の変化)' do
 
-    let!(:user){ create(:user) }
-
     before do
       fill_in 'Title', with: 'Test Title'
-      fill_in 'User', with: "#{user.id}"
       click_button '登録する'
     end
 
@@ -23,7 +22,7 @@ describe 'New Summaryページ' do
     end
 
     specify '遷移先にメッセージが表示される' do
-      expect(page).to have_css('p', text: 'Summary was successfully created.')
+      expect(page).to have_content('Summary was successfully created.')
     end
 
     specify '遷移先のタイトルが作成したものが表示されている' do
@@ -31,35 +30,7 @@ describe 'New Summaryページ' do
     end
 
     specify '遷移先にBackリンクがある' do
-      expect(page).to have_link(text: 'Back', href:summaries_path)
-    end
-
-  end
-
-  context '異常系(ボタンクリックなどによる外観の変化)' do
-
-    context '存在しないslack.idを打った場合' do
-
-      let!(:user){ create(:user) }
-
-      before do
-        fill_in 'Title', with: 'Test Title'
-        fill_in 'User', with: '-1'
-        click_button '登録する'
-      end
-
-      specify 'エラーメッセージが表示される(タイトル)' do
-        expect(page).to have_css('h2', text: '1 error prohibited this summary from being saved:')
-      end
-
-      specify 'エラーメッセージが表示される(内容)' do
-        expect(page).to have_css('li', text:'Userを入力してください')
-      end
-
-      specify '新しいSummaryを作成できなかったのでSummariesページに遷移しない' do
-        expect(current_path).to eq(summaries_path)
-      end
-
+      expect(page).to have_link(text: '戻る', href:summaries_path)
     end
 
   end

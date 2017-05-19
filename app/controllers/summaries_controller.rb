@@ -1,27 +1,20 @@
 class SummariesController < ApplicationController
   before_action :set_summary, only: [:show, :edit, :update, :destroy]
+  before_action :build_summary, only: :create
 
-  # GET /summaries
-  # GET /summaries.json
   def index
-    @summaries = Summary.all
+    @summaries = current_user.summaries
   end
 
-  # GET /summaries/1
-  # GET /summaries/1.json
   def show
+    @contents = @summary.contents
   end
 
-  # GET /summaries/new
   def new
     @summary = Summary.new
   end
 
-  # POST /summaries
-  # POST /summaries.json
   def create
-    @summary = Summary.new(summary_params)
-
     respond_to do |format|
       if @summary.save
         format.html { redirect_to @summary, notice: 'Summary was successfully created.' }
@@ -33,8 +26,6 @@ class SummariesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /summaries/1
-  # PATCH/PUT /summaries/1.json
   def update
     respond_to do |format|
       if @summary.update(summary_params)
@@ -47,8 +38,6 @@ class SummariesController < ApplicationController
     end
   end
 
-  # DELETE /summaries/1
-  # DELETE /summaries/1.json
   def destroy
     @summary.destroy
     respond_to do |format|
@@ -58,13 +47,16 @@ class SummariesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_summary
-      @summary = Summary.find(params[:id])
-    end
+  def set_summary
+    @summary = Summary.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def summary_params
-      params.require(:summary).permit(:title, :user_id)
-    end
+  def summary_params
+    params.require(:summary).permit(:title, :user_id)
+  end
+
+  def build_summary
+    @summary = current_user.summaries.build(summary_params)
+  end
+
 end
