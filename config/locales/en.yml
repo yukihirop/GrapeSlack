@@ -1,5 +1,29 @@
 ---
 en:
+  commons:
+    login: "%{kind} SignUp/Login"
+    logout: "Logout"
+  user:
+    profile: "Profile"
+    summaries:
+      title: "Summaries Index"
+      tables:
+        row_1: "Title"
+      forms:
+        title: "Title"
+        url: "%{kind} URL"
+        cancel: "Cancel"
+        back: "Back"
+    contents: "%{kind} Contents"
+    tables:
+      row_1: " "
+      row_2: " "
+      name: "Full Name"
+      first_name: "First Name"
+      last_name: "Last Name"
+      email: "E-mail"
+      password: "password"
+      profile_img_url: "Profile Image"
   activerecord:
     errors:
       messages:

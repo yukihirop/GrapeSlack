@@ -1,24 +1,32 @@
-<%= form_with(model: summary, local: true) do |form| %>
-  <% if summary.errors.any? %>
+<%= form_for(@summary) do |f| %>
+
+  <% if @summary.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(summary.errors.count, "error") %> prohibited this summary from being saved:</h2>
 
       <ul>
-      <% summary.errors.full_messages.each do |message| %>
+      <% @summary.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title, id: :summary_title %>
-  </div>
+    <div class="form-group">
+      <%= f.label t('user.summaries.forms.title') %>
+      <%= f.text_field :title, {:class => 'form-control'} %>
+    </div>
 
+    <div class="form-group">
+      <%= f.fields_for :contents do |f_contents| %>
+          <%= f_contents.label t('user.summaries.forms.url', kind:'Slack') %>
+          <%= f_contents.text_area :slack_url, {:class => 'form-control', :rows => 10} %>
+      <% end %>
+    </div>
 
+    <div class="actions">
+      <%= f.submit :class => 'btn btn-primary btn-sm' %>
+      <%= link_to t('user.summaries.forms.cancel'), summaries_path %>
+    </div>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
 <% end %>

@@ -1,6 +1,7 @@
-<%= "#{@summary.title}の内容" %>
+<h3><strong><%= @summary.title %></strong>  に追加</h3>
 
 <%= form_for([@summary,@content]) do |f| %>
+
     <% if @content.errors.any? %>
         <div id="error_explanation">
           <h2><%= pluralize(@content.errors.count, "error") %> prohibited this summary from being saved:</h2>
@@ -13,12 +14,13 @@
         </div>
     <% end %>
 
-    <div class="field" style="width:auto;">
-      <%= f.label :slack_url %>
-      <%= f.text_field :slack_url %>
+    <div class="form-group">
+      <%= f.label t('user.summaries.forms.url', kind:'Slack') %>
+      <%= f.text_area :slack_url, {:class => 'form-control', :rows => 10} %>
     </div>
 
     <div class="actions">
-      <%= f.submit %>
+      <%= f.submit :class => 'btn btn-primary btn-sm' %>
+      <%= link_to t('user.summaries.forms.cancel'), summaries_path %>
     </div>
 <% end %>

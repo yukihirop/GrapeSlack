@@ -1,0 +1,14 @@
+<% unless current_page?(root_path) %>
+
+    <div class="container-fluid main">
+      <div class="col-md-3">
+        <%= render :partial => 'shared/sidemenu' %>
+      </div>
+      <div class="col-md-9">
+        <%= render :partial => 'shared/content' %>
+      </div>
+    </div>
+
+<% else %>
+    <%= yield %>
+<% end %>

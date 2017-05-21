@@ -12,38 +12,28 @@ class SummariesController < ApplicationController
 
   def new
     @summary = Summary.new
+    @summary.contents.build
   end
 
   def create
-    respond_to do |format|
-      if @summary.save
-        format.html { redirect_to @summary, notice: 'Summary was successfully created.' }
-        format.json { render :show, status: :created, location: @summary }
-      else
-        format.html { render :new }
-        format.json { render json: @summary.errors, status: :unprocessable_entity }
-      end
+    if @summary.save
+      redirect_to summaries_path, notice: 'Summary was successfully created.'
+    else
+      render :new
     end
   end
 
   def update
-    respond_to do |format|
-      if @summary.update(summary_params)
-        format.html { redirect_to @summary, notice: 'Summary was successfully updated.' }
-        format.json { render :show, status: :ok, location: @summary }
-      else
-        format.html { render :edit }
-        format.json { render json: @summary.errors, status: :unprocessable_entity }
-      end
+    if @summary.update(summary_params)
+      redirect_to @summary, notice: 'Summary was successfully updated.'
+    else
+      render :edit
     end
   end
 
   def destroy
     @summary.destroy
-    respond_to do |format|
-      format.html { redirect_to summaries_url, notice: 'Summary was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to summaries_url, notice: 'Summary was successfully destroyed.'
   end
 
   private
@@ -52,7 +42,10 @@ class SummariesController < ApplicationController
   end
 
   def summary_params
-    params.require(:summary).permit(:title, :user_id)
+    params.require(:summary).permit(
+        :title, :user_id,
+        contents_attributes:[:id,:slack_url]
+    )
   end
 
   def build_summary

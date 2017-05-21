@@ -8,7 +8,7 @@ class ContentsController < ApplicationController
 
   def create
     if @content.save
-      redirect_to summary_path(@summary.id)
+      redirect_to summaries_path, notice: 'Content was successfully created.'
     end
   end
 

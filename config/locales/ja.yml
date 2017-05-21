@@ -1,5 +1,29 @@
 ---
 ja:
+  commons:
+    login: "%{kind}で新規登録/ログイン"
+    logout: "ログアウト"
+  user:
+    profile: "プロフィール"
+    summaries:
+      title: "まとめ一覧"
+      tables:
+        row_1: "タイトル"
+      forms:
+        title: "タイトル"
+        url: "%{kind} URL"
+        cancel: "キャンセル"
+        back: "戻る"
+    contents: "%{kind}投稿一覧"
+    tables:
+      row_1: "項目"
+      row_2: "内容"
+      name: "名前"
+      first_name: "名"
+      last_name: "姓"
+      email: "メールアドレス"
+      password: "パスワード"
+      profile_img_url: "プロフィール画像"
   activerecord:
     errors:
       messages:

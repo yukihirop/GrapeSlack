@@ -1,30 +1,32 @@
-<p>
-  <strong>Title:</strong>
-  <%= @summary.title %>
-</p>
+<h3><strong><%= @summary.title %></strong></h3>
+<br>
+<% @contents.each do |content| %>
+    <ul class="list-unstyled">
+      <li class="media">
+        <div class="media-left">
+          <img class="d-flex align-self-start mr-3" src="https://d1ic4altzx8ueg.cloudfront.net/global/images/finder-default-gravatar-64.png" alt="Generic placeholder image">
+        </div>
+        <div class="media-body">
+          <h5 class="media-title mt-0 mb-1"><strong>List-based media object</strong></h5>
+          <p style="word-wrap:break-word;"><%= content.slack_url %></p>
+        </div>
+        <div class="media-right">
+          <%= link_to '削除', '#', {
+             :class => 'btn btn-danger btn-sm',
+             :style => 'color:white;',
+             :method => :delete,
+             :data => { confirm: '本当に削除しますか?' }
+          } %>
+        </div>
+      </li>
+      <hr>
+    </ul>
+<% end %>
 
-<p>
-  <strong>User:</strong>
-  <%= @summary.user.name %>
-</p>
+<div class="actions">
+  <%= link_to t('user.summaries.forms.back'), summaries_path, {
+      :class => 'btn btn-sm btn-primary',
+      :style => 'color:white;'
+       } %>
+</div>
 
-<h2>持ってるまとめ一覧:</h2>
-<table>
-  <thead>
-  <tr>
-    <th>Slack URL</th>
-    <th colspan="3"></th>
-  </tr>
-  </thead>
-
-  <tbody>
-  <% @contents.each do |content| %>
-      <tr>
-        <td><%= content.slack_url %></td>
-      </tr>
-  <% end %>
-  </tbody>
-</table>
-
-
-<%= link_to '戻る', summaries_path %>

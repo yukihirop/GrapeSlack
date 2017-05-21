@@ -1,9 +1,0 @@
-<% require 'json' %>
-
-<h1>現在のユーザー情報:</h1>
-<p><%= current_user.to_json %></p>
-
-<ul>
-  <li><%= link_to 'ログアウト', destroy_user_session_path, :method => :delete %></li>
-  <li><%= link_to 'まとめ作成', summaries_path %></li>
-</ul>

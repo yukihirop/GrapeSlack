@@ -1,0 +1,35 @@
+//https://bootsnipp.com/snippets/featured/sidebar-responsive
+
+#sidebar-wrapper {
+  background-color: purple;
+  z-index: 1;
+  list-style: none;
+}
+
+.sidebar-nav {
+  color: white;
+  list-style: none;
+
+  padding-right: 0px;
+  padding-left: 0px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.sidebar-nav li {
+
+  border: 1px solid white;
+  text-indent: 20px;
+  line-height: 50px;
+}
+
+.sidebar-nav li a {
+
+  color: white;
+  display: block;
+  text-decoration: none;
+  padding-right: 0px;
+  padding-left: 0px;
+  margin-right: auto;
+  margin-left: auto;
+}

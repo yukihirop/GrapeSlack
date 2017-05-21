@@ -1,3 +1,19 @@
 // Place all the styles related to the Users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+//ユーザー情報
+.table {
+  table-layout: fixed;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.table.profile tr th:nth-child(1) {
+  width: 20%;
+}
+
+//.table-responsive {
+//  white-space:nowrap;
+//}

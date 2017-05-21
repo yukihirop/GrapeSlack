@@ -1,0 +1,30 @@
+<% unless current_page?(root_path) %>
+
+    <div class="container-fluid" style="background-color:purple;">
+
+      <%= link_to(user_info_path, {
+          :class => 'navbar-brand text-muted',
+          :style => 'text:bold;color:white;text-align:left;'
+      }) do %>
+          <strong style="color:white;text-align: left">GrapeSlack</strong>
+      <% end %>
+
+      <ul class="nav navbar-nav navbar-right">
+
+        <li>
+          <%= link_to(user_profile_path, {:style => 'color:white;'}) do %>
+              <strong><%= "#{current_user.name}さん" %></strong>
+          <% end %>
+        </li>
+
+        <li>
+          <%= link_to t('commons.logout'), destroy_user_session_path, {
+              :method => :delete,
+              :style => 'text-align:right;color:white;margin-right:10px;'
+          } %>
+        </li>
+      </ul>
+
+    </div>
+<% end %>
+
