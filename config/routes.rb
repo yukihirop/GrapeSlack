@@ -15,6 +15,10 @@ Rails.application.routes.draw do
     resources :summaries, except: :edit do
       resources :contents, only: [:new,:create]
     end
+
+    get '/contents', to: 'contents#index'
+    delete '/contents/:id', to: 'contents#destroy'
+
   end
 
   get '*anything' => 'application#routing_error'

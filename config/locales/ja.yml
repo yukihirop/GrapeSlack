@@ -3,18 +3,32 @@ ja:
   commons:
     login: "%{kind}で新規登録/ログイン"
     logout: "ログアウト"
+    delete: "削除"
+    add: "追加"
+    are_you_sure: '本当に削除しますか？'
   user:
+    info: "ユーザー情報"
     profile: "プロフィール"
     summaries:
       title: "まとめ一覧"
       tables:
-        row_1: "タイトル"
+        create_title: "まとめ作成"
+        row_1_title: "タイトル"
+        row_2_count: "個数"
       forms:
         title: "タイトル"
         url: "%{kind} URL"
         cancel: "キャンセル"
         back: "戻る"
-    contents: "%{kind}投稿一覧"
+      messages:
+        destroy: "まとめを削除しました。"
+        create: "まとめを作成しました。"
+        update: "まとめを更新しました。"
+    contents:
+      title: "投稿一覧"
+      messages:
+        destroy: "投稿を削除しました。"
+        create: "投稿を作成しました。"
     tables:
       row_1: "項目"
       row_2: "内容"

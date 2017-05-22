@@ -10,6 +10,10 @@
 
   <body>
 
+  <% if current_page?(root_path) %>
+      <%= render :partial => 'shared/flash' %>
+  <% end %>
+
   <%= render :partial => 'shared/navbar' %>
   <%= render :file => 'shared/base' %>
 

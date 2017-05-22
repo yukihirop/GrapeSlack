@@ -17,7 +17,7 @@ class SummariesController < ApplicationController
 
   def create
     if @summary.save
-      redirect_to summaries_path, notice: 'Summary was successfully created.'
+      redirect_to summaries_path, notice: I18n.t('user.summaries.messages.create')
     else
       render :new
     end
@@ -25,7 +25,7 @@ class SummariesController < ApplicationController
 
   def update
     if @summary.update(summary_params)
-      redirect_to @summary, notice: 'Summary was successfully updated.'
+      redirect_to @summary, notice: I18n.t('user.summaries.messages.update')
     else
       render :edit
     end
@@ -33,7 +33,7 @@ class SummariesController < ApplicationController
 
   def destroy
     @summary.destroy
-    redirect_to summaries_url, notice: 'Summary was successfully destroyed.'
+    redirect_to summaries_url, notice: I18n.t('user.summaries.messages.destroy')
   end
 
   private

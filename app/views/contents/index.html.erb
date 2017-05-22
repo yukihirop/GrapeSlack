@@ -1,4 +1,4 @@
-<h3><strong><%= @summary.title %></strong></h3>
+<h3><strong><%= t('user.contents.title') %></strong></h3>
 <br>
 <% @contents.each do |content| %>
     <ul class="list-unstyled">
@@ -12,10 +12,10 @@
         </div>
         <div class="media-right">
           <%= link_to t('commons.delete'), '#', {
-             :class => 'btn btn-danger btn-sm',
-             :style => 'color:white;',
-             :method => :delete,
-             :data => { confirm: t('commons.are_you_sure') }
+              :class => 'btn btn-danger btn-sm',
+              :style => 'color:white;',
+              :method => :delete,
+              :data => { confirm: t('commons.are_you_sure') }
           } %>
         </div>
       </li>
@@ -27,6 +27,6 @@
   <%= link_to t('user.summaries.forms.back'), summaries_path, {
       :class => 'btn btn-sm btn-primary',
       :style => 'color:white;'
-       } %>
+  } %>
 </div>
 

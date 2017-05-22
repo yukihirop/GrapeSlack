@@ -3,18 +3,32 @@ en:
   commons:
     login: "%{kind} SignUp/Login"
     logout: "Logout"
+    delete: "Delete"
+    add: "Add"
+    are_you_sure: 'Are you sure?'
   user:
+    info: "User Info"
     profile: "Profile"
     summaries:
       title: "Summaries Index"
       tables:
-        row_1: "Title"
+        create_title: "Summary Create"
+        row_1_title: "Title"
+        row_2_count: "Counts"
       forms:
         title: "Title"
         url: "%{kind} URL"
         cancel: "Cancel"
         back: "Back"
-    contents: "%{kind} Contents"
+      messages:
+        destroy: "Summary was successfully destroyed."
+        create: "Summary was successfully created."
+        update: "Summary was successfully updated."
+    contents:
+      title: "Contents Index"
+      messages:
+        destroy: "Content was successfully destroyed."
+        create: "Content was successfully created."
     tables:
       row_1: " "
       row_2: " "
