@@ -6,6 +6,7 @@ ja:
     delete: "削除"
     add: "追加"
     are_you_sure: '本当に削除しますか？'
+    required_login: 'ログインしてください'
   user:
     info: "ユーザー情報"
     profile: "プロフィール"

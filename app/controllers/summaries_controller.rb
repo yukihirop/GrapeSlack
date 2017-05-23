@@ -1,5 +1,4 @@
 class SummariesController < ApplicationController
-  before_action :exit_current_user?
   before_action :set_summary, only: [:show, :edit, :update, :destroy]
   before_action :build_summary, only: :create
 

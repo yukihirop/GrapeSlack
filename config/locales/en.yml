@@ -6,6 +6,7 @@ en:
     delete: "Delete"
     add: "Add"
     are_you_sure: 'Are you sure?'
+    required_login: 'Please login'
   user:
     info: "User Info"
     profile: "Profile"

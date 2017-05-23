@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :exit_current_user?, only: [:profile, :show]
+  skip_before_action :exit_current_user?, only: [:index]
 
   def index
   end
