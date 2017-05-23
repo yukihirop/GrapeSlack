@@ -12,6 +12,7 @@ class ContentsController < ApplicationController
   end
 
   def create
+
     if @content.save
       redirect_to summaries_path, notice: I18n.t('user.contents.messages.create')
     end

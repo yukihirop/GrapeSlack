@@ -11,10 +11,10 @@ Slack.configure do |config|
   config.token =  ENV['TOKEN'] || Thread.current[:request].session[:token]
 end
 
-module GrapeSlackHash
-  refine Hash do
-    def to_threadts
-      map{|k,v| [k, v.delete('p').insert(-7,'.')]}.to_h
+module GrapeSlackString
+  refine String do
+    def to_unix
+      delete('p').insert(-7,'.')
     end
   end
 end
@@ -36,6 +36,7 @@ module GrapeSlack
       yield self if block_given?
     end
 
+    using GrapeSlackString
     def replies
       @log.info('リプライ一覧を取得します。')
 
@@ -43,7 +44,7 @@ module GrapeSlack
       replies = []
 
       hchannelThreadts.each do |channel,thread_ts|
-        replies << client.channels_replies(channel: channel, thread_ts: thread_ts)
+        replies << client.channels_replies(channel: channel, thread_ts: thread_ts.to_unix)
       end
 
       replies.map!{|rep| rep['messages']}.compact!.flatten!
@@ -83,9 +84,8 @@ module GrapeSlack
       @aURLs.flatten!.grep(/https:\/\/aiming.slack.com\/archives/)
     end
 
-    using GrapeSlackHash
     def hchannelThreadts
-      channel_ts = aURLs.map{|str| str.split('/')[4..5]}.to_h.to_threadts
+      channel_ts = aURLs.map{|str| str.split('/')[4..5]}.to_h
     end
 
   end
@@ -107,4 +107,4 @@ end
 
 binding.pry
 
-p res
+p
