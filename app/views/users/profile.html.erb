@@ -1,0 +1,37 @@
+<div class="main-view">
+  <h3><strong><%= t('user.info') %></strong></h3>
+  <table class="table table-striped table-responsive table-bordered profile">
+    <thead>
+    <tr>
+      <th><%= t('user.tables.row_1') %></th>
+      <th><%= t('user.tables.row_2') %></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><%= t('user.tables.name') %></td>
+      <td><%= current_user.name %></td>
+    </tr>
+    <tr>
+      <td><%= t('user.tables.last_name') %></td>
+      <td><%= current_user.last_name %></td>
+    </tr>
+    <tr>
+      <td><%= t('user.tables.first_name') %></td>
+      <td><%= current_user.first_name %></td>
+    </tr>
+    <tr>
+      <td><%= t('user.tables.email') %></td>
+      <td><%= current_user.email %></td>
+    </tr>
+    <tr>
+      <td><%= t('user.tables.password') %></td>
+      <td><%= current_user.encrypted_password %></td>
+    </tr>
+    <tr>
+      <td><%= t('user.tables.profile_img_url') %></td>
+      <td><%= current_user.profile_img_url %></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

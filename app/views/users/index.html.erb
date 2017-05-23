@@ -1,2 +1,18 @@
-<h1>Users#index</h1>
-<%= link_to 'Slackで新規登録/ログイン', new_user_session_path %>
+<div class="container-fluid">
+  <div class="row">
+    <h1 class="text-center login-title"><font color="purple"><strong>GrapeSlack</strong></font></h1>
+    <div style="text-align:center;">
+      <%= link_to  t('commons.login', kind:'Slack'), new_user_session_path, {
+          :class => 'btn btn-lg-primary',
+          :style => 'background-color:purple;
+                     color:white;
+                     margin-right:auto;
+                     margin-left:auto;'} %>
+    </div>
+  </div>
+</div>
+
+
+
+
+

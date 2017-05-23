@@ -1,28 +1,39 @@
-<p id="notice"><%= notice %></p>
+<div class="col-md-10">
+  <h3><strong><%= t('user.summaries.title') %></strong></h3>
+</div>
+<div class="col-md-2" style="margin-left:auto;">
+  <div style="text-align:right;">
+    <%= link_to t('user.summaries.tables.create_title'), new_summary_path, {
+        :class => 'btn btn-sm btn-primary',
+        :style => 'color:white;'} %>
+  </div>
+</div>
 
-<h1>Summaries</h1>
-
-<table>
+<table class="table table-striped table-responsive table-hover summaries">
   <thead>
     <tr>
-      <th>Title</th>
-      <th>User</th>
-      <th colspan="3"></th>
+      <th><%= t('user.summaries.tables.row_1_title') %></th>
+      <th><%= t('user.summaries.tables.row_2_count') %></th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @summaries.each do |summary| %>
       <tr>
-        <td><%= summary.title %></td>
-        <td><%= summary.user %></td>
-        <td><%= link_to 'Show', summary %></td>
-        <td><%= link_to 'Destroy', summary, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to summary.title, summary_path(summary) %></td>
+        <td><%= summary.contents.size %></td>
+        <td><%= link_to t('commons.add'), new_summary_content_path(summary.id), {
+            :class => 'btn btn-info btn-sm'
+        } %></td>
+        <td><%= link_to t('commons.delete'), summary, {
+            :class => 'btn btn-danger btn-sm',
+            :style => 'color:white;',
+            :method => :delete,
+            :data => { confirm: t('commons.are_you_sure') }
+        } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Summary', new_summary_path %>

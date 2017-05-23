@@ -13,3 +13,54 @@
  *= require_tree .
  *= require_self
  */
+
+.container {
+    border: medium dotted black;
+}
+
+.container-fluid {
+    border: medium solid #ff00ff;
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-right: auto;
+    margin-left: auto;
+    width:100%;
+}
+
+.container-fluid.main {
+    border: medium solid green;
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-right: auto;
+    margin-left: auto;
+
+}
+
+.container-fluid.content {
+    border: medium solid green;
+    padding-right: 30px;
+    padding-left: 30px;
+    margin-right: auto;
+    margin-left: auto;
+
+}
+
+.flash {
+    padding-top:15px;
+    margin-top:auto;
+    margin-bottom:auto;
+}
+
+.main-view {
+
+}
+
+
+[class^="col-"] {
+    border: medium dotted orange;
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-right: auto;
+    margin-left: auto;
+}
+

@@ -9,4 +9,10 @@ class UsersController < ApplicationController
     end
   end
 
+  def profile
+    unless user_signed_in?
+      redirect_to user_profile_path
+    end
+  end
+
 end
