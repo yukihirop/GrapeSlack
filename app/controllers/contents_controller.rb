@@ -1,4 +1,5 @@
 class ContentsController < ApplicationController
+  before_action :exit_current_user?
   before_action :build_content, only: :create
   before_action :set_summary, only: [:new, :create]
   before_action :set_content, only: :destroy
