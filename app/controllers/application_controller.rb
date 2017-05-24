@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   before_action :set_request
 
   def set_request
-    Thead.current[:request] = request
+    Thread.current[:request] = request
   end
 
   def deny_anonymous

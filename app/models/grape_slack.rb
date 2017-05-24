@@ -21,15 +21,35 @@ end
 
 
 module GrapeSlack
-  class Slack
+  module Slack
 
-    attr_accessor :tURLs, :client
-    attr_reader :results
     USER_OPTIONS = %W[name first_name last_name image_48]
 
-    def initialize(attributes = nil)
-      @log = Logger.new('/tmp/log')
+    def start
       @results = {}
+    end
+
+    def end
+      @results
+    end
+
+    def client=(token)
+      @token = token
+    end
+
+    def client
+      @token
+    end
+
+    def tURLs=(urls)
+      @urls = urls
+    end
+
+    def tURLs
+      @urls
+    end
+
+    def preparate(attributes = nil)
       attributes.each do |k,v|
         send("#{k.to_s}=", v) if respond_to?("#{k.to_s}=")
       end if attributes
@@ -38,7 +58,6 @@ module GrapeSlack
 
     using GrapeSlackString
     def replies
-      @log.info('リプライ一覧を取得します。')
       replies = []
       @results.delete('replies') unless @results.empty?
       hchannelThreadts.each do |channel,thread_ts|
@@ -55,7 +74,6 @@ module GrapeSlack
     end
 
     def users
-      @log.info('チームメンバー一覧を取得します。')
       @users ||= {}
       @results.delete('users') unless @results.empty?
       USER_OPTIONS.each do |opt|
@@ -72,7 +90,6 @@ module GrapeSlack
     private
 
     def aURLs
-      @log.info('有効なURLかどうか検査しています。')
       @aURLs = URI.extract(tURLs, ['https']).map{|str| str.split(',')}
       @aURLs.flatten!.grep(/https:\/\/aiming.slack.com\/archives/)
     end
@@ -84,20 +101,3 @@ module GrapeSlack
   end
 
 end
-
-
-
-res = GrapeSlack::Slack.new do |gs|
-  gs.client = Slack.client
-  gs.tURLs = 'https://aiming.slack.com/archives/C0BL9SDCM/p1495016704352847,
-https://aiming.slack.com/archives/C5GACEUP6/p1495454313686993
-https://aiming.slack.com/archives/C0aa9SDCM/p1495032304352847,fafafafafafa
-https://aiming.slack.com/archives/C0BL9faCM/p1495013204352847
-https://aiming.slack.com/archives/C0BL9SfaM/p1495015504352847'
-  gs.replies
-  gs.users
-end
-
-binding.pry
-
-p

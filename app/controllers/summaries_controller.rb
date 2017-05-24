@@ -16,7 +16,13 @@ class SummariesController < ApplicationController
   end
 
   def create
-    if @summary.save
+    # if @summary.save
+    #   redirect_to summaries_path, notice: I18n.t('user.summaries.messages.create')
+    # else
+    #   render :new
+    # end
+    @summary.contents.last.params = summary_params
+    if Summary.import @summary.contents.last.remake_multi_records
       redirect_to summaries_path, notice: I18n.t('user.summaries.messages.create')
     else
       render :new
