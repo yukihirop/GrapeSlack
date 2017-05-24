@@ -92,7 +92,7 @@ describe 'Summariesページ', :js => true do
         end
 
         specify 'まとめ一覧のページにリダイレクト' do
-          expect(current_path).to eq(summaries_path)
+          expect(current_path).to eq(summary_path(summary_id))
         end
 
         specify 'Notificationメッセージの表示確認' do

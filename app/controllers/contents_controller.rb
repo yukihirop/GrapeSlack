@@ -19,8 +19,13 @@ class ContentsController < ApplicationController
 
   def destroy
     @content.destroy
-    #TODO: どこにリダイレクトさせるか検討
-    redirect_to summaries_path, notice: I18n.t('user.contents.messages.destroy')
+    flash[:notice] = I18n.t('user.contents.messages.destroy')
+    case request.path_info
+      when /\/user\/summaries/
+        redirect_to summary_path(params[:summary_id])
+      when /\/user\/contents/
+       redirect_to contents_path
+    end
   end
 
   private
