@@ -9,7 +9,17 @@ ja:
     required_login: 'ログインしてください'
   user:
     info: "ユーザー情報"
-    profile: "プロフィール"
+    profile:
+      title: "プロフィール"
+      tables:
+        row_1: "項目"
+        row_2: "内容"
+        name: "名前"
+        first_name: "名"
+        last_name: "姓"
+        email: "メールアドレス"
+        password: "パスワード"
+        profile_img_url: "プロフィール画像"
     summaries:
       title: "まとめ一覧"
       tables:
@@ -30,15 +40,6 @@ ja:
       messages:
         destroy: "投稿を削除しました。"
         create: "投稿を作成しました。"
-    tables:
-      row_1: "項目"
-      row_2: "内容"
-      name: "名前"
-      first_name: "名"
-      last_name: "姓"
-      email: "メールアドレス"
-      password: "パスワード"
-      profile_img_url: "プロフィール画像"
   activerecord:
     errors:
       messages:

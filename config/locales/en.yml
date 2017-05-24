@@ -9,7 +9,17 @@ en:
     required_login: 'Please login'
   user:
     info: "User Info"
-    profile: "Profile"
+    profile:
+      title: "Profile"
+      tables:
+        row_1: "Item"
+        row_2: "Contents"
+        name: "Full Name"
+        first_name: "First Name"
+        last_name: "Last Name"
+        email: "E-mail"
+        password: "password"
+        profile_img_url: "Profile Image"
     summaries:
       title: "Summaries Index"
       tables:
@@ -30,15 +40,6 @@ en:
       messages:
         destroy: "Content was successfully destroyed."
         create: "Content was successfully created."
-    tables:
-      row_1: " "
-      row_2: " "
-      name: "Full Name"
-      first_name: "First Name"
-      last_name: "Last Name"
-      email: "E-mail"
-      password: "password"
-      profile_img_url: "Profile Image"
   activerecord:
     errors:
       messages:
