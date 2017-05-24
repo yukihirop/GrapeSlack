@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   scope :user do
     resources :summaries, except: :edit do
-      resources :contents, only: [:new,:create]
+      resources :contents, only: [:new,:create,:destroy]
     end
 
     get '/contents', to: 'contents#index'

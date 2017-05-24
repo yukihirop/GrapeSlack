@@ -38,6 +38,7 @@ class SummariesController < ApplicationController
 
   private
   def set_summary
+    #TODO: summary_paramsで通すように書き直す
     @summary = Summary.find(params[:id])
   end
 

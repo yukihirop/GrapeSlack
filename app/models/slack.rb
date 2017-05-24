@@ -39,14 +39,11 @@ module GrapeSlack
     using GrapeSlackString
     def replies
       @log.info('リプライ一覧を取得します。')
-
-      @results.delete('replies') unless @results.empty?
       replies = []
-
+      @results.delete('replies') unless @results.empty?
       hchannelThreadts.each do |channel,thread_ts|
         replies << client.channels_replies(channel: channel, thread_ts: thread_ts.to_unix)
       end
-
       replies.map!{|rep| rep['messages']}.compact!.flatten!
       replies.each_with_index do |el, i|
         el.delete('type')
@@ -54,17 +51,13 @@ module GrapeSlack
         el.store('user', users['name'][el['user']])
         el['text'].gsub!(/<@(.+?)>/){"@#{users['name'][$1]}"}
       end
-
       @results['replies'] = replies
-
     end
 
     def users
       @log.info('チームメンバー一覧を取得します。')
-
-      @results.delete('users') unless @results.empty?
       @users ||= {}
-
+      @results.delete('users') unless @results.empty?
       USER_OPTIONS.each do |opt|
         if opt == 'name'
           @users[opt] = client.users_list['members'].map{ |m| [ m['id'], m[opt] ] }.to_h
@@ -72,9 +65,9 @@ module GrapeSlack
           @users[opt] = client.users_list['members'].map{ |m| [ m['id'], m['profile'][opt] ] }.to_h
         end
       end if @users.empty?
-
       @results['users'] = @users
     end
+
 
     private
 

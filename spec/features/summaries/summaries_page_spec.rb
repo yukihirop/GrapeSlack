@@ -11,83 +11,96 @@ describe 'Summariesページ', :js => true do
   context '正常系(ボタンクリックなどによる外観の変化)' do
 
     before do
-      click_link 'まとめ作成'
-      fill_in 'Title',  with: 'Test Title'
-      click_button '登録する'
-      click_link '戻る'
+      click_link  I18n.t('user.summaries.tables.create_title')
+      fill_in 'summary_title',  with: 'Test Title'
+      click_button I18n.t('helpers.submit.create')
     end
 
     specify '作成したまとめがテーブルに挿入される' do
       expect(page).to have_css('td', text: 'Test Title')
     end
 
-    specify '表示リンクが表示される' do
-      expect(page).to have_link(text: '表示', href:summary_path(Summary.last.id))
+    specify "#{I18n.t('commons.add')}リンクが表示される" do
+      #findに変更しないと@summary.saveされる前に検証してしまう(以下、同じ)
+      expect(find('.table')).to have_link(text: I18n.t('commons.add'), href: new_summary_content_path(Summary.last.id))
     end
 
-    specify '削除リンクが表示される' do
-      expect(page).to have_link(text: '削除', href:summary_path(Summary.last.id))
+    specify "#{I18n.t('commons.delete')}リンクが表示される" do
+      expect(find('.table')).to have_link(text: I18n.t('commons.delete'), href:summary_path(Summary.last.id))
     end
 
+    #TODO: まだ実装できていない
     context 'まとめを閲覧する' do
 
       before do
-        click_link '表示'
+        within('.table') do
+          visit summary_path(Summary.last.id)
+        end
       end
 
-      specify 'Titleのパラグラフの表示確認' do
-        expect(page).to have_css('strong', text: 'Title:')
-        expect(page).to have_css('p', text: 'Test Title')
+      specify 'タイトルの表示確認' do
+        expect(find('.col-md-9')).to have_css('h3', text: "#{Summary.last.title}")
       end
 
-      specify 'Userのパラグラフの表示確認' do
-        expect(page).to have_css('strong', text: 'User:')
+      specify 'プロフィール画像の表示確認' do
+        expect(find('.media-left')).to have_selector('img')
       end
 
-      specify '戻るリンクの表示確認' do
-        expect(page).to have_link(text: '戻る', href:summaries_path)
+      specify '投稿者の表示確認' do
+        expect(find('.media-body')).to have_selector('h5')
+      end
+
+      specify '投稿内容の表示確認' do
+        expect(find('.media-body')).to have_selector('p')
+      end
+
+      specify "#{I18n.t('commons.delete')}ボタンの表示確認" do
+        expect(find('.media-right')).to have_selector('a')
+      end
+
+      specify "#{I18n.t('user.summaries.forms.back')}リンクの表示確認" do
+        expect(find('.actions')).to have_link(text: "#{I18n.t('user.summaries.forms.back')}", href:summaries_path)
       end
 
     end
 
     context 'まとめを削除する' do
 
+      let(:summary_id){ Summary.last.id }
+      let(:content_id){ Summary.last.contents.last.id}
+
+      before do
+        within('.table') do
+          visit summary_path(Summary.last.id)
+        end
+      end
+
       specify 'コンファームメッセージの表示確認' do
-        expect(page).to have_link(text: '削除', href:summary_path(Summary.last.id))
-        link = find_link '削除'
-        expect(link['data-confirm']).to eq('本当に削除しますか?')
+        expect(find('.media-right')).to have_link(text: "#{I18n.t('commons.delete')}", href:summary_content_path(summary_id, content_id))
+        link = find_link I18n.t('commons.delete')
+        expect(link['data-confirm']).to eq(I18n.t('commons.are_you_sure'))
       end
 
       context 'コンファームOKの場合' do
 
         before do
-          page.accept_confirm  do
-            click_link '削除'
+          within(find('.media-right')) do
+            page.accept_confirm do
+              click_link I18n.t('commons.delete')
+            end
           end
-          expect(current_path).to eq(summaries_path)
+        end
+
+        specify 'まとめ一覧のページにリダイレクト' do
+          expect(current_path).to eq(summary_path(summary_id))
         end
 
         specify 'Notificationメッセージの表示確認' do
-          expect(page).to have_content ('Summary was successfully destroyed.')
+          expect(page).to have_content (I18n.t('user.contents.messages.destroy'))
         end
 
         specify 'テーブルの行にTitleがTest Titleの行を持たないことを確認' do
-          expect(page).not_to have_css('td', text: 'Test Title')
-        end
-
-      end
-
-      context 'コンファームCancelの場合' do
-
-        before do
-          page.dismiss_confirm  do
-            click_link '削除'
-          end
-          expect(current_path).to eq(summaries_path)
-        end
-
-        specify '作成したまとめのタイトル(Test Title)が表示されていることを確認' do
-          expect(page).to have_css('td', text: 'Test Title')
+          expect(find('h3')).not_to have_css('h3', text: 'Test Title')
         end
 
       end

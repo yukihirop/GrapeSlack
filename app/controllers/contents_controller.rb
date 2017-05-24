@@ -20,13 +20,21 @@ class ContentsController < ApplicationController
 
   def destroy
     @content.destroy
-    redirect_to contents_path, notice: I18n.t('user.contents.messages.destroy')
+    flash[:notice] = I18n.t('user.contents.messages.destroy')
+    case request.path_info
+      when /\/user\/summaries/
+        redirect_to summary_path(params[:summary_id])
+      when /\/user\/contents/
+       redirect_to contents_path
+    end
   end
 
   private
 
   def content_params
-    params.require(:content).permit(:slack_url, :content_id)
+    params.require(:content).permit(
+        :slack_url, :content_id, :summary_id
+    )
   end
 
   def build_content
@@ -38,7 +46,8 @@ class ContentsController < ApplicationController
   end
 
   def set_content
-    @content = Content.find(content_params)
+    #TODO: content_paramsで通すように書き直す
+    @content = Content.find(params[:id])
   end
 
 end
