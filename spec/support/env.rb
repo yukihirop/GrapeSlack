@@ -6,6 +6,8 @@ Capybara.default_driver = :rack_test
 Capybara.javascript_driver = :webkit
 # 非表示要素がfindやhave_selectorなどにヒットしないようにする
 Capybara.ignore_hidden_elements = true
+# 待ち時間を5秒に変更
+Capybara.default_max_wait_time = 5
 
 # Capybara::InfiniteRedirectError: redirected more than 5 times, check for infinite redirects. 対策
 # デフォルトのドライバーのfollow_redirectsをfalseに

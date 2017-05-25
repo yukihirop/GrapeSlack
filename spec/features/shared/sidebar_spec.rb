@@ -11,15 +11,15 @@ describe 'Sidebar' do
 
     # [参考] http://qiita.com/maangie/items/4522fb16a0fd78fd150e
     specify "#{I18n.t('user.profile.title')}リンクの確認" do
-      expect(find('.sidebar-nav').find_all('li')[0]).to have_link(text: I18n.t('user.profile.title'),href:user_profile_path)
+      expect(page).to have_link(text: I18n.t('user.profile.title'),href:user_profile_path)
     end
 
     specify "#{I18n.t('user.summaries.title')}リンクの確認" do
-      expect(find('.sidebar-nav').find_all('li')[1]).to have_link(text: I18n.t('user.summaries.title'),href:summaries_path)
+      expect(page).to have_link(text: I18n.t('user.summaries.title'),href:summaries_path)
     end
 
     specify "#{I18n.t('user.contentss.title')}リンクの確認" do
-      expect(find('.sidebar-nav').find_all('li')[2]).to have_link(text: I18n.t('user.contents.title'),href:contents_path)
+      expect(page).to have_link(text: I18n.t('user.contents.title'),href:contents_path)
     end
 
   end

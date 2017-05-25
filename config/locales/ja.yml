@@ -12,8 +12,9 @@ ja:
     profile:
       title: "プロフィール"
       tables:
-        row_1: "項目"
-        row_2: "内容"
+        rows:
+          items: "項目"
+          contents: "内容"
         name: "名前"
         first_name: "名"
         last_name: "姓"

@@ -26,7 +26,7 @@ describe 'New Summaryページ' do
     end
 
     specify '遷移先のタイトルが作成したものが表示されている' do
-      expect(page).to have_css('td', text: 'Test Title')
+      expect(page).to have_content('Test Title')
     end
 
   end

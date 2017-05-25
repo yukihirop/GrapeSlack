@@ -10,51 +10,49 @@ describe 'Profileページ' do
   context '正常系(ボタンクリックなどによる外観の変化)' do
 
     before do
-      within(find('.col-md-3')) do
-        click_link I18n.t('user.profile.title')
-      end
+      click_link I18n.t('user.profile.title')
     end
 
     specify 'テーブルのタイトルの確認' do
-      expect(find('.col-md-9')).to have_css('h3', text: I18n.t('user.info'))
+      expect(page).to have_content(I18n.t('user.info'))
     end
 
     context 'テーブルヘッダ' do
 
-      specify 'テーブルのヘッダ：1列目の確認' do
-        expect(find('.table')).to have_css('thead', text: I18n.t('user.profile.tables.row_1'))
+      specify "テーブルのヘッダ：#{I18n.t('user.profile.tables.rows.items')}の確認" do
+        expect(page).to have_content(I18n.t('user.profile.tables.rows.items'))
       end
 
-      specify 'テーブルのヘッダ：２列目の確認' do
-        expect(find('.table')).to have_css('thead', text: I18n.t('user.profile.tables.row_2'))
+      specify "テーブルのヘッダ：#{I18n.t('user.profile.tables.rows.contents')}の確認" do
+        expect(page).to have_content(I18n.t('user.profile.tables.rows.contents'))
       end
 
     end
 
-    context 'テーブル１列目' do
+    context "テーブル列:#{I18n.t('user.profile.tables.rows.items')}" do
 
-      specify '名前の確認' do
-        expect(find('.table')).to have_css('tr', text: I18n.t('user.profile.tables.name'))
+      specify "#{I18n.t('user.profile.tables.name')}の確認" do
+        expect(page).to have_content(I18n.t('user.profile.tables.name'))
       end
 
-      specify '姓の確認' do
-        expect(find('.table')).to have_css('tr', text: I18n.t('user.profile.tables.last_name'))
+      specify "#{I18n.t('user.profile.tables.last_name')}の確認" do
+        expect(page).to have_content(I18n.t('user.profile.tables.last_name'))
       end
 
-      specify '名の確認' do
-        expect(find('.table')).to have_css('tr', text: I18n.t('user.profile.tables.first_name'))
+      specify "#{I18n.t('user.profile.tables.first_name')}の確認" do
+        expect(page).to have_content(I18n.t('user.profile.tables.first_name'))
       end
 
-      specify 'メールアドレスの確認' do
-        expect(find('.table')).to have_css('tr', text: I18n.t('user.profile.tables.email'))
+      specify "#{I18n.t('user.profile.tables.email')}の確認" do
+        expect(page).to have_content(I18n.t('user.profile.tables.email'))
       end
 
-      specify 'パスワードの確認' do
-        expect(find('.table')).to have_css('tr', text: I18n.t('user.profile.tables.password'))
+      specify "#{I18n.t('user.profile.tables.password')}の確認" do
+        expect(page).to have_content(I18n.t('user.profile.tables.password'))
       end
 
-      specify 'プロフィール画像の確認' do
-        expect(find('.table')).to have_css('tr', text: I18n.t('user.profile.tables.profile_img_url'))
+      specify "#{I18n.t('user.profile.tables.profile_img_url')}の確認" do
+        expect(page).to have_content(I18n.t('user.profile.tables.profile_img_url'))
       end
 
     end
