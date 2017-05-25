@@ -23,7 +23,7 @@ en:
     summaries:
       title: "Summaries Index"
       tables:
-        create_title: "Summary Create"
+        create: "Summary Create"
         row_1_title: "Title"
         row_2_count: "Counts"
       forms:
