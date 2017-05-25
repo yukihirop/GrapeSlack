@@ -1,4 +1,4 @@
-require_relative 'grape_slack'
+require_relative 'content_api'
 
 module GrapeSlackString
   refine String do
@@ -12,7 +12,7 @@ end
 
 class Content < ApplicationRecord
   belongs_to :summary
-  include GrapeSlack::Slack
+  include GrapeSlack::Content::Api
 
   attr_accessor :params
 

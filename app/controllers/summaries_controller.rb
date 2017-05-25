@@ -16,13 +16,7 @@ class SummariesController < ApplicationController
   end
 
   def create
-    # if @summary.save
-    #   redirect_to summaries_path, notice: I18n.t('user.summaries.messages.create')
-    # else
-    #   render :new
-    # end
-    @summary.contents.last.params = summary_params
-    if Summary.import @summary.contents.last.remake_multi_records
+    if multi_contents_save
       redirect_to summaries_path, notice: I18n.t('user.summaries.messages.create')
     else
       render :new
@@ -43,6 +37,7 @@ class SummariesController < ApplicationController
   end
 
   private
+
   def set_summary
     #TODO: summary_paramsで通すように書き直す
     @summary = Summary.find(params[:id])
@@ -55,8 +50,37 @@ class SummariesController < ApplicationController
     )
   end
 
+  # summaries#createのサブルーチン
   def build_summary
     @summary = current_user.summaries.build(summary_params)
+    @summary.contents.last.params = summary_params
+  end
+
+  def summary_content
+    @summary_content ||= @summary.contents.last
+  end
+
+  def remake_contents
+    @remake_contents = summary_content.remake_multi_records
+  end
+
+  def first_save_summary_content
+    @first_save_summary_content ||= current_user.summaries.build(remake_contents[0])
+  end
+
+  def summary_contents_index(n)
+    @summary_content_index ||=
+        remake_contents[n]['contents_attributes']['0']
+  end
+
+  def multi_contents_save
+    @contents = []
+    if first_save_summary_content.save
+      remake_contents.each do |content|
+        @contents << first_save_summary_content.contents.build(content['contents_attributes']['0'])
+      end
+      Content.import @contents
+    end
   end
 
 end
