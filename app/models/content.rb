@@ -51,18 +51,19 @@ class Content < ApplicationRecord
   def from_replies(n)
     #n番目のreplie
     replie = @results['replies'][n]
-    @copy_params['contents_attributes']['0'].merge!({'nickname'       => replie['user']})
-    @copy_params['contents_attributes']['0'].merge!({'slack_message'  => replie['text']})
-    @copy_params['contents_attributes']['0'].merge!({'slack_url'      => "https://aiming.slack.com/#{replie['id']}/#{replie['ts'].to_p}"})
-    from_users(replie['user_id'])
+    @copy_params.merge!({'nickname'       => replie['user']})
+    @copy_params.merge!({'slack_message'  => replie['text']})
+    @copy_params.merge!({'slack_url'      => "https://aiming.slack.com/#{replie['id']}/#{replie['ts'].to_p}"})
+    from_users(replie['id'])
   end
 
-  def from_users(user_id)
+  def from_users(id)
     # こちらはhash
     users = @results['users']
-    @copy_params['contents_attributes']['0'].merge!({'first_name'     => users['first_name'][user_id]})
-    @copy_params['contents_attributes']['0'].merge!({'last_name'      => users['last_name'][user_id]})
-    @copy_params['contents_attributes']['0'].merge!({'name'           => "#{users['last_name'][user_id]} + ' ' + #{users['first_name'][user_id]}"})
+    @copy_params.merge!({'first_name'     => users['first_name'][id]})
+    @copy_params.merge!({'last_name'      => users['last_name'][id]})
+    @copy_params.merge!({'name'           => "#{users['first_name'][id]} " + ' ' + "#{users['last_name'][id]}"})
+    @copy_params.merge!({'profile_image_48_url' => users['image_48'][id]})
   end
 
   def each_after_remake

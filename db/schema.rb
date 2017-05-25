@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170518084107) do
+ActiveRecord::Schema.define(version: 20170525031454) do
 
   create_table "contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "summary_id"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20170518084107) do
     t.string "slack_message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "profile_image_48_url", null: false
     t.index ["summary_id"], name: "index_contents_on_summary_id"
   end
 

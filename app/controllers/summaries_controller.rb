@@ -53,7 +53,7 @@ class SummariesController < ApplicationController
   # summaries#createのサブルーチン
   def build_summary
     @summary = current_user.summaries.build(summary_params)
-    @summary.contents.last.params = summary_params
+    @summary.contents.last.params = summary_params['contents_attributes']['0']
   end
 
   def summary_content
@@ -65,19 +65,20 @@ class SummariesController < ApplicationController
   end
 
   def first_save_summary_content
-    @first_save_summary_content ||= current_user.summaries.build(remake_contents[0])
+    @merged_summary = summary_params.merge('contents_attributes' => {'0' => remake_contents[0]})
+    @first_save_summary_content ||= current_user.summaries.build(@merged_summary)
   end
 
   def summary_contents_index(n)
-    @summary_content_index ||=
-        remake_contents[n]['contents_attributes']['0']
+    @summary_content_index ||= remake_contents[n]
   end
 
   def multi_contents_save
     @contents = []
     if first_save_summary_content.save
-      remake_contents.each do |content|
-        @contents << first_save_summary_content.contents.build(content['contents_attributes']['0'])
+      # 最初は保存したのでshiftで除去
+      remake_contents.drop(1).each do |content|
+        @contents << first_save_summary_content.contents.build(content)
       end
       Content.import @contents
     end

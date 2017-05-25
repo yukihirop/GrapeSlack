@@ -12,7 +12,7 @@ class ContentsController < ApplicationController
   end
 
   def create
-    if @content.save
+    if multi_contents_save
       redirect_to summaries_path, notice: I18n.t('user.contents.messages.create')
     end
   end
@@ -36,9 +36,6 @@ class ContentsController < ApplicationController
     )
   end
 
-  def build_content
-    @content = current_user.summaries.find(params[:summary_id]).contents.build(content_params)
-  end
 
   def set_summary
     @summary = current_user.summaries.find(params[:summary_id])
@@ -47,6 +44,29 @@ class ContentsController < ApplicationController
   def set_content
     #TODO: content_paramsで通すように書き直す
     @content = Content.find(params[:id])
+  end
+
+  #contets#createのサブルーチン
+  def current_summary
+    current_user.summaries.find(params[:summary_id])
+  end
+
+  def build_content
+    @content = current_summary.contents.build(content_params)
+    @content.params = content_params
+  end
+
+  def remake_contents
+    @remake_contents ||= @content.remake_multi_records
+  end
+
+
+  def multi_contents_save
+    @contents = []
+    remake_contents.each do |content|
+      @contents << current_summary.contents.build(content)
+    end
+    Content.import @contents
   end
 
 end
