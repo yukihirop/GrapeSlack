@@ -56,11 +56,11 @@ describe 'Summariesページ' do
       expect(page).to have_selector('p')
     end
 
-    specify "#{I18n.t('commons.delete')}ボタンの表示確認" do
+    specify '削除リンクの表示確認' do
       expect(page).to have_selector('a')
     end
 
-    specify "#{I18n.t('user.summaries.forms.back')}リンクの表示確認" do
+    specify '戻るリンクの表示確認' do
       expect(page).to have_link(text: "#{I18n.t('user.summaries.forms.back')}", href:summaries_path)
     end
 

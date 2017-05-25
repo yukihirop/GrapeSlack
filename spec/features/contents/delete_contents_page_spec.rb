@@ -16,7 +16,7 @@ describe 'Contentsページ' do
       click_link I18n.t('commons.delete')
     end
 
-    specify "#{I18n.t('user.contents.title')}ページにリダイレクトする" do
+    specify '投稿一覧ページにリダイレクトする' do
       expect(current_path).to eq contents_path
     end
 

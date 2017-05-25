@@ -19,39 +19,39 @@ describe 'Profileページ' do
 
     context 'テーブルヘッダ' do
 
-      specify "テーブルのヘッダ：#{I18n.t('user.profile.tables.rows.items')}の確認" do
+      specify 'テーブルのヘッダ：項目の確認' do
         expect(page).to have_content(I18n.t('user.profile.tables.rows.items'))
       end
 
-      specify "テーブルのヘッダ：#{I18n.t('user.profile.tables.rows.contents')}の確認" do
+      specify 'テーブルのヘッダ：内容の確認' do
         expect(page).to have_content(I18n.t('user.profile.tables.rows.contents'))
       end
 
     end
 
-    context "テーブル列:#{I18n.t('user.profile.tables.rows.items')}" do
+    context 'テーブル列:項目' do
 
-      specify "#{I18n.t('user.profile.tables.name')}の確認" do
+      specify '名前の確認' do
         expect(page).to have_content(I18n.t('user.profile.tables.name'))
       end
 
-      specify "#{I18n.t('user.profile.tables.last_name')}の確認" do
+      specify '姓の確認' do
         expect(page).to have_content(I18n.t('user.profile.tables.last_name'))
       end
 
-      specify "#{I18n.t('user.profile.tables.first_name')}の確認" do
+      specify '名の確認' do
         expect(page).to have_content(I18n.t('user.profile.tables.first_name'))
       end
 
-      specify "#{I18n.t('user.profile.tables.email')}の確認" do
+      specify 'メールアドレスの確認' do
         expect(page).to have_content(I18n.t('user.profile.tables.email'))
       end
 
-      specify "#{I18n.t('user.profile.tables.password')}の確認" do
+      specify 'パスワードの確認' do
         expect(page).to have_content(I18n.t('user.profile.tables.password'))
       end
 
-      specify "#{I18n.t('user.profile.tables.profile_img_url')}の確認" do
+      specify 'プロフィール画像の確認' do
         expect(page).to have_content(I18n.t('user.profile.tables.profile_img_url'))
       end
 

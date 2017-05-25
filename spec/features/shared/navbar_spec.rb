@@ -19,7 +19,7 @@ describe 'Navbar' do
       expect(page).to have_link(text: "#{user_name}",href:user_profile_path)
     end
 
-    specify "#{I18n.t('commons.logout')}リンクの確認" do
+    specify 'ログアウトリンクの確認' do
       expect(page).to have_link(text: I18n.t('commons.logout'),href:destroy_user_session_path)
     end
 

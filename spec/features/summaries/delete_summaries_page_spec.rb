@@ -15,7 +15,7 @@ describe 'Summariesページ' do
       click_link I18n.t('commons.delete')
     end
 
-    specify "#{I18n.t('user.summaries.title')}ページにリダイレクトする" do
+    specify 'まとめ一覧ページにリダイレクトする' do
       expect(current_path).to eq summaries_path
     end
 
