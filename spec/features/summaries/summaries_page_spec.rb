@@ -1,99 +1,70 @@
 require 'rails_helper'
 
-describe 'Summariesページ', :js => true do
+describe 'Summariesページ' do
 
   before do
     set_omniauth
     visit user_slack_omniauth_authorize_path
-    visit summaries_path
+    click_link I18n.t('user.summaries.title')
+    click_link I18n.t('user.summaries.tables.create')
+    fill_in 'summary_title',  with: 'Test Title'
+    click_button I18n.t('helpers.submit.create')
   end
 
-  context '正常系(ボタンクリックなどによる外観の変化)' do
+  context 'まとめを作成' do
 
-    before do
-      click_link 'まとめ作成'
-      fill_in 'Title',  with: 'Test Title'
-      click_button '登録する'
-      click_link '戻る'
-    end
+    let(:summary_id) { Summary.last.id }
 
     specify '作成したまとめがテーブルに挿入される' do
-      expect(page).to have_css('td', text: 'Test Title')
+      expect(page).to have_content('Test Title')
     end
 
-    specify '表示リンクが表示される' do
-      expect(page).to have_link(text: '表示', href:summary_path(Summary.last.id))
+    specify "#{I18n.t('commons.add')}リンクが表示される" do
+      #findに変更しないと@summary.saveされる前に検証してしまう(以下、同じ)
+      expect(page).to have_link(text: I18n.t('commons.add'), href: new_summary_content_path(summary_id))
     end
 
-    specify '削除リンクが表示される' do
-      expect(page).to have_link(text: '削除', href:summary_path(Summary.last.id))
+    specify "#{I18n.t('commons.delete')}リンクが表示される" do
+      expect(page).to have_link(text: I18n.t('commons.delete'), href:summary_path(summary_id))
     end
 
-    context 'まとめを閲覧する' do
+  end
 
-      before do
-        click_link '表示'
-      end
+  #TODO: まだ実装できていない
+  context 'まとめを閲覧する' do
 
-      specify 'Titleのパラグラフの表示確認' do
-        expect(page).to have_css('strong', text: 'Title:')
-        expect(page).to have_css('p', text: 'Test Title')
-      end
-
-      specify 'Userのパラグラフの表示確認' do
-        expect(page).to have_css('strong', text: 'User:')
-      end
-
-      specify '戻るリンクの表示確認' do
-        expect(page).to have_link(text: '戻る', href:summaries_path)
-      end
-
+    before do
+      click_link 'Test Title'
     end
 
-    context 'まとめを削除する' do
+    let(:summary_title){ Summary.last.title }
 
-      specify 'コンファームメッセージの表示確認' do
-        expect(page).to have_link(text: '削除', href:summary_path(Summary.last.id))
-        link = find_link '削除'
-        expect(link['data-confirm']).to eq('本当に削除しますか?')
-      end
+    specify 'タイトルの表示確認' do
+      expect(page).to have_content(summary_title)
+    end
 
-      context 'コンファームOKの場合' do
+    # TODO: 後で内容を検証するテストにする
+    specify 'プロフィール画像の表示確認' do
+      expect(page).to have_selector('img')
+    end
 
-        before do
-          page.accept_confirm  do
-            click_link '削除'
-          end
-          expect(current_path).to eq(summaries_path)
-        end
+    specify '投稿者の表示確認' do
+      expect(page).to have_selector('h5')
+    end
 
-        specify 'Notificationメッセージの表示確認' do
-          expect(page).to have_content ('Summary was successfully destroyed.')
-        end
+    specify '投稿内容の表示確認' do
+      expect(page).to have_selector('p')
+    end
 
-        specify 'テーブルの行にTitleがTest Titleの行を持たないことを確認' do
-          expect(page).not_to have_css('td', text: 'Test Title')
-        end
+    specify '削除リンクの表示確認' do
+      expect(page).to have_selector('a')
+    end
 
-      end
-
-      context 'コンファームCancelの場合' do
-
-        before do
-          page.dismiss_confirm  do
-            click_link '削除'
-          end
-          expect(current_path).to eq(summaries_path)
-        end
-
-        specify '作成したまとめのタイトル(Test Title)が表示されていることを確認' do
-          expect(page).to have_css('td', text: 'Test Title')
-        end
-
-      end
-
+    specify '戻るリンクの表示確認' do
+      expect(page).to have_link(text: "#{I18n.t('user.summaries.forms.back')}", href:summaries_path)
     end
 
   end
 
 end
+

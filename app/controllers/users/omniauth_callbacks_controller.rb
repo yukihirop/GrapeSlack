@@ -1,5 +1,5 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
-
+  skip_before_action :deny_anonymous
 
   def slack
     # You need to implement the method below in your model (e.g. app/models/user.rb)

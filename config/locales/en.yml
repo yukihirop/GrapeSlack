@@ -6,15 +6,28 @@ en:
     delete: "Delete"
     add: "Add"
     are_you_sure: 'Are you sure?'
+    required_login: 'Please login'
   user:
     info: "User Info"
-    profile: "Profile"
+    profile:
+      title: "Profile"
+      tables:
+        rows:
+          items: "Item"
+          contents: "Contents"
+        name: "Full Name"
+        first_name: "First Name"
+        last_name: "Last Name"
+        email: "E-mail"
+        password: "password"
+        profile_img_url: "Profile Image"
     summaries:
       title: "Summaries Index"
       tables:
-        create_title: "Summary Create"
-        row_1_title: "Title"
-        row_2_count: "Counts"
+        create: "Summary Create"
+        rows:
+          title: "Title"
+          count: "Counts"
       forms:
         title: "Title"
         url: "%{kind} URL"
@@ -29,15 +42,6 @@ en:
       messages:
         destroy: "Content was successfully destroyed."
         create: "Content was successfully created."
-    tables:
-      row_1: " "
-      row_2: " "
-      name: "Full Name"
-      first_name: "First Name"
-      last_name: "Last Name"
-      email: "E-mail"
-      password: "password"
-      profile_img_url: "Profile Image"
   activerecord:
     errors:
       messages:
