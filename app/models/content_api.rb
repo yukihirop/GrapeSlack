@@ -55,19 +55,15 @@ module GrapeSlack
 
       using GrapeSlackString
       def replies
-        replies = []
+        @pare_replies = []
         @results.delete('replies') unless @results.empty?
         hchannelThreadts.each do |thread_ts, channel|
-          replies << client.channels_replies(channel: channel, thread_ts: thread_ts.to_unix)
+          @pare_replies << client.channels_replies(channel: channel, thread_ts: thread_ts.to_unix)
         end
-        @replies = replies.map{|rep| rep['messages']}.compact.flatten
-        @replies.each_with_index do |el, i|
-          el.delete('type')
-          el['id'] = el['user']
-          el.store('user', users['name'][el['user']])
-          el['text'].gsub!(/<@(.+?)>/){"@#{users['name'][$1]}"}
-        end
-        @results['replies'] = @replies
+        # 最初の投稿にrepliesが２つあると
+        # @chil_repliesは、[[{},{},{}],{},{}]になってる
+        @chil_replies = @pare_replies.map{|rep| rep['messages']}.compact
+        @results['replies'] = remake_pare_replies_from(@chil_replies)
       end
 
       # 非同期処理にしたい
@@ -95,6 +91,31 @@ module GrapeSlack
 
       def hchannelThreadts
         channel_ts = aURLs.map{|url| url.split('/')[4..5].reverse}.to_h
+      end
+
+      def remake_pare_replies_from(chil_replies)
+        #repが[{},{},{}]か{}かになっている
+        chil_replies.map{ |grand_rep| remake_child_replies_from(grand_rep)}
+      end
+
+      def remake_child_replies_from(grand_replies)
+        # 投稿にrepliesが付いている場合 [{},{},{}]の形式の場合
+        if grand_replies.kind_of?(Array)
+          # repliesは取ってこない。(最初の投稿に感してリメイク)
+          @result = remake_replies_from_hash(grand_replies.first)
+          # ついていない場合 {}の形式の場合
+        elsif grand_replies.kind_of?(Hash)
+          @result = remake_replies_from_hash(grand_replies)
+        end
+        @result
+      end
+
+      def remake_replies_from_hash(hash)
+        hash.delete('type')
+        hash['id'] = hash['user']
+        hash.store('user', users['name'][hash['user']])
+        hash['text'].gsub!(/<@(.+?)>/){"@#{users['name'][$1]}"}
+        hash
       end
 
     end
