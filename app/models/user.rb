@@ -8,7 +8,6 @@ class User < ApplicationRecord
   def self.find_for_slack_oauth(auth, signed_in_resource=nil)
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
     unless user
-      Thread.current[:request].session = auth.credentials.token
       user = User.create(
           first_name:     auth.info.first_name,
            last_name:     auth.info.last_name,

@@ -12,8 +12,9 @@ en:
     profile:
       title: "Profile"
       tables:
-        row_1: "Item"
-        row_2: "Contents"
+        rows:
+          items: "Item"
+          contents: "Contents"
         name: "Full Name"
         first_name: "First Name"
         last_name: "Last Name"
@@ -23,9 +24,10 @@ en:
     summaries:
       title: "Summaries Index"
       tables:
-        create_title: "Summary Create"
-        row_1_title: "Title"
-        row_2_count: "Counts"
+        create: "Summary Create"
+        rows:
+          title: "Title"
+          count: "Counts"
       forms:
         title: "Title"
         url: "%{kind} URL"

@@ -12,15 +12,15 @@ describe 'Navbar' do
   context '正常系(ボタンクリックなどによる外観の変化)' do
 
     specify 'GrapeSlackの確認' do
-      expect(find('.navbar-brand')).to have_content('GrapeSlack')
+      expect(page).to have_content('GrapeSlack')
     end
 
     specify 'ユーザーリンクの確認' do
-      expect(find('.navbar-right').find_all('li')[0]).to have_link(text: "#{user_name}",href:user_profile_path)
+      expect(page).to have_link(text: "#{user_name}",href:user_profile_path)
     end
 
-    specify "#{I18n.t('commons.logout')}リンクの確認" do
-      expect(find('.navbar-right').find_all('li')[1]).to have_link(text: I18n.t('commons.logout'),href:destroy_user_session_path)
+    specify 'ログアウトリンクの確認' do
+      expect(page).to have_link(text: I18n.t('commons.logout'),href:destroy_user_session_path)
     end
 
   end

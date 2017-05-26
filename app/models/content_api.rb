@@ -1,14 +1,9 @@
-require 'bundler'
-Bundler.require
-
 require 'slack'
-require 'yaml'
-require 'pry'
 require 'uri'
 
 # slack
 Slack.configure do |config|
-  config.token =  ENV['TOKEN'] || Thread.current[:request].session[:token]
+  config.token =  Thread.current[:request].session[:token]
 end
 
 module GrapeSlackString
@@ -62,7 +57,7 @@ module GrapeSlack
       def replies
         replies = []
         @results.delete('replies') unless @results.empty?
-        hchannelThreadts.each do |channel,thread_ts|
+        hchannelThreadts.each do |thread_ts, channel|
           replies << client.channels_replies(channel: channel, thread_ts: thread_ts.to_unix)
         end
         @replies = replies.map{|rep| rep['messages']}.compact.flatten
@@ -94,12 +89,12 @@ module GrapeSlack
       private
 
       def aURLs
-        @aURLs = URI.extract(tURLs, ['https']).map{|str| str.split(',')}
-        @aURLs.flatten!.grep(/https:\/\/aiming.slack.com\/archives/).uniq
+        @aURLs = URI.extract(tURLs, ['https']).map{|tURL| tURL.split(',')}
+        @aURLs.flatten.grep(/https:\/\/aiming.slack.com\/archives/).uniq
       end
 
       def hchannelThreadts
-        channel_ts = aURLs.map{|str| str.split('/')[4..5]}.to_h
+        channel_ts = aURLs.map{|url| url.split('/')[4..5].reverse}.to_h
       end
 
     end

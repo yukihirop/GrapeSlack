@@ -5,8 +5,8 @@ describe 'New Summaryページ' do
   before do
     set_omniauth
     visit user_slack_omniauth_authorize_path
-    visit summaries_path
-    click_link I18n.t('user.summaries.tables.create_title')
+    click_link I18n.t('user.summaries.title')
+    click_link I18n.t('user.summaries.tables.create')
   end
 
   context '正常系(ボタンクリックなどによる外観の変化)' do
@@ -18,9 +18,7 @@ describe 'New Summaryページ' do
     end
 
     specify '新しいSummaryを作成できたらSummariesページに遷移する' do
-      within(find('.col-md-9')) do
-        expect(current_path).to eq(summaries_path)
-      end
+      expect(current_path).to eq(summaries_path)
     end
 
     specify '遷移先にメッセージが表示される' do
@@ -28,7 +26,7 @@ describe 'New Summaryページ' do
     end
 
     specify '遷移先のタイトルが作成したものが表示されている' do
-      expect(find('.table')).to have_css('td', text: 'Test Title')
+      expect(page).to have_content('Test Title')
     end
 
   end

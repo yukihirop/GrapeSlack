@@ -76,7 +76,7 @@ class SummariesController < ApplicationController
   def multi_contents_save
     @contents = []
     if first_save_summary_content.save
-      # 最初は保存したのでshiftで除去
+      # 最初は保存したのでdropで除去
       remake_contents.drop(1).each do |content|
         @contents << first_save_summary_content.contents.build(content)
       end

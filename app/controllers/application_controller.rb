@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   end
 
   def deny_anonymous
-    redirect_to root_path, notice: I18n.t('commons.required_login') unless current_user
+    redirect_to root_path, notice: I18n.t('commons.required_login') unless user_signed_in?
   end
 
 end

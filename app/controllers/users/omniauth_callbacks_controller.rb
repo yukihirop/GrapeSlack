@@ -6,6 +6,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     user = User.find_for_slack_oauth(request.env['omniauth.auth'], current_user)
 
     if user.persisted?
+      session[:token] =   request.env['omniauth.auth'].credentials.token
       flash[:notice] = I18n.t 'devise.omniauth_callbacks.success', kind: 'Slack'
       sign_in user, :event => :authentication
       redirect_to user_info_path

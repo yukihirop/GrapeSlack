@@ -12,8 +12,9 @@ ja:
     profile:
       title: "プロフィール"
       tables:
-        row_1: "項目"
-        row_2: "内容"
+        rows:
+          items: "項目"
+          contents: "内容"
         name: "名前"
         first_name: "名"
         last_name: "姓"
@@ -23,9 +24,10 @@ ja:
     summaries:
       title: "まとめ一覧"
       tables:
-        create_title: "まとめ作成"
-        row_1_title: "タイトル"
-        row_2_count: "個数"
+        create: "まとめ作成"
+        rows:
+          title: "タイトル"
+          count: "個数"
       forms:
         title: "タイトル"
         url: "%{kind} URL"
