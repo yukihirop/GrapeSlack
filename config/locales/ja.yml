@@ -24,10 +24,9 @@ ja:
     summaries:
       title: "まとめ一覧"
       tables:
-        create: "まとめ作成"
-        rows:
-          title: "タイトル"
-          count: "個数"
+        create_title: "まとめ作成"
+        row_1_title: "タイトル"
+        row_2_count: "個数"
       forms:
         title: "タイトル"
         url: "%{kind} URL"
