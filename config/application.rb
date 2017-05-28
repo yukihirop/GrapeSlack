@@ -23,5 +23,9 @@ module GrapeSlack
     # デフォルトを日本語にする
     config.i18n.default_locale = :ja
 
+    # オートロードパスの追加
+    config.autoload_paths << Rails.root.join('app/models/grape_slack')
+    config.autoload_paths << Rails.root.join('app/models/grape_slack/api')
+
   end
 end

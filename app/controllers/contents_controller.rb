@@ -1,6 +1,6 @@
 class ContentsController < ApplicationController
-  before_action :build_content, only: :create
   before_action :set_summary, only: [:new, :create]
+  before_action :build_content, only: :create
   before_action :set_content, only: :destroy
 
   def index
@@ -12,7 +12,7 @@ class ContentsController < ApplicationController
   end
 
   def create
-    if multi_contents_save
+    if Content.import @contents
       redirect_to summaries_path, notice: I18n.t('user.contents.messages.create')
     end
   end
@@ -47,26 +47,10 @@ class ContentsController < ApplicationController
   end
 
   #contets#createのサブルーチン
-  def current_summary
-    current_user.summaries.find(params[:summary_id])
-  end
-
   def build_content
-    @content = current_summary.contents.build(content_params)
-    @content.params = content_params
+    contents_params = GrapeSlack::URLParser.new(content_params).slack_urls
+    @contents = @summary.contents.build(contents_params)
   end
 
-  def remake_contents
-    @remake_contents ||= @content.remake_multi_records
-  end
-
-
-  def multi_contents_save
-    @contents = []
-    remake_contents.each do |content|
-      @contents << current_summary.contents.build(content)
-    end
-    Content.import @contents
-  end
 
 end
