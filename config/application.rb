@@ -27,5 +27,7 @@ module GrapeSlack
     config.autoload_paths << Rails.root.join('app/models/grape_slack')
     config.autoload_paths << Rails.root.join('app/models/grape_slack/api')
 
+    #アダプターをresqueにする
+    config.active_job.queue_adapter = :resque
   end
 end

@@ -13,6 +13,7 @@ class SummariesController < ApplicationController
   def new
     @summary = Summary.new
     @summary.contents.build
+    SlackMembersJob.perform_later
   end
 
   def create
