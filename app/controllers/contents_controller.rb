@@ -12,7 +12,7 @@ class ContentsController < ApplicationController
   end
 
   def create
-    if Content.import @contents
+    if Content.import @contents, :validate => true
       redirect_to summaries_path, notice: I18n.t('user.contents.messages.create')
     end
   end

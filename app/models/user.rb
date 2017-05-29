@@ -4,6 +4,14 @@ class User < ApplicationRecord
   devise :database_authenticatable, :omniauthable,
          :recoverable
   has_many :summaries
+  validates :first_name,       presence:true
+  validates :last_name,        presence:true
+  validates :name,             presence:true
+  validates :password,         presence:true
+  validates :email,            presence:true
+  validates :provider,         presence:true
+  validates :uid,              presence:true
+  validates :profile_img_url,  presence:true
 
   def self.find_for_slack_oauth(auth, signed_in_resource=nil)
     user = User.where(:provider => auth.provider, :uid => auth.uid).first

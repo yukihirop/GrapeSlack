@@ -19,6 +19,10 @@ class SummariesController < ApplicationController
     if @summary.save
       redirect_to summaries_path, notice: I18n.t('user.summaries.messages.create')
     else
+      #@summaryはbefore_actionで整形したので失敗した際は元に戻す
+      #必要がある
+      @summary.contents.build(summary_params['contents_attributes']['0'])
+      @summary.contents = [Marshal.load(Marshal.dump(@summary.contents.to_a[-1]))]
       render :new
     end
   end
@@ -43,6 +47,12 @@ class SummariesController < ApplicationController
     @summary = Summary.find(params[:id])
   end
 
+  def only_summary_params
+    params.require(:summary).permit(
+                                :title, :user_id
+    )
+  end
+
   def summary_params
     params.require(:summary).permit(
         :title, :user_id,
@@ -52,7 +62,7 @@ class SummariesController < ApplicationController
 
   # summaries#createのサブルーチン
   def build_summary
-    @summary = current_user.summaries.build(summary_params)
+    @summary = current_user.summaries.build(only_summary_params)
     contents_params = GrapeSlack::URLParser.new(summary_params['contents_attributes']['0']).slack_urls
     @summary.contents.build(contents_params)
   end
