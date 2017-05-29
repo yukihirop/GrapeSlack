@@ -148,7 +148,7 @@ ja:
       second: 秒
       year: 年
   errors:
-    format: "%{attribute}%{message}"
+    format:
     messages:
       accepted: を受諾してください
       blank: を入力してください

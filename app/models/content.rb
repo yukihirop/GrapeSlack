@@ -1,9 +1,14 @@
 class Content < ApplicationRecord
   belongs_to :summary
+
+  validates :slack_url,            presence:true
   before_save :remake_contents
 
   #selfはContent
-  def self.import(contents)
+  def self.import(*args, &block)
+    if args.first.kind_of?(Array)
+      contents = args.first
+    end
     members = GrapeSlack::Api::Member.new.members
     contents.each do |content|
       #remake_contentsのselfはcontent
@@ -12,7 +17,6 @@ class Content < ApplicationRecord
     super
   end
 
-  #selfは@summary.contents[n]
   def remake_contents
     members ||= GrapeSlack::Api::Member.new.members
     reply   = GrapeSlack::Api::Reply.new(self.slack_url).reply
