@@ -37,6 +37,7 @@ class SummariesController < ApplicationController
   end
 
   private
+
   def set_summary
     #TODO: summary_paramsで通すように書き直す
     @summary = Summary.find(params[:id])
@@ -49,8 +50,11 @@ class SummariesController < ApplicationController
     )
   end
 
+  # summaries#createのサブルーチン
   def build_summary
     @summary = current_user.summaries.build(summary_params)
+    contents_params = GrapeSlack::URLParser.new(summary_params['contents_attributes']['0']).slack_urls
+    @summary.contents.build(contents_params)
   end
 
 end

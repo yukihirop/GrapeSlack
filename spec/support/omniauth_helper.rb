@@ -3,6 +3,9 @@ def set_omniauth
   OmniAuth.config.mock_auth[:slack] =
       OmniAuth::AuthHash.new(
           {
+              'credentials' => {
+                  'token' => ENV['TOKEN']
+              },
               'provider'  => 'slack',
               'uid'       => 'mock_uid_1234',
               'info'      => {

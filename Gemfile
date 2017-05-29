@@ -39,6 +39,9 @@ gem 'devise', git: 'https://github.com/gogovan/devise.git', branch: 'rails-5.1'
 
 gem 'rails-i18n'
 
+gem 'slack-api'
+gem 'activerecord-import'
+
 # bootstrap
 gem 'less-rails', git: 'https://github.com/MustafaZain/less-rails'
 gem 'therubyracer'

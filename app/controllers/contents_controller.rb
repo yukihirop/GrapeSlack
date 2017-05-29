@@ -1,6 +1,6 @@
 class ContentsController < ApplicationController
-  before_action :build_content, only: :create
   before_action :set_summary, only: [:new, :create]
+  before_action :build_content, only: :create
   before_action :set_content, only: :destroy
 
   def index
@@ -12,7 +12,7 @@ class ContentsController < ApplicationController
   end
 
   def create
-    if @content.save
+    if Content.import @contents
       redirect_to summaries_path, notice: I18n.t('user.contents.messages.create')
     end
   end
@@ -36,9 +36,6 @@ class ContentsController < ApplicationController
     )
   end
 
-  def build_content
-    @content = current_user.summaries.find(params[:summary_id]).contents.build(content_params)
-  end
 
   def set_summary
     @summary = current_user.summaries.find(params[:summary_id])
@@ -48,5 +45,12 @@ class ContentsController < ApplicationController
     #TODO: content_paramsで通すように書き直す
     @content = Content.find(params[:id])
   end
+
+  #contets#createのサブルーチン
+  def build_content
+    contents_params = GrapeSlack::URLParser.new(content_params).slack_urls
+    @contents = @summary.contents.build(contents_params)
+  end
+
 
 end
