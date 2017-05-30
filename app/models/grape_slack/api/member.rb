@@ -23,7 +23,7 @@ module GrapeSlack
           else
             @members[opt] = @users_list.map{ |m| [ m['id'], m['profile'][opt] ] }.to_h
           end
-        end if @members.empty?
+        end
         @members
       end
 

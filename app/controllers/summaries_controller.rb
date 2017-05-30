@@ -63,7 +63,7 @@ class SummariesController < ApplicationController
   # summaries#createのサブルーチン
   def build_summary
     @summary = current_user.summaries.build(only_summary_params)
-    contents_params = GrapeSlack::URLParser.new(summary_params['contents_attributes']['0']).slack_urls
+    contents_params = GrapeSlack::URLParser.new(summary_params['contents_attributes']['0']).remake_contents_params
     @summary.contents.build(contents_params)
   end
 

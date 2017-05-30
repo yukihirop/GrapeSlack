@@ -14,9 +14,9 @@ module GrapeSlack
 
       attr_reader :reply
 
-      def initialize (slack_url)
+      def initialize (slack_url, members)
         @slack_url = slack_url
-        @members = GrapeSlack::Api::Member.new.members
+        @members = members
         Slack.configure do |config|
           config.token = ENV['TOKEN']
         end
