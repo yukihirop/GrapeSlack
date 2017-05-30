@@ -28,6 +28,7 @@ ja:
         row_1_title: "タイトル"
         row_2_count: "個数"
       forms:
+        create: "まとめ作成"
         title: "タイトル"
         url: "%{kind} URL"
         cancel: "キャンセル"
