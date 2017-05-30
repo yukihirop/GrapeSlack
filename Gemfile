@@ -43,6 +43,10 @@ gem 'slack-api'
 gem 'activerecord-import'
 gem 'resque'
 gem 'resque-scheduler'
+gem 'redis-objects'
+gem 'redis-namespace'
+
+gem 'foreman'
 
 # bootstrap
 gem 'less-rails', git: 'https://github.com/MustafaZain/less-rails'

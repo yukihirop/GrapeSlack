@@ -19,7 +19,7 @@ class Content < ApplicationRecord
   end
 
   def member
-    @member ||= GrapeSlack::Api::Member.new.member
+    @member ||= GrapeSlack::Api::Member.new.member_from_redis
   end
 
 end
