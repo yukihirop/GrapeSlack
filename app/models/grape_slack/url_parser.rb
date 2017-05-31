@@ -19,11 +19,11 @@ module GrapeSlack
       # @remake_contents_paramsには空のcontentインスタンスが入ってないと
       # validateがかからない。
       (arr_slack_urls.blank?) ?
-          into_content_params {@remake_contents_params << {slack_urll: given_urls} if arr_slack_urls.blank?} :
-          into_content_params(given_urls, arr_slack_urls)
+          add_content_params {@remake_contents_params << {slack_url: ""} if arr_slack_urls.blank?} :
+          add_content_params(arr_slack_urls)
     end
 
-    def into_content_params(given_urls="", arr_slack_urls=[], &block)
+    def add_content_params(arr_slack_urls=[], &block)
       return yield if block_given?
       arr_slack_urls.each do |slack_url|
         copy_content_params = {}

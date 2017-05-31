@@ -4,7 +4,7 @@ module GrapeSlack
   module Api
     class Member
 
-      attr_reader :members
+      attr_reader :member
       MEMBER_ATTRIBUTES = %W[name first_name last_name image_48]
 
       def initialize

@@ -28,7 +28,6 @@ module GrapeSlack
 
       def user_id2name reply
         reply_message = Marshal.load(Marshal.dump(reply['messages'].first))
-        binding.pry
         reply_message.merge!({
                                  'id'   => reply_message['user'],
                                  'text' => reply_message['text'].gsub(/<@(.+?)>/){"@#{@member['name'][$1]}"}

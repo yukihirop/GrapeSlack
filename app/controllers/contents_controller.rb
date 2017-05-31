@@ -12,7 +12,7 @@ class ContentsController < ApplicationController
   end
 
   def create
-    if remake_contents.map(&:valid?).first && Content.import(remake_contents.map(&:remake_contents))
+    if remake_contents.map(&:valid?).first && Content.import(remake_contents.map(&:set_attributes))
       redirect_to summaries_path, notice: I18n.t('user.contents.messages.create')
     else
       @content = remake_contents.first
@@ -35,7 +35,7 @@ class ContentsController < ApplicationController
 
   def content_params
     params.require(:content).permit(
-        :slack_url, :content_id, :summary_id
+        :slack_url, :id, :summary_id
     )
   end
 
@@ -52,8 +52,8 @@ class ContentsController < ApplicationController
   #contets#createのサブルーチン
   def build_content
     txt_slack_urls = content_params['slack_url']
-    contents_params = GrapeSlack::URLParser.new(txt_slack_urls).remake_contents_params
-    @remake_contents = @summary.contents.build(contents_params)
+    remake_contents_params = GrapeSlack::URLParser.new(txt_slack_urls).remake_contents_params
+    @remake_contents = @summary.contents.build(remake_contents_params)
   end
 
   private

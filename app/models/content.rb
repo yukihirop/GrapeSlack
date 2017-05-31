@@ -2,11 +2,11 @@ class Content < ApplicationRecord
   belongs_to :summary
 
   # [参考] http://bitarts.jp/blog/2015/09/14/rails_url_validate.html
-  validates :slack_url, presence:true, format: /\A#{URI::regexp(%w(https://aiming.slack.com/archives/))}\z/
-  before_save :member
+  validates :slack_url, presence:true, format: /\A#{URI::regexp(%w(https))}\z/
+  before_validation :member
   before_save :set_attributes
 
-  def set_attriubtes
+  def set_attributes
     return self if self[:slack_url] == ""
     reply   = GrapeSlack::Api::Reply.new(self.slack_url, @member).reply
     self.first_name           = @member['first_name'][reply['id']]
