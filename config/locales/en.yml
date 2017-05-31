@@ -149,7 +149,7 @@ en:
       second: Seconds
       year: Year
   errors:
-    format:
+    format: "%{attribute}%{message}"
     messages:
       accepted: must be accepted
       blank: can't be blank

@@ -12,10 +12,10 @@ class ContentsController < ApplicationController
   end
 
   def create
-    if @remake_contents.map(&:valid?).first && Content.import(@remake_contents.map(&:remake_contents))
+    if remake_contents.map(&:valid?).first && Content.import(remake_contents.map(&:remake_contents))
       redirect_to summaries_path, notice: I18n.t('user.contents.messages.create')
     else
-      @content = @remake_contents.first
+      @content = remake_contents.first
       render :new
     end
   end
@@ -51,9 +51,14 @@ class ContentsController < ApplicationController
 
   #contets#createのサブルーチン
   def build_content
-    contents_params = GrapeSlack::URLParser.new(content_params).remake_contents_params
+    txt_slack_urls = content_params['slack_url']
+    contents_params = GrapeSlack::URLParser.new(txt_slack_urls).remake_contents_params
     @remake_contents = @summary.contents.build(contents_params)
   end
+
+  private
+  # こうすることでtypoを防げる。
+  attr_accessor :remake_contents
 
 
 end

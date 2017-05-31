@@ -21,7 +21,7 @@ class User < ApplicationRecord
            last_name:     auth.info.last_name,
                 name:     auth.info.name,
                email:     auth.info.email,
-          profile_img_url:auth.info.image_24,
+          profile_img_url:auth.extra.user_info.user.profile.image_192,
             provider:     auth.provider,
                  uid:     auth.uid,
             password:     Devise.friendly_token[0,20]

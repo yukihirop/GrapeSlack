@@ -14,23 +14,24 @@ module GrapeSlack
 
       attr_reader :reply
 
-      def initialize (slack_url, members)
+      def initialize (slack_url, member)
         @slack_url = slack_url
-        @members = members
+        @member = member
         Slack.configure do |config|
           config.token = ENV['TOKEN']
         end
       end
 
       def reply
-        after_reply Slack.client.channels_replies(channel: channel, thread_ts: thread_ts)
+        user_id2name Slack.client.channels_replies(channel: channel, thread_ts: thread_ts)
       end
 
-      def after_reply reply
+      def user_id2name reply
         reply_message = Marshal.load(Marshal.dump(reply['messages'].first))
+        binding.pry
         reply_message.merge!({
                                  'id'   => reply_message['user'],
-                                 'text' => reply_message['text'].gsub(/<@(.+?)>/){"@#{@members['name'][$1]}"}
+                                 'text' => reply_message['text'].gsub(/<@(.+?)>/){"@#{@member['name'][$1]}"}
                              })
       end
 
