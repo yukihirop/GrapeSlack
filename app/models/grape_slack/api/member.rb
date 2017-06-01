@@ -23,8 +23,10 @@ module GrapeSlack
           else
             @member[attribute] = @users_list.map{ |m| [ m['id'], m['profile'][attribute] ] }.to_h
           end
+        end
         @member
       end
+
 
       def member_from_redis
         @member_from_redis ||= {}

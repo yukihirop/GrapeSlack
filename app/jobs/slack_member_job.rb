@@ -3,13 +3,9 @@ class SlackMemberJob < ApplicationJob
   MEMBER_ATTRIBUTES = %W[name first_name last_name image_48]
 
   def perform(override)
-    if override == true
-      #削除後再度作成
-      set_slack_member_in(attribute) { Redis.current.flushall }
-    else
-      #既に存在してたらスルー
-      set_slack_member { return if Redis.current.keys.include?(MEMBER_ATTRIBUTES) }
-    end
+    #上書き作成もしくは既に存在してたらスルー
+    override ? set_slack_member :
+               set_slack_member { return if Redis.current.keys.include?(MEMBER_ATTRIBUTES)}
   end
 
   private
