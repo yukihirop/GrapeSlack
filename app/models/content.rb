@@ -1,27 +1,25 @@
 class Content < ApplicationRecord
   belongs_to :summary
-  before_save :remake_contents
 
-  #selfはContent
-  def self.import(contents)
-    members = GrapeSlack::Api::Member.new.members
-    contents.each do |content|
-      #remake_contentsのselfはcontent
-      content.remake_contents
-    end
-    super
+  # [参考] http://bitarts.jp/blog/2015/09/14/rails_url_validate.html
+  validates :slack_url, presence:true, format: /\A#{URI::regexp(%w(https))}\z/
+  before_validation :member
+  before_save :set_attributes
+
+  def set_attributes
+    return self if self[:slack_url] == ""
+    reply   = GrapeSlack::Api::Reply.new(self.slack_url, @member).reply
+    self.first_name           = @member['first_name'][reply['id']]
+    self.last_name            = @member['last_name'][reply['id']]
+    self.name                 = self.first_name + ' ' + self.last_name
+    self.nickname             = @member['name'][reply['id']]
+    self.profile_image_48_url = @member['image_48'][reply['id']]
+    self.slack_message        = reply['text']
+    self
   end
 
-  #selfは@summary.contents[n]
-  def remake_contents
-    members ||= GrapeSlack::Api::Member.new.members
-    reply   = GrapeSlack::Api::Reply.new(self.slack_url).reply
-    self.first_name           = members['first_name'][reply['id']]
-    self.last_name            = members['last_name'][reply['id']]
-    self.name                 = self.first_name + ' ' + self.last_name
-    self.nickname             = members['name'][reply['id']]
-    self.profile_image_48_url = members['image_48'][reply['id']]
-    self.slack_message        = reply['text']
+  def member
+    @member ||= GrapeSlack::Api::Member.new.member
   end
 
 end

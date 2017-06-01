@@ -10,16 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170525031454) do
+ActiveRecord::Schema.define(version: 20170529021236) do
 
   create_table "contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "summary_id"
-    t.string "name"
+    t.string "name", null: false
     t.string "first_name"
     t.string "last_name"
-    t.string "nickname"
-    t.string "slack_url"
-    t.string "slack_message"
+    t.string "nickname", null: false
+    t.string "slack_url", null: false
+    t.string "slack_message", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "profile_image_48_url", null: false

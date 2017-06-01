@@ -19,6 +19,8 @@ class SummariesController < ApplicationController
     if @summary.save
       redirect_to summaries_path, notice: I18n.t('user.summaries.messages.create')
     else
+      @summary = Summary.new(summary_params)
+      @summary.validate
       render :new
     end
   end
@@ -43,18 +45,24 @@ class SummariesController < ApplicationController
     @summary = Summary.find(params[:id])
   end
 
-  def summary_params
+  def only_summary_params
     params.require(:summary).permit(
-        :title, :user_id,
-        contents_attributes:[:id,:slack_url]
+                                :title, :user_id
     )
   end
 
-  # summaries#createのサブルーチン
+  def summary_params
+    params.require(:summary).permit(
+        :title, :user_id,
+        contents_attributes:[:slack_url]
+    )
+  end
+
   def build_summary
-    @summary = current_user.summaries.build(summary_params)
-    contents_params = GrapeSlack::URLParser.new(summary_params['contents_attributes']['0']).slack_urls
-    @summary.contents.build(contents_params)
+    @summary = current_user.summaries.build(only_summary_params)
+    txt_slack_urls = summary_params['contents_attributes']['0']['slack_url']
+    remake_contents_params = GrapeSlack::URLParser.new(txt_slack_urls).remake_contents_params
+    @summary.contents.build(remake_contents_params)
   end
 
 end
