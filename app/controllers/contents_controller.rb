@@ -49,7 +49,6 @@ class ContentsController < ApplicationController
     @content = Content.find(params[:id])
   end
 
-  #contets#createのサブルーチン
   def build_content
     txt_slack_urls = content_params['slack_url']
     remake_contents_params = GrapeSlack::URLParser.new(txt_slack_urls).remake_contents_params

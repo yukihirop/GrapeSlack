@@ -19,6 +19,8 @@ class SummariesController < ApplicationController
     if @summary.save
       redirect_to summaries_path, notice: I18n.t('user.summaries.messages.create')
     else
+      @summary = Summary.new(summary_params)
+      @summary.validate
       render :new
     end
   end
@@ -56,7 +58,6 @@ class SummariesController < ApplicationController
     )
   end
 
-  # summaries#createのサブルーチン
   def build_summary
     @summary = current_user.summaries.build(only_summary_params)
     txt_slack_urls = summary_params['contents_attributes']['0']['slack_url']
