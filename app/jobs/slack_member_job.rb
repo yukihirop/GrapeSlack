@@ -1,11 +1,21 @@
 class SlackMemberJob < ApplicationJob
-  queue_as :default
+
+  module GrapeSlackArray
+    refine Array do
+      def add_prefix(prefix)
+        map{|attribute| "#{prefix}:#{attribute}"}
+      end
+    end
+  end
+
+  queue_as :slack_member
   MEMBER_ATTRIBUTES = %W[name first_name last_name image_48]
 
+  using GrapeSlackArray
   def perform(override)
     #上書き作成もしくは既に存在してたらスルー
     override ? set_slack_member :
-               set_slack_member { return if Redis.current.keys.include?(MEMBER_ATTRIBUTES)}
+               set_slack_member { return if Redis.current.keys.include?(MEMBER_ATTRIBUTES.add_prefix('slack_member'))}
   end
 
   private

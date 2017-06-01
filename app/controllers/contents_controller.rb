@@ -11,6 +11,7 @@ class ContentsController < ApplicationController
     @content = @summary.contents.build
     #一旦redisに保存してたキーを削除して再度作成
     SlackMemberJob.perform_later(true)
+    SlackChannelListJob.perform_later(true)
   end
 
   def create
