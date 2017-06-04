@@ -4,8 +4,8 @@ module GrapeSlack
   module Api
     class Member
 
-      attr_reader :members
-      MEMBER_OPTIONS = %W[name first_name last_name image_48]
+      attr_reader :member, :member_from_redis
+      MEMBER_ATTRIBUTES = %W[name first_name last_name image_48]
 
       def initialize
         Slack.configure do |config|
@@ -13,18 +13,27 @@ module GrapeSlack
         end
       end
 
-      def members
-        @members ||= {}
-        return @members if @members.present?
+      def member
+        @member ||= {}
+        return @member if @member.present?
         @users_list ||= Slack.client.users_list['members']
-        MEMBER_OPTIONS.each do |opt|
-          if opt == 'name'
-            @members[opt] = @users_list.map{ |m| [ m['id'], m[opt] ] }.to_h
+        MEMBER_ATTRIBUTES.each do |attribute|
+          if attribute == 'name'
+            @member[attribute] = @users_list.map{ |m| [ m['id'], m[attribute] ] }.to_h
           else
-            @members[opt] = @users_list.map{ |m| [ m['id'], m['profile'][opt] ] }.to_h
+            @member[attribute] = @users_list.map{ |m| [ m['id'], m['profile'][attribute] ] }.to_h
           end
-        end if @members.empty?
-        @members
+        end
+        @member
+      end
+
+
+      def member_from_redis
+        @member_from_redis ||= {}
+        MEMBER_ATTRIBUTES.each do |attribute|
+          @member_from_redis[attribute] = Redis.current.hgetall("slack_member:#{attribute}")
+        end
+        @member_from_redis
       end
 
     end

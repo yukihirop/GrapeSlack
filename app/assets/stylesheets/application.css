@@ -51,10 +51,6 @@
     margin-bottom:auto;
 }
 
-.main-view {
-
-}
-
 
 [class^="col-"] {
     border: medium dotted orange;
@@ -63,4 +59,3 @@
     margin-right: auto;
     margin-left: auto;
 }
-
