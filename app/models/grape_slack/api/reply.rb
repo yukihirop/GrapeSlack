@@ -17,9 +17,6 @@ module GrapeSlack
       def initialize (slack_url, member)
         @slack_url = slack_url
         @member = member
-        Slack.configure do |config|
-          config.token = ENV['TOKEN']
-        end
       end
 
       def reply

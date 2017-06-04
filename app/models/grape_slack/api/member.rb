@@ -7,12 +7,6 @@ module GrapeSlack
       attr_reader :member, :member_from_redis
       MEMBER_ATTRIBUTES = %W[name first_name last_name image_48]
 
-      def initialize
-        Slack.configure do |config|
-          config.token = ENV['TOKEN']
-        end
-      end
-
       def member
         @member ||= {}
         return @member if @member.present?

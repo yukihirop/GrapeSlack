@@ -47,6 +47,7 @@ gem 'redis-objects'
 gem 'redis-namespace'
 
 gem 'foreman'
+gem 'config'
 
 # bootstrap
 gem 'less-rails', git: 'https://github.com/MustafaZain/less-rails'

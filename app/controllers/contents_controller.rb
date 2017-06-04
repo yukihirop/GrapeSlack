@@ -10,15 +10,16 @@ class ContentsController < ApplicationController
   def new
     @content = @summary.contents.build
     #一旦redisに保存してたキーを削除して再度作成
-    SlackMemberJob.perform_later(true)
-    SlackChannelListJob.perform_later(true)
+    SlackMemberJob.perform_later
+    SlackChannelListJob.perform_later
   end
 
   def create
     if remake_contents.map(&:valid?).first && Content.import(remake_contents.map(&:set_attributes))
       redirect_to summaries_path, notice: I18n.t('user.contents.messages.create')
     else
-      @content = remake_contents.first
+      @content = @summary.contents.build(content_params)
+      @content.validate
       render :new
     end
   end
@@ -55,7 +56,8 @@ class ContentsController < ApplicationController
   def build_content
     txt_slack_urls = content_params['slack_url']
     remake_contents_params = GrapeSlack::URLParser.new(txt_slack_urls).remake_contents_params
-    @remake_contents = @summary.contents.build(remake_contents_params)
+    permit_contents_params = GrapeSlack::URLPermit.new(remake_contents_params).permit_contents_params
+    @remake_contents = @summary.contents.build(permit_contents_params)
   end
 
   private
