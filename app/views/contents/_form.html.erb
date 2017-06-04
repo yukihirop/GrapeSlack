@@ -19,6 +19,6 @@
 
     <div class="actions">
       <%= f.submit :class => 'btn btn-primary btn-sm' %>
-      <%= link_to t('user.summaries.forms.cancel'), summaries_path %>
+      <%= link_to t('user.summaries.forms.cancel'), summaries_path(current_user.nickname) %>
     </div>
 <% end %>

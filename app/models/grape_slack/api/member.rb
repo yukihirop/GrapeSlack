@@ -25,7 +25,9 @@ module GrapeSlack
       def member_from_redis
         @member_from_redis ||= {}
         MEMBER_ATTRIBUTES.each do |attribute|
-          @member_from_redis[attribute] = Redis.current.hgetall("slack_member:#{attribute}")
+          while @member_from_redis[attribute].blank?
+            @member_from_redis[attribute] = Redis.current.hgetall("slack_member:#{attribute}")
+          end
         end
         @member_from_redis
       end

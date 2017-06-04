@@ -1,3 +1,5 @@
+require 'channel'
+
 module GrapeSlack
 
   class URLPermit

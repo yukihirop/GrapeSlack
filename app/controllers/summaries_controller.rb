@@ -20,7 +20,7 @@ class SummariesController < ApplicationController
 
   def create
     if @summary.save
-      redirect_to summaries_path, notice: I18n.t('user.summaries.messages.create')
+      redirect_to summaries_path(current_user.nickname), notice: I18n.t('user.summaries.messages.create')
     else
       @summary = current_user.summaries.build(summary_params)
       @summary.validate
@@ -38,7 +38,7 @@ class SummariesController < ApplicationController
 
   def destroy
     @summary.destroy
-    redirect_to summaries_url, notice: I18n.t('user.summaries.messages.destroy')
+    redirect_to summaries_path(current_user.nickname), notice: I18n.t('user.summaries.messages.destroy')
   end
 
   private

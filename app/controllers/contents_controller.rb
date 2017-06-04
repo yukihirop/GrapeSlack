@@ -16,7 +16,7 @@ class ContentsController < ApplicationController
 
   def create
     if remake_contents.map(&:valid?).first && Content.import(remake_contents.map(&:set_attributes))
-      redirect_to summaries_path, notice: I18n.t('user.contents.messages.create')
+      redirect_to summaries_path(current_user.nickname), notice: I18n.t('user.contents.messages.create')
     else
       @content = @summary.contents.build(content_params)
       @content.validate
@@ -29,9 +29,9 @@ class ContentsController < ApplicationController
     flash[:notice] = I18n.t('user.contents.messages.destroy')
     case request.path_info
       when /\/user\/summaries/
-        redirect_to summary_path(params[:summary_id])
+        redirect_to summary_path(current_user.nickname, params[:summary_id])
       when /\/user\/contents/
-       redirect_to contents_path
+       redirect_to contents_path(current_user.nickname)
     end
   end
 
@@ -39,7 +39,7 @@ class ContentsController < ApplicationController
 
   def content_params
     params.require(:content).permit(
-        :slack_url, :id, :summary_id
+        :slack_url, :content_id, :summary_id
     )
   end
 

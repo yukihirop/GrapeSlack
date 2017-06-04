@@ -14,7 +14,7 @@ module GrapeSlack
 
       attr_reader :reply
 
-      def initialize (slack_url, member)
+      def initialize(slack_url, member)
         @slack_url = slack_url
         @member = member
       end
@@ -23,7 +23,7 @@ module GrapeSlack
         user_id2name Slack.client.channels_replies(channel: channel, thread_ts: thread_ts)
       end
 
-      def user_id2name reply
+      def user_id2name(reply)
         reply_message = Marshal.load(Marshal.dump(reply['messages'].first))
         reply_message.merge!({
                                  'id'   => reply_message['user'],

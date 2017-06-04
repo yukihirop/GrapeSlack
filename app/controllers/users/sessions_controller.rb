@@ -7,7 +7,7 @@ class Users::SessionsController < Devise::SessionsController
   def new
     if user_signed_in?
       flash[:notice] = I18n.t 'devise.sessions.signed_in'
-      redirect_to user_info_path
+      redirect_to user_profile_path(current_user.nickname)
     else
       redirect_to user_slack_omniauth_authorize_path
     end

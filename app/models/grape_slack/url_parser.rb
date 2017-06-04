@@ -1,5 +1,3 @@
-require 'channel'
-
 module GrapeSlack
 
   refine String do

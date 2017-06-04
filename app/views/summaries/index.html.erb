@@ -3,7 +3,7 @@
 </div>
 <div class="col-md-2" style="margin-left:auto;">
   <div style="text-align:right;">
-    <%= link_to t('user.summaries.forms.create'), new_summary_path, {
+    <%= link_to t('user.summaries.forms.create'), new_summary_path(current_user.nickname), {
         :class => 'btn btn-sm btn-primary',
         :style => 'color:white;'} %>
   </div>
@@ -22,9 +22,9 @@
       <tbody>
       <% @summaries.each do |summary| %>
           <tr>
-            <td><%= link_to summary.title, summary_path(summary) %></td>
+            <td><%= link_to summary.title, summary_path(current_user.nickname, summary.id) %></td>
             <td><%= summary.contents.size %></td>
-            <td><%= link_to t('commons.add'), new_summary_content_path(summary.id), {
+            <td><%= link_to t('commons.add'), new_summary_content_path(current_user.nickname, summary.id), {
                 :class => 'btn btn-info btn-sm'
             } %></td>
             <td><%= link_to t('commons.delete'), summary, {

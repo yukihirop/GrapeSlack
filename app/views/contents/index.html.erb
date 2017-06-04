@@ -26,7 +26,7 @@
 <% end %>
 
 <div class="actions">
-  <%= link_to t('user.summaries.forms.back'), summaries_path, {
+  <%= link_to t('user.summaries.forms.back'), summaries_path(current_user.nickname), {
       :class => 'btn btn-sm btn-primary',
       :style => 'color:white;'
   } %>

@@ -7,7 +7,7 @@
       <ul class="nav navbar-nav navbar-right">
 
         <li>
-          <%= link_to(user_profile_path, {
+          <%= link_to(user_profile_path(current_user.nickname), {
               :class => 'text-muted',
               :style => 'color:white;'
           }) do %>

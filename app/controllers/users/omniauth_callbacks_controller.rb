@@ -8,7 +8,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     if user.persisted?
       flash[:notice] = I18n.t 'devise.omniauth_callbacks.success', kind: 'Slack'
       sign_in user, :event => :authentication
-      redirect_to user_info_path
+      redirect_to user_info_path(current_user.nickname)
     else
       flash[:notice] = I18n.t 'devise.omniauth_callbacks.failure'
       session['devise.slack_data'] = request.env['omniauth.auth']

@@ -8,10 +8,12 @@ Rails.application.routes.draw do
   }
   get '/users/auth/failure', to: 'users#index'
 
-  get '/user/info', to: 'users#show'
-  get '/user/profile', to: 'users#profile'
+  scope '(:nickname)' do
+    get '', to: 'users#show',           as: :user_info
+    get '/profile', to: 'users#profile',as: :user_profile
+  end
 
-  scope :user do
+  scope '(:nickname)' do
     resources :summaries, except: :edit do
       resources :contents, only: [:new,:create,:destroy]
     end

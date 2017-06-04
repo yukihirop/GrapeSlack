@@ -20,6 +20,7 @@ class User < ApplicationRecord
           first_name:     auth.info.first_name,
            last_name:     auth.info.last_name,
                 name:     auth.info.name,
+            nickname:     auth.info.nickname,
                email:     auth.info.email,
           profile_img_url:auth.extra.user_info.user.profile.image_192,
             provider:     auth.provider,
