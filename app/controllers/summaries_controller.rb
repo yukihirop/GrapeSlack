@@ -5,11 +5,11 @@ class SummariesController < ApplicationController
   include GrapeSlack::SlackUrlProccesable
 
   def index
-    @summaries = current_user.summaries
+    @summaries = current_user.summaries.page(params[:page])
   end
 
   def show
-    @contents = @summary.contents
+    @contents = @summary.contents.page(params[:page])
   end
 
   def new

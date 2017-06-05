@@ -1,5 +1,12 @@
 ---
 en:
+  views:
+    pagination:
+      first: "&laquo;"
+      last: "&raquo;"
+      previous: "&lsaquo;"
+      next: "&rsaquo;"
+      truncate: "..."
   commons:
     login: "%{kind} SignUp/Login"
     logout: "Logout"

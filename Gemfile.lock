@@ -138,6 +138,18 @@ GEM
       multi_json (~> 1.2)
     json (2.1.0)
     jwt (1.5.6)
+    kaminari (1.0.1)
+      activesupport (>= 4.1.0)
+      kaminari-actionview (= 1.0.1)
+      kaminari-activerecord (= 1.0.1)
+      kaminari-core (= 1.0.1)
+    kaminari-actionview (1.0.1)
+      actionview
+      kaminari-core (= 1.0.1)
+    kaminari-activerecord (1.0.1)
+      activerecord
+      kaminari-core (= 1.0.1)
+    kaminari-core (1.0.1)
     less (2.6.0)
       commonjs (~> 0.2.7)
     libv8 (3.16.14.19)
@@ -377,6 +389,7 @@ DEPENDENCIES
   factory_girl_rails
   foreman
   jbuilder (~> 2.5)
+  kaminari
   less-rails!
   listen (>= 3.0.5, < 3.2)
   mysql2 (>= 0.3.18, < 0.5)

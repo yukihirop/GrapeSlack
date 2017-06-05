@@ -6,7 +6,7 @@ class ContentsController < ApplicationController
   include GrapeSlack::SlackUrlProccesable
 
   def index
-    @contents = Content.all
+    @contents = Content.all.page(params[:page])
   end
 
   def new

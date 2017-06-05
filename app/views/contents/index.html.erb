@@ -26,6 +26,7 @@
       <hr>
     </ul>
 <% end %>
+<%= paginate @contents %>
 
 <div class="actions">
   <%= link_to t('user.summaries.forms.back'), summaries_path(current_user.nickname), {
