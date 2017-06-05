@@ -2,6 +2,7 @@
   <div id="sidebar-wrapper" class="sidebar-toggle">
     <ul class="sidebar-nav">
       <li><%= link_to t('user.profile.title'), user_profile_path(current_user.nickname) %></li>
+      <li><%= link_to t('user.others_summaries.title'), user_others_summaries_path(current_user.nickname) %></li>
       <li><%= link_to t('user.summaries.title'), summaries_path(current_user.nickname) %></li>
       <li><%= link_to t('user.contents.title'), contents_path(current_user.nickname) %></li>
     </ul>

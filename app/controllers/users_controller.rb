@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    @users = User.all.page(params[:page])
   end
 
   def profile

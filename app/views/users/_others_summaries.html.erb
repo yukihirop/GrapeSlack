@@ -1,0 +1,7 @@
+<div>
+  <ul>
+    <% user.summaries.shuffle[0..5].each do |summary| %>
+        <li><%= link_to summary.title, summary_path(user.nickname, summary.id) %></li>
+    <% end %>
+  </ul>
+</div>

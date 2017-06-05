@@ -83,6 +83,8 @@ group :development, :test do
   #bcrypt
   gem 'bcrypt-ruby'
 
+  gem 'gimei'
+  gem 'ffaker'
 
 end
 

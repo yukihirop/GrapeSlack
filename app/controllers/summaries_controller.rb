@@ -1,11 +1,12 @@
 class SummariesController < ApplicationController
   before_action :set_summary, only: [:show, :edit, :update, :destroy]
   before_action :build_summary, only: :create
+  before_action :you_look_user
 
   include GrapeSlack::SlackUrlProccesable
 
   def index
-    @summaries = current_user.summaries.page(params[:page])
+    @summaries = you_look_user.summaries.page(params[:page])
   end
 
   def show
@@ -47,7 +48,7 @@ class SummariesController < ApplicationController
 
   def set_summary
     #TODO: summary_paramsで通すように書き直す
-    @summary = Summary.find(params[:id])
+    @summary = Summary.where(user_id: you_look_user.id).find_by(id:params[:id])
   end
 
   def only_summary_params
