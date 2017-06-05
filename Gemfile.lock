@@ -100,11 +100,17 @@ GEM
     coffee-script-source (1.12.2)
     commonjs (0.2.7)
     concurrent-ruby (1.0.5)
+    config (1.4.0)
+      activesupport (>= 3.0)
+      deep_merge (~> 1.1.1)
     database_rewinder (0.8.1)
     debug_inspector (0.0.3)
+    deep_merge (1.1.1)
     diff-lcs (1.3)
     erubi (1.6.0)
     erubis (2.7.0)
+    et-orbi (1.0.4)
+      tzinfo
     eventmachine (1.2.3)
     execjs (2.7.0)
     factory_girl (4.8.0)
@@ -120,6 +126,8 @@ GEM
       eventmachine (>= 0.12.0)
       websocket-driver (>= 0.5.1)
     ffi (1.9.18)
+    foreman (0.84.0)
+      thor (~> 0.19.1)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
     hashie (3.5.5)
@@ -147,9 +155,11 @@ GEM
     mime-types-data (3.2016.0521)
     mini_portile2 (2.1.0)
     minitest (5.10.2)
+    mono_logger (1.1.0)
     multi_json (1.12.1)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
+    mustermann (1.0.0)
     mysql2 (0.4.6)
     nio4r (2.0.0)
     nokogiri (1.7.2)
@@ -190,6 +200,8 @@ GEM
     public_suffix (2.0.5)
     puma (3.8.2)
     rack (2.0.2)
+    rack-protection (2.0.0)
+      rack
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (5.1.0)
@@ -231,10 +243,26 @@ GEM
     rb-fsevent (0.9.8)
     rb-inotify (0.9.8)
       ffi (>= 0.5.0)
+    redis (3.3.3)
+    redis-namespace (1.5.3)
+      redis (~> 3.0, >= 3.0.4)
+    redis-objects (1.3.0)
+      redis (~> 3.3)
     ref (2.0.0)
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
       railties (>= 4.2.0, < 5.3)
+    resque (1.27.4)
+      mono_logger (~> 1.0)
+      multi_json (~> 1.0)
+      redis-namespace (~> 1.3)
+      sinatra (>= 0.9.2)
+      vegas (~> 0.1.2)
+    resque-scheduler (4.3.0)
+      mono_logger (~> 1.0)
+      redis (~> 3.3)
+      resque (~> 1.26)
+      rufus-scheduler (~> 3.2)
     rspec-core (3.6.0)
       rspec-support (~> 3.6.0)
     rspec-expectations (3.6.0)
@@ -255,6 +283,8 @@ GEM
     ruby-graphviz (1.2.3)
     ruby_dep (1.5.0)
     rubyzip (1.2.1)
+    rufus-scheduler (3.4.2)
+      et-orbi (~> 1.0)
     sass (3.4.23)
     sass-rails (5.0.6)
       railties (>= 4.0.0, < 6)
@@ -271,6 +301,11 @@ GEM
       websocket (~> 1.0)
     shoulda-matchers (3.1.1)
       activesupport (>= 4.0.0)
+    sinatra (2.0.0)
+      mustermann (~> 1.0)
+      rack (~> 2.0)
+      rack-protection (= 2.0.0)
+      tilt (~> 2.0)
     slack-api (1.5.0)
       faraday (~> 0.11)
       faraday_middleware (~> 0.10.0)
@@ -307,6 +342,8 @@ GEM
       thread_safe (~> 0.1)
     uglifier (3.2.0)
       execjs (>= 0.3.0, < 3)
+    vegas (0.1.11)
+      rack (>= 1.0.0)
     warden (1.2.7)
       rack (>= 1.0)
     web-console (3.5.0)
@@ -333,10 +370,12 @@ DEPENDENCIES
   capybara (~> 2.13.0)
   capybara-webkit (~> 1.14.0)
   coffee-rails (~> 4.2)
+  config
   database_rewinder
   devise!
   execjs
   factory_girl_rails
+  foreman
   jbuilder (~> 2.5)
   less-rails!
   listen (>= 3.0.5, < 3.2)
@@ -352,6 +391,10 @@ DEPENDENCIES
   rails-controller-testing
   rails-erd
   rails-i18n
+  redis-namespace
+  redis-objects
+  resque
+  resque-scheduler
   rspec-rails
   sass-rails (~> 5.0)
   seed-fu

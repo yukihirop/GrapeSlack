@@ -1,37 +1,13 @@
 <div class="main-view">
   <h3><strong><%= t('user.info') %></strong></h3>
-  <table class="table table-striped table-responsive table-bordered profile">
-    <thead>
-    <tr>
-      <th><%= t('user.profile.tables.rows.items') %></th>
-      <th><%= t('user.profile.tables.rows.contents') %></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <td><%= t('user.profile.tables.name') %></td>
-      <td><%= current_user.name %></td>
-    </tr>
-    <tr>
-      <td><%= t('user.profile.tables.last_name') %></td>
-      <td><%= current_user.last_name %></td>
-    </tr>
-    <tr>
-      <td><%= t('user.profile.tables.first_name') %></td>
-      <td><%= current_user.first_name %></td>
-    </tr>
-    <tr>
-      <td><%= t('user.profile.tables.email') %></td>
-      <td><%= current_user.email %></td>
-    </tr>
-    <tr>
-      <td><%= t('user.profile.tables.password') %></td>
-      <td><%= current_user.encrypted_password %></td>
-    </tr>
-    <tr>
-      <td><%= t('user.profile.tables.profile_img_url') %></td>
-      <td><%= current_user.profile_img_url %></td>
-    </tr>
-    </tbody>
-  </table>
+  <div class="container-fluid main">
+    <div class="col-md-3">
+      <%= image_tag(current_user.profile_img_url, {
+          :size => '128x128',
+          :alt   => 'Generic placeholder image'}) %>
+    </div>
+    <div class="col-md-9">
+      <%= render :partial => 'profile_table' %>
+    </div>
+  </div>
 </div>

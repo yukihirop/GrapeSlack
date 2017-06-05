@@ -13,13 +13,16 @@ class SummariesController < ApplicationController
   def new
     @summary = Summary.new
     @summary.contents.build
+    #一旦redisに保存してたキーを削除して再度作成
+    SlackMemberJob.perform_later
+    SlackChannelListJob.perform_later
   end
 
   def create
     if @summary.save
       redirect_to summaries_path, notice: I18n.t('user.summaries.messages.create')
     else
-      @summary = Summary.new(summary_params)
+      @summary = current_user.summaries.build(summary_params)
       @summary.validate
       render :new
     end
@@ -54,7 +57,7 @@ class SummariesController < ApplicationController
   def summary_params
     params.require(:summary).permit(
         :title, :user_id,
-        contents_attributes:[:slack_url]
+        contents_attributes:[:id, :slack_url]
     )
   end
 
@@ -62,7 +65,8 @@ class SummariesController < ApplicationController
     @summary = current_user.summaries.build(only_summary_params)
     txt_slack_urls = summary_params['contents_attributes']['0']['slack_url']
     remake_contents_params = GrapeSlack::URLParser.new(txt_slack_urls).remake_contents_params
-    @summary.contents.build(remake_contents_params)
+    permit_contents_params = GrapeSlack::URLPermit.new(remake_contents_params).permit_contents_params
+    @summary.contents.build(permit_contents_params)
   end
 
 end

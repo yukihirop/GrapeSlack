@@ -1,0 +1,14 @@
+default: &default
+  host: 127.0.0.1
+  port: 6379
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default
+  host: <%= GRAPESLACK_REDIS_HOST %>
+  password: <%= GRAPESLACK_REDIS_PASSWORD %>

@@ -4,14 +4,8 @@ module GrapeSlack
   module Api
     class Member
 
-      attr_reader :member
+      attr_reader :member, :member_from_redis
       MEMBER_ATTRIBUTES = %W[name first_name last_name image_48]
-
-      def initialize
-        Slack.configure do |config|
-          config.token = ENV['TOKEN']
-        end
-      end
 
       def member
         @member ||= {}
@@ -25,6 +19,15 @@ module GrapeSlack
           end
         end
         @member
+      end
+
+
+      def member_from_redis
+        @member_from_redis ||= {}
+        MEMBER_ATTRIBUTES.each do |attribute|
+          @member_from_redis[attribute] = Redis.current.hgetall("slack_member:#{attribute}")
+        end
+        @member_from_redis
       end
 
     end

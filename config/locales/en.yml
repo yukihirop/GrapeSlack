@@ -29,6 +29,7 @@ en:
           title: "Title"
           count: "Counts"
       forms:
+        create: "Summary Create"
         title: "Title"
         url: "%{kind} URL"
         cancel: "Cancel"
