@@ -12,7 +12,7 @@ module GrapeSlack
     private
     def permit_slack_channel(remake_slack_params)
       @permit_contents_params = remake_slack_params.select{|slack_url_param|
-        channel_permit(
+        permit_channel(
             slack_url_param[:slack_url],
             Settings.slack[:permit_channel]
         )
@@ -22,7 +22,7 @@ module GrapeSlack
       @permit_contents_params << {slack_url: ""} if @permit_contents_params.blank?
     end
 
-    def channel_permit(slack_url, channel_name)
+    def permit_channel(slack_url, channel_name)
       @channels_list ||= {}
       while @channels_list.empty?
         @channels_list = GrapeSlack::Api::Channel.new.list_from_redis
