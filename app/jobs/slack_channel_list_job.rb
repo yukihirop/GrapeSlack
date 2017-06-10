@@ -2,6 +2,8 @@ class SlackChannelListJob < ApplicationJob
 
   queue_as :slack_channel
 
+  include GrapeSlack::Api::ChannelGetable
+
   def perform
     set_slack_channel
   end
@@ -9,7 +11,7 @@ class SlackChannelListJob < ApplicationJob
   private
   def set_slack_channel
     channel_attribute = Redis::HashKey.new('slack_channel:name')
-    GrapeSlack::Api::Channel.new.list.each do |key, val|
+    channel_list.each do |key, val|
       channel_attribute[key]=val
     end
   end

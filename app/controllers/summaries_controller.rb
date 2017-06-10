@@ -2,6 +2,8 @@ class SummariesController < ApplicationController
   before_action :set_summary, only: [:show, :edit, :update, :destroy]
   before_action :build_summary, only: :create
 
+  include GrapeSlack::SlackUrlProccesable
+
   def index
     @summaries = current_user.summaries
   end
@@ -19,7 +21,10 @@ class SummariesController < ApplicationController
   end
 
   def create
-    if @summary.save
+    if flash[:danger_channel_timeout] || flash[:danger_invalid_url]
+      @summary = current_user.summaries.build(summary_params)
+      render :new
+    elsif @summary.save
       redirect_to summaries_path(current_user.nickname), notice: I18n.t('user.summaries.messages.create')
     else
       @summary = current_user.summaries.build(summary_params)
@@ -64,9 +69,7 @@ class SummariesController < ApplicationController
   def build_summary
     @summary = current_user.summaries.build(only_summary_params)
     txt_slack_urls = summary_params['contents_attributes']['0']['slack_url']
-    remake_contents_params = GrapeSlack::URLParser.new(txt_slack_urls).remake_contents_params
-    permit_contents_params = GrapeSlack::URLPermit.new(remake_contents_params).permit_contents_params
-    @summary.contents.build(permit_contents_params)
+    @summary.contents.build(contents_params_after_treatment(txt_slack_urls))
   end
 
 end

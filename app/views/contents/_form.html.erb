@@ -1,4 +1,12 @@
-<%= form_for([summary,content]) do |f| %>
+<%= form_for [summary,content], :url => url_for(:controller => 'contents',
+                                               :action => 'create',
+                                               :nickname => current_user.nickname) do |f| %>
+
+    <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key %>">
+          <%= value %>
+        </div>
+    <% end %>
 
     <% if content.errors.any? %>
         <div id="error_explanation">

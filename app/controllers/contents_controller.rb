@@ -3,6 +3,8 @@ class ContentsController < ApplicationController
   before_action :build_content, only: :create
   before_action :set_content, only: :destroy
 
+  include GrapeSlack::SlackUrlProccesable
+
   def index
     @contents = Content.all
   end
@@ -15,7 +17,10 @@ class ContentsController < ApplicationController
   end
 
   def create
-    if remake_contents.map(&:valid?).first && Content.import(remake_contents.map(&:set_attributes))
+    if flash[:danger_channel_timeout] || flash[:danger_invalid_url]
+      @content = @summary.contents.build(content_params)
+      render :new
+    elsif remake_contents.map(&:valid?).first && Content.import(remake_contents.map(&:set_attributes))
       redirect_to summaries_path(current_user.nickname), notice: I18n.t('user.contents.messages.create')
     else
       @content = @summary.contents.build(content_params)
@@ -29,7 +34,7 @@ class ContentsController < ApplicationController
     flash[:notice] = I18n.t('user.contents.messages.destroy')
     case request.path_info
       when /\/user\/summaries/
-        redirect_to summary_path(current_user.nickname, params[:summary_id])
+        redirect_to summary_path(current_user.nickname, content_params[:summary_id])
       when /\/user\/contents/
        redirect_to contents_path(current_user.nickname)
     end
@@ -55,9 +60,7 @@ class ContentsController < ApplicationController
 
   def build_content
     txt_slack_urls = content_params['slack_url']
-    remake_contents_params = GrapeSlack::URLParser.new(txt_slack_urls).remake_contents_params
-    permit_contents_params = GrapeSlack::URLPermit.new(remake_contents_params).permit_contents_params
-    @remake_contents = @summary.contents.build(permit_contents_params)
+    @remake_contents = @summary.contents.build(contents_params_after_treatment(txt_slack_urls))
   end
 
   private
