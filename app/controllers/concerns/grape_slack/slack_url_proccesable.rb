@@ -14,13 +14,10 @@ module GrapeSlack
     def permit_contents_params_with_flash
       #slackチャンネルの取得タイムアウトエラー
       if flash[:danger_channel_timeout]
-        return
       elsif @remake_contents_params.first[:slack_url].empty?
         flash[:danger_invalid_url] = '入力さたSlackURLの形式がhttps://aiming.slack.com/archivesではありません.'
-        return
       elsif @permit_contents_params.first[:slack_url].empty?
         flash[:danger_invalid_url] = '入力されたSlackURLに#randomチャンネルのものが含まれていません.'
-        return
       end
       @permit_contents_params
     end

@@ -13,12 +13,14 @@
           <p style="word-wrap:break-word;"><%= content.slack_message %></p>
         </div>
         <div class="media-right">
-          <%= link_to t('commons.delete'), {:controller => 'contents', :action => 'destroy', :id => content.id}, {
-              :class => 'btn btn-danger btn-sm',
-              :style => 'color:white;',
-              :method => :delete,
-              :data => { confirm: t('commons.are_you_sure') }
-          } %>
+          <%= link_to t('commons.delete'),
+                      delete_content_path(current_user.nickname, content.id),
+                      {
+                          :class => 'btn btn-danger btn-sm',
+                          :style => 'color:white;',
+                          :method => :delete,
+                          :data => { confirm: t('commons.are_you_sure') }
+                      } %>
         </div>
       </li>
       <hr>

@@ -17,10 +17,7 @@ class ContentsController < ApplicationController
   end
 
   def create
-    if flash[:danger_channel_timeout] || flash[:danger_invalid_url]
-      @content = @summary.contents.build(content_params)
-      render :new
-    elsif remake_contents.map(&:valid?).first && Content.import(remake_contents.map(&:set_attributes))
+    if remake_contents.map(&:valid?).first && Content.import(remake_contents.map(&:set_attributes))
       redirect_to summaries_path(current_user.nickname), notice: I18n.t('user.contents.messages.create')
     else
       @content = @summary.contents.build(content_params)
@@ -33,10 +30,10 @@ class ContentsController < ApplicationController
     @content.destroy
     flash[:notice] = I18n.t('user.contents.messages.destroy')
     case request.path_info
-      when /\/user\/summaries/
-        redirect_to summary_path(current_user.nickname, content_params[:summary_id])
-      when /\/user\/contents/
-       redirect_to contents_path(current_user.nickname)
+      when /\/#{current_user.nickname}\/summaries/
+        redirect_to summary_path(current_user.nickname, content_params_at_delete[:summary_id])
+      when /\/#{current_user.nickname}\/contents/
+        redirect_to contents_path(current_user.nickname)
     end
   end
 
@@ -44,7 +41,13 @@ class ContentsController < ApplicationController
 
   def content_params
     params.require(:content).permit(
-        :slack_url, :content_id, :summary_id
+        :slack_url, :id, :summary_id
+    )
+  end
+
+  def content_params_at_delete
+    params.permit(
+        :id, :summary_id
     )
   end
 

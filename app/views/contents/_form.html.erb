@@ -3,7 +3,7 @@
                                                :nickname => current_user.nickname) do |f| %>
 
     <% flash.each do |key, value| %>
-        <div class="alert alert-<%= key %>">
+        <div class="alert alert-<%= key.to_s.split('_').first %>">
           <%= value %>
         </div>
     <% end %>

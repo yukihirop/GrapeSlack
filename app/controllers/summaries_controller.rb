@@ -21,10 +21,7 @@ class SummariesController < ApplicationController
   end
 
   def create
-    if flash[:danger_channel_timeout] || flash[:danger_invalid_url]
-      @summary = current_user.summaries.build(summary_params)
-      render :new
-    elsif @summary.save
+    if @summary.save
       redirect_to summaries_path(current_user.nickname), notice: I18n.t('user.summaries.messages.create')
     else
       @summary = current_user.summaries.build(summary_params)
