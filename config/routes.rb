@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       delete '/summaries/:summary_id/contents/:id', to: 'contents#destroy', as: :delete_summary_content
 
       get '', to: 'users#show',           as: :user_info
+      get '/others_summaries', to: 'users#show',   as: :user_others_summaries
       get '/profile', to: 'users#profile',as: :user_profile
 
       get '/contents', to: 'contents#index'
