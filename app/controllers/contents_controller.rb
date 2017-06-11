@@ -7,7 +7,7 @@ class ContentsController < ApplicationController
   include GrapeSlack::SlackUrlProccesable
 
   def index
-    @contents = Content.where(user_id:you_look_user.id).page(params[:page])
+    @contents = you_look_user.contents.page(params[:page])
   end
 
   def new

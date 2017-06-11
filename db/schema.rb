@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170531035516) do
+ActiveRecord::Schema.define(version: 20170531031640) do
 
   create_table "contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "summary_id"
@@ -23,9 +23,7 @@ ActiveRecord::Schema.define(version: 20170531035516) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "profile_image_48_url", null: false
-    t.bigint "user_id"
     t.index ["summary_id"], name: "index_contents_on_summary_id"
-    t.index ["user_id"], name: "index_contents_on_user_id"
   end
 
   create_table "summaries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -56,6 +54,5 @@ ActiveRecord::Schema.define(version: 20170531035516) do
   end
 
   add_foreign_key "contents", "summaries"
-  add_foreign_key "contents", "users"
   add_foreign_key "summaries", "users"
 end

@@ -5,7 +5,6 @@ I18n.locale = :ja
   Content.seed do |s|
     g = Gimei.name
     s.id            = 1+i
-    s.user_id       = 1+i/(20*20)
     s.summary_id    = 1+i/20
     s.first_name    = g.first.kanji
     s.last_name     = g.last.kanji

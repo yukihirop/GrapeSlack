@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :omniauthable,
          :recoverable
   has_many :summaries
-  has_many :contents
+  has_many :contents, through: :summaries
   validates :first_name,       presence:true
   validates :last_name,        presence:true
   validates :name,             presence:true
