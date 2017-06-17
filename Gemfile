@@ -49,6 +49,8 @@ gem 'redis-namespace'
 gem 'foreman'
 gem 'config'
 
+
+
 # bootstrap
 gem 'less-rails', git: 'https://github.com/MustafaZain/less-rails'
 gem 'therubyracer'
@@ -63,7 +65,6 @@ group :development, :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13.0'
   gem 'capybara-webkit', '~> 1.14.0'
-
   gem 'selenium-webdriver'
 
   gem 'rspec-rails'
@@ -72,19 +73,17 @@ group :development, :test do
 
   gem 'seed-fu'
   gem 'rails-erd'
-
-  #pry
   gem 'pry-rails'
   gem 'pry-byebug'
   gem 'pry-doc'
   gem 'pry-rescue'
   gem 'pry-stack_explorer'
-
-  #bcrypt
   gem 'bcrypt-ruby'
 
   gem 'gimei'
   gem 'ffaker'
+
+  gem 'i18n-tasks'
 
 end
 

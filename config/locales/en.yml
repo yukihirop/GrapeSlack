@@ -1,64 +1,19 @@
 ---
 en:
-  views:
-    pagination:
-      first: "&laquo;"
-      last: "&raquo;"
-      previous: "&lsaquo;"
-      next: "&rsaquo;"
-      truncate: "..."
-  commons:
-    login: "%{kind} SignUp/Login"
-    logout: "Logout"
-    delete: "Delete"
-    add: "Add"
-    are_you_sure: 'Are you sure?'
-    required_login: 'Please login'
-  user:
-    others_summaries:
-      title: "Other Summary Index"
-    info: "User Info"
-    profile:
-      title: "Profile"
-      tables:
-        rows:
-          items: "Item"
-          contents: "Contents"
-        name: "Full Name"
-        first_name: "First Name"
-        last_name: "Last Name"
-        email: "E-mail"
-        password: "password"
-        profile_img_url: "Profile Image"
-    summaries:
-      title: "Summaries Index"
-      tables:
-        create: "Summary Create"
-        rows:
-          title: "Title"
-          count: "Counts"
-      forms:
-        create: "Summary Create"
-        title: "Title"
-        url: "%{kind} URL"
-        cancel: "Cancel"
-        back: "Back"
-      messages:
-        destroy: "Summary was successfully destroyed."
-        create: "Summary was successfully created."
-        update: "Summary was successfully updated."
-    contents:
-      title: "Contents Index"
-      messages:
-        destroy: "Content was successfully destroyed."
-        create: "Content was successfully created."
   activerecord:
     errors:
       messages:
-        record_invalid: "Validation failed: %{errors}"
+        record_invalid: 'Validation failed: %{errors}'
         restrict_dependent_destroy:
-          has_one: "Cannot delete record because a dependent %{record} exists"
-          has_many: "Cannot delete record because dependent %{record} exist"
+          has_many: Cannot delete record because dependent %{record} exist
+          has_one: Cannot delete record because a dependent %{record} exists
+  commons:
+    add: Add
+    are_you_sure: Are you sure?
+    delete: Delete
+    login: "%{kind} SignUp/Login"
+    logout: Logout
+    required_login: Please login
   date:
     abbr_day_names:
     - Sun
@@ -69,7 +24,7 @@ en:
     - Fri
     - Sat
     abbr_month_names:
-    -
+    - 
     - Jan
     - Feb
     - Mar
@@ -95,7 +50,7 @@ en:
       long: "%B %d, %Y"
       short: "%b %d"
     month_names:
-    -
+    - 
     - January
     - February
     - March
@@ -145,12 +100,12 @@ en:
       x_months:
         one: 1 month
         other: "%{count} months"
-      x_years:
-        one: 1 year
-        other: "%{count} years"
       x_seconds:
         one: 1 second
         other: "%{count} seconds"
+      x_years:
+        one: 1 year
+        other: "%{count} years"
     prompts:
       day: Day
       hour: Hour
@@ -158,12 +113,18 @@ en:
       month: Month
       second: Seconds
       year: Year
+  devise:
+    omniauth_callbacks:
+      failure: Failure
+      success: Success
+    sessions:
+      signed_in: Signed in
+      signed_out: Signed out
   errors:
     format: "%{attribute}%{message}"
     messages:
       accepted: must be accepted
       blank: can't be blank
-      present: must be blank
       confirmation: doesn't match %{attribute}
       empty: can't be empty
       equal_to: must be equal to %{count}
@@ -175,10 +136,12 @@ en:
       invalid: is invalid
       less_than: must be less than %{count}
       less_than_or_equal_to: must be less than or equal to %{count}
-      model_invalid: "Validation failed: %{errors}"
+      model_invalid: 'Validation failed: %{errors}'
       not_a_number: is not a number
       not_an_integer: must be an integer
       odd: must be odd
+      other_than: must be other than %{count}
+      present: must be blank
       required: must exist
       taken: has already been taken
       too_long:
@@ -190,7 +153,6 @@ en:
       wrong_length:
         one: is the wrong length (should be 1 character)
         other: is the wrong length (should be %{count} characters)
-      other_than: must be other than %{count}
     template:
       body: 'There were problems with the following fields:'
       header:
@@ -263,3 +225,51 @@ en:
       long: "%B %d, %Y %H:%M"
       short: "%d %b %H:%M"
     pm: pm
+  user:
+    contents:
+      messages:
+        create: Content was successfully created.
+        destroy: Content was successfully destroyed.
+      title: Contents Index
+    info: User Info
+    others_summaries:
+      title: Other Summary Index
+    profile:
+      tables:
+        email: E-mail
+        first_name: First Name
+        last_name: Last Name
+        name: Full Name
+        password: password
+        profile_img_url: Profile Image
+        rows:
+          contents: Contents
+          items: Item
+      title: Profile
+    summaries:
+      forms:
+        back: Back
+        cancel: Cancel
+        create: Summary Create
+        title: Title
+        url: "%{kind} URL"
+      messages:
+        create: Summary was successfully created.
+        destroy: Summary was successfully destroyed.
+        update: Summary was successfully updated.
+      tables:
+        create: Summary Create
+        create_title: まとめ作成
+        row_1_title: タイトル
+        row_2_count: 個数
+        rows:
+          count: Counts
+          title: Title
+      title: Summaries Index
+  views:
+    pagination:
+      first: "&laquo;"
+      last: "&raquo;"
+      next: "&rsaquo;"
+      previous: "&lsaquo;"
+      truncate: "..."

@@ -1,0 +1,30 @@
+internal_locale: en
+base_locale: en
+locales:
+- en
+- ja
+data:
+  adapter: I18n::Tasks::Data::FileSystem
+  read:
+  - config/locales/%{locale}.yml
+  write:
+  - config/locales/%{locale}.yml
+search:
+  paths:
+  - app/
+  relative_roots:
+  - app/controllers
+  - app/helpers
+  - app/mailers
+  - app/presenters
+  - app/views
+  scanners:
+  - - "::I18n::Tasks::Scanners::RubyAstScanner"
+    - only:
+      - "*.rb"
+  - - "::I18n::Tasks::Scanners::PatternWithScopeScanner"
+    - exclude:
+      - "*.rb"
+  strict: true
+  exclude:
+    - app/assets/images
