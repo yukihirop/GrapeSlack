@@ -7,13 +7,6 @@ en:
         restrict_dependent_destroy:
           has_many: Cannot delete record because dependent %{record} exist
           has_one: Cannot delete record because a dependent %{record} exists
-  commons:
-    add: Add
-    are_you_sure: Are you sure?
-    delete: Delete
-    login: "%{kind} SignUp/Login"
-    logout: Logout
-    required_login: Please login
   date:
     abbr_day_names:
     - Sun
@@ -225,51 +218,3 @@ en:
       long: "%B %d, %Y %H:%M"
       short: "%d %b %H:%M"
     pm: pm
-  user:
-    contents:
-      messages:
-        create: Content was successfully created.
-        destroy: Content was successfully destroyed.
-      title: Contents Index
-    info: User Info
-    others_summaries:
-      title: Other Summary Index
-    profile:
-      tables:
-        email: E-mail
-        first_name: First Name
-        last_name: Last Name
-        name: Full Name
-        password: password
-        profile_img_url: Profile Image
-        rows:
-          contents: Contents
-          items: Item
-      title: Profile
-    summaries:
-      forms:
-        back: Back
-        cancel: Cancel
-        create: Summary Create
-        title: Title
-        url: "%{kind} URL"
-      messages:
-        create: Summary was successfully created.
-        destroy: Summary was successfully destroyed.
-        update: Summary was successfully updated.
-      tables:
-        create: Summary Create
-        create_title: まとめ作成
-        row_1_title: タイトル
-        row_2_count: 個数
-        rows:
-          count: Counts
-          title: Title
-      title: Summaries Index
-  views:
-    pagination:
-      first: "&laquo;"
-      last: "&raquo;"
-      next: "&rsaquo;"
-      previous: "&lsaquo;"
-      truncate: "..."

@@ -1,0 +1,23 @@
+---
+en:
+  user:
+    summaries:
+      forms:
+        back: Back
+        cancel: Cancel
+        create: Summary Create
+        title: Title
+        url: "%{kind} URL"
+      messages:
+        create: Summary was successfully created.
+        destroy: Summary was successfully destroyed.
+        update: Summary was successfully updated.
+      tables:
+        create: Summary Create
+        create_title: まとめ作成
+        row_1_title: タイトル
+        row_2_count: 個数
+        rows:
+          count: Counts
+          title: Title
+      title: Summaries Index

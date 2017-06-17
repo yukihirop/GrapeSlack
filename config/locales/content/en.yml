@@ -1,0 +1,8 @@
+---
+en:
+  user:
+    contents:
+      messages:
+        create: Content was successfully created.
+        destroy: Content was successfully destroyed.
+      title: Contents Index

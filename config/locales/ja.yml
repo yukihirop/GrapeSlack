@@ -7,13 +7,6 @@ ja:
         restrict_dependent_destroy:
           has_many: "%{record}が存在しているので削除できません"
           has_one: "%{record}が存在しているので削除できません"
-  commons:
-    add: 追加
-    are_you_sure: 本当に削除しますか？
-    delete: 削除
-    login: "%{kind}で新規登録/ログイン"
-    logout: ログアウト
-    required_login: ログインしてください
   date:
     abbr_day_names:
     - 日
@@ -217,51 +210,3 @@ ja:
       long: "%Y年%m月%d日(%a) %H時%M分%S秒 %z"
       short: "%y/%m/%d %H:%M"
     pm: 午後
-  user:
-    contents:
-      messages:
-        create: 投稿を作成しました。
-        destroy: 投稿を削除しました。
-      title: 投稿一覧
-    info: ユーザー情報
-    others_summaries:
-      title: 他の人のまとめ一覧
-    profile:
-      tables:
-        email: メールアドレス
-        first_name: 名
-        last_name: 姓
-        name: 名前
-        password: パスワード
-        profile_img_url: プロフィール画像
-        rows:
-          contents: 内容
-          items: 項目
-      title: プロフィール
-    summaries:
-      forms:
-        back: 戻る
-        cancel: キャンセル
-        create: まとめ作成
-        title: タイトル
-        url: "%{kind} URL"
-      messages:
-        create: まとめを作成しました。
-        destroy: まとめを削除しました。
-        update: まとめを更新しました。
-      tables:
-        create: Summary Create
-        create_title: まとめ作成
-        row_1_title: タイトル
-        row_2_count: 個数
-        rows:
-          count: Counts
-          title: Title
-      title: まとめ一覧
-  views:
-    pagination:
-      first: "&laquo;"
-      last: "&raquo;"
-      next: "&rsaquo;"
-      previous: "&lsaquo;"
-      truncate: "..."

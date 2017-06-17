@@ -1,14 +1,14 @@
 internal_locale: en
-base_locale: en
+base_locale: ja
 locales:
 - en
 - ja
 data:
   adapter: I18n::Tasks::Data::FileSystem
   read:
-  - config/locales/%{locale}.yml
+  - config/locales/*/%{locale}.yml
   write:
-  - config/locales/%{locale}.yml
+  - config/locales/*/%{locale}.yml
 search:
   paths:
   - app/

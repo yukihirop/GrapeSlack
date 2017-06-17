@@ -1,0 +1,32 @@
+---
+en:
+  commons:
+    add: Add
+    are_you_sure: Are you sure?
+    delete: Delete
+    login: "%{kind} SignUp/Login"
+    logout: Logout
+    required_login: Please login
+  user:
+    info: User Info
+    others_summaries:
+      title: Other Summary Index
+    profile:
+      tables:
+        email: E-mail
+        first_name: First Name
+        last_name: Last Name
+        name: Full Name
+        password: password
+        profile_img_url: Profile Image
+        rows:
+          contents: Contents
+          items: Item
+      title: Profile
+  views:
+    pagination:
+      first: "&laquo;"
+      last: "&raquo;"
+      next: "&rsaquo;"
+      previous: "&lsaquo;"
+      truncate: "..."

@@ -1,0 +1,32 @@
+---
+ja:
+  commons:
+    add: 追加
+    are_you_sure: 本当に削除しますか？
+    delete: 削除
+    login: "%{kind}で新規登録/ログイン"
+    logout: ログアウト
+    required_login: ログインしてください
+  user:
+    info: User Info
+    others_summaries:
+      title: 他の人のまとめ一覧
+    profile:
+      tables:
+        email: メールアドレス
+        first_name: 名
+        last_name: 姓
+        name: 名前
+        password: パスワード
+        profile_img_url: プロフィール画像
+        rows:
+          contents: 内容
+          items: 項目
+      title: プロフィール
+  views:
+    pagination:
+      first: "&laquo;"
+      last: "&raquo;"
+      next: "&rsaquo;"
+      previous: "&lsaquo;"
+      truncate: "..."
