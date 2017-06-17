@@ -22,8 +22,7 @@ class Content < ApplicationRecord
   end
 
   def member
-    #正常に取得できない場合は、false
+    # 正常に取得できない場合は、false
     @member = member_from_redis
   end
-
 end
