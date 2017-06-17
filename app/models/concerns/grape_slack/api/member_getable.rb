@@ -29,30 +29,30 @@ module GrapeSlack
 
       private
       def execute_member_from_redis
-        @member_from_redis ||= {}
+        @member_from_redis = {}
         MEMBER_ATTRIBUTES.each do |attribute|
           begin
-            member_from_redis_with_timeout(@member_from_redis,attribute)
+            member_from_redis_with_timeout(attribute)
           rescue Timeout::Error
-            member_from_redis_with_rescue(@member_from_redis,attribute)
+            member_from_redis_with_rescue(attribute)
             break
           end
         end
         @member_from_redis
       end
 
-      def member_from_redis_with_timeout(member_from_redis, attribute)
+      def member_from_redis_with_timeout(attribute)
         Timeout.timeout(Settings.redis[:hgetall][:timeout]) do
-          while member_from_redis[attribute].blank?
-            member_from_redis[attribute] = Redis.current.hgetall("slack_member:#{attribute}")
+          while @member_from_redis[attribute].blank?
+            @member_from_redis[attribute] = Redis.current.hgetall("slack_member:#{attribute}")
           end
         end
       end
 
-      def member_from_redis_with_rescue(member_from_redis, attribute)
+      def member_from_redis_with_rescue(attribute)
         if is_a?(Content)
           errors[:base] << "Slackメンバー取得のタイムアウトエラー"
-          member_from_redis[attribute] = nil
+          @member_from_redis[attribute] = nil
         else
           #TODO: loggerで次回プルリクの際警告を出す。
         end

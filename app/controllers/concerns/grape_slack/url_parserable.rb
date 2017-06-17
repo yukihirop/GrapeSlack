@@ -11,18 +11,13 @@ module GrapeSlack
     using GrapeSlack::URLParserable
     def remake_contents_params(given_urls)
       @remake_contents_params = []
-      arr_slack_urls = given_urls.url_split
-      add_content_params(arr_slack_urls)
+      add_content_params(given_urls.url_split)
       @remake_contents_params
     end
 
     private
     def add_content_params(arr_slack_urls=[])
-      arr_slack_urls.each do |slack_url|
-        copy_content_params = {}
-        copy_content_params[:slack_url] = slack_url
-        @remake_contents_params << copy_content_params
-      end
+      @remake_contents_params = arr_slack_urls.map{|slack_url| {:slack_url => slack_url} }
       # @remake_contents_paramsには空のcontentインスタンスが入ってないと
       # validateがかからない。
       @remake_contents_params << {:slack_url => ""} if arr_slack_urls.blank?

@@ -5,6 +5,7 @@ module GrapeSlack
 
       refine String do
         def to_unixtime
+          #p123456789 => 123.456789
           delete('p').insert(-7,'.')
         end
       end
@@ -34,7 +35,6 @@ module GrapeSlack
       def thread_ts
         @slack_url.split('/')[5].to_unixtime
       end
-
     end
   end
 end
