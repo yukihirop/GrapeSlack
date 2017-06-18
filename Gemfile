@@ -49,8 +49,6 @@ gem 'redis-namespace'
 gem 'foreman'
 gem 'config'
 
-
-
 # bootstrap
 gem 'less-rails', git: 'https://github.com/MustafaZain/less-rails'
 gem 'therubyracer'
@@ -102,6 +100,9 @@ group :test do
   gem 'factory_girl_rails'
   gem 'database_rewinder'
   gem 'shoulda-matchers'
+  # HTTP requests用のモックアップを作ってくれる
+  gem 'webmock'
+  gem 'vcr'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
