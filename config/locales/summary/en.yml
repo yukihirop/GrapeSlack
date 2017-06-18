@@ -2,6 +2,9 @@
 en:
   user:
     summaries:
+      errors:
+        channel_invalid_slack_urls: 入力されたSlackURLに#%{kind}チャンネルのものが含まれていません.
+        invalid_slack_urls: 入力さたSlackURLの形式がhttps://aiming.slack.com/archivesではありません.
       forms:
         back: Back
         cancel: Cancel
@@ -14,7 +17,6 @@ en:
         update: Summary was successfully updated.
       tables:
         create: Summary Create
-        create_title: まとめ作成
         row_1_title: タイトル
         row_2_count: 個数
         rows:

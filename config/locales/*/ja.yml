@@ -1,9 +1,0 @@
----
-ja:
-  devise:
-    omniauth_callbacks:
-      failure: Failure
-      success: Success
-    sessions:
-      signed_in: Signed in
-      signed_out: Signed out

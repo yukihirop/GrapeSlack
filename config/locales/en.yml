@@ -106,13 +106,6 @@ en:
       month: Month
       second: Seconds
       year: Year
-  devise:
-    omniauth_callbacks:
-      failure: Failure
-      success: Success
-    sessions:
-      signed_in: Signed in
-      signed_out: Signed out
   errors:
     format: "%{attribute}%{message}"
     messages:
