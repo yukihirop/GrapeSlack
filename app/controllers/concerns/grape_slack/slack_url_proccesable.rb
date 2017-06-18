@@ -15,9 +15,9 @@ module GrapeSlack
       #slackチャンネルの取得タイムアウトエラー
       if flash[:danger_channel_timeout]
       elsif @remake_contents_params.first[:slack_url].empty?
-        flash[:danger_invalid_url] = '入力さたSlackURLの形式がhttps://aiming.slack.com/archivesではありません.'
+        flash[:danger_invalid_url] = I18n.t('user.summaries.errors.invalid_slack_urls')
       elsif @permit_contents_params.first[:slack_url].empty?
-        flash[:danger_invalid_url] = '入力されたSlackURLに#randomチャンネルのものが含まれていません.'
+        flash[:danger_invalid_url] = I18n.t('user.summaries.errors.channel_invalid_slack_urls')
       end
       @permit_contents_params
     end
