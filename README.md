@@ -1,24 +1,48 @@
-# README
+# GrapeSlack
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Slackの投稿をまとめるためのアプリケーションです。
 
-Things you may want to cover:
+## 動作環境
 
-* Ruby version
+* ruby 2.4.1p111 (2017-03-22 revision 58053) [x86_64-darwin14]
 
-* System dependencies
+* Rails 5.1.0
 
-* Configuration
+* mysql  Ver 14.14 Distrib 5.7.12, for osx10.10 (x86_64) using  EditLine wrapper
 
-* Database creation
+* Redis server v=3.2.9
 
-* Database initialization
+## 事前準備
 
-* How to run the test suite
+以下の環境変数を用意する。
 
-* Services (job queues, cache servers, search engines, etc.)
+```bash
+export SLACK_API_KEY=
+export SLACK_API_SECRET=
+export SLACK_API_TOKEN=
 
-* Deployment instructions
+# 以下はデプロイ時に必要
+export DEVISE_KEY_BASE=
+export SECRET_KEY_BASE=
+export GRAPESLACK_DATABASE_PASSWORD=
+export GRAPESLACK_DATABASE_HOST=
+export GRAPESLACK_REDIS_PASSWORD=
+export GRAPESLACK_REDIS_HOST=
+```
 
-* ...
+[direnvを使うとプロジェクト毎に環境変数を設定出来る](http://qiita.com/kompiro/items/5fc46089247a56243a62)
+
+## 動作確認
+
+### redisを起動させる
+[foreman](https://github.com/ddollar/foreman)を使っている。
+
+```
+bunlde exec foreman start
+```
+
+### rails側(セットアップ・サーバー起動)
+```
+bundle exec rake db:setup
+rails s
+```
