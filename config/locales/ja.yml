@@ -1,5 +1,12 @@
 ---
 ja:
+  views:
+    pagination:
+      first: "&laquo;"
+      last: "&raquo;"
+      previous: "&lsaquo;"
+      next: "&rsaquo;"
+      truncate: "..."
   commons:
     login: "%{kind}で新規登録/ログイン"
     logout: "ログアウト"
@@ -8,6 +15,8 @@ ja:
     are_you_sure: '本当に削除しますか？'
     required_login: 'ログインしてください'
   user:
+    others_summaries:
+      title: "他の人のまとめ一覧"
     info: "ユーザー情報"
     profile:
       title: "プロフィール"

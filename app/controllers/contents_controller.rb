@@ -2,11 +2,12 @@ class ContentsController < ApplicationController
   before_action :set_summary, only: [:new, :create]
   before_action :build_content, only: :create
   before_action :set_content, only: :destroy
+  before_action :you_look_user, only: :index
 
   include GrapeSlack::SlackUrlProccesable
 
   def index
-    @contents = Content.all
+    @contents = you_look_user.contents.page(params[:page])
   end
 
   def new

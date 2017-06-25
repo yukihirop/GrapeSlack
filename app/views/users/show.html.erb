@@ -1,0 +1,25 @@
+<h3><strong>人気のまとめ一覧</strong></h3>
+<br>
+<% @users.shuffle.each do |user| %>
+    <% if user.nickname != current_user.nickname %>
+        <ul class="list-unstyled">
+          <li class="media">
+            <div class="media-left">
+              <%= image_tag(user.profile_img_url, {
+                  :class => 'd-flex align-self-start mr-3',
+                  :size => '48x48',
+                  :alt   => 'Generic placeholder image'}) %>
+            </div>
+            <div class="media-body">
+              <h5 class="media-title mt-0 mb-1"><strong><%= link_to user.name, summaries_path(user.nickname) %></strong></h5>
+              <p style="word-wrap:break-word;"><%= render :partial => 'others_summaries', locals:{user:user} %></p>
+            </div>
+            <div class="media-right">
+              <%# 何か書く %>
+            </div>
+          </li>
+          <hr>
+        </ul>
+    <% end %>
+<% end %>
+<%= paginate @users %>

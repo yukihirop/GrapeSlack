@@ -15,17 +15,17 @@ Rails.application.routes.draw do
         resources :contents, only: [:new,:create]
       end
 
+      #deleteだけ別にして名前をつけるようにした。
       delete '/summaries/:id', to: 'summaries#destroy', as: :delete_summary
       delete '/summaries/:summary_id/contents/:id', to: 'contents#destroy', as: :delete_summary_content
 
       get '', to: 'users#show',           as: :user_info
+      get '/others_summaries', to: 'users#show',   as: :user_others_summaries
       get '/profile', to: 'users#profile',as: :user_profile
 
       get '/contents', to: 'contents#index'
       delete '/contents/:id', to: 'contents#destroy', as: :delete_content
     end
   end
-
-  get '*anything' => 'application#routing_error'
 
 end

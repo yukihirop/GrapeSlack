@@ -6,27 +6,31 @@
         <div class="media-left">
           <%= image_tag(content.profile_image_48_url, {
               :class => 'd-flex align-self-start mr-3',
+              :size  => '48x48',
               :alt   => 'Generic placeholder image'}) %>
         </div>
         <div class="media-body">
           <h5 class="media-title mt-0 mb-1"><strong><%= content.name %></strong></h5>
           <p style="word-wrap:break-word;"><%= content.slack_message %></p>
         </div>
-        <div class="media-right">
-          <%= link_to t('commons.delete'), delete_summary_content_path(current_user.nickname,@summary.id,content.id), {
-             :class => 'btn btn-danger btn-sm',
-             :style => 'color:white;',
-             :method => :delete,
-             :data => { confirm: t('commons.are_you_sure') }
-          } %>
-        </div>
+        <% if you_look_user.nickname == current_user.nickname %>
+            <div class="media-right">
+              <%= link_to t('commons.delete'), delete_summary_content_path(current_user.nickname,@summary.id,content.id), {
+                  :class => 'btn btn-danger btn-sm',
+                  :style => 'color:white;',
+                  :method => :delete,
+                  :data => { confirm: t('commons.are_you_sure') }
+              } %>
+            </div>
+        <% end %>
       </li>
       <hr>
     </ul>
 <% end %>
+<%= paginate @contents %>
 
 <div class="actions">
-  <%= link_to t('user.summaries.forms.back'), summaries_path(current_user.nickname), {
+  <%= link_to t('user.summaries.forms.back'), summaries_path(you_look_user.nickname), {
       :class => 'btn btn-sm btn-primary',
       :style => 'color:white;'
        } %>

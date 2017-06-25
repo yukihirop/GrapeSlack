@@ -1,5 +1,12 @@
 ---
 en:
+  views:
+    pagination:
+      first: "&laquo;"
+      last: "&raquo;"
+      previous: "&lsaquo;"
+      next: "&rsaquo;"
+      truncate: "..."
   commons:
     login: "%{kind} SignUp/Login"
     logout: "Logout"
@@ -8,6 +15,8 @@ en:
     are_you_sure: 'Are you sure?'
     required_login: 'Please login'
   user:
+    others_summaries:
+      title: "Other Summary Index"
     info: "User Info"
     profile:
       title: "Profile"
