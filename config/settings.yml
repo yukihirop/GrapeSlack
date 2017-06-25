@@ -1,2 +1,5 @@
 slack:
   permit_channel: 'random'
+redis:
+  hgetall:
+    timeout: 3

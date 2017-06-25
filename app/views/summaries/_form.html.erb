@@ -1,16 +1,24 @@
-<%= form_for(summary) do |f| %>
+<%= form_for summary, :url => url_for(:controller => 'summaries',
+                                      :action => 'create',
+                                      :nickname => current_user.nickname) do |f| %>
 
-  <% if summary.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(summary.errors.count, "error") %> prohibited this summary from being saved:</h2>
+    <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key.to_s.split('_').first %>">
+          <%= value %>
+        </div>
+    <% end %>
 
-      <ul>
-      <% summary.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+    <% if summary.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(summary.errors.count, "error") %> prohibited this summary from being saved:</h2>
+
+          <ul>
+            <% summary.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
 
     <div class="form-group">
       <%= f.label t('user.summaries.forms.title') %>
@@ -19,14 +27,14 @@
 
     <div class="form-group">
       <%= f.fields_for :contents do |f_contents| %>
-          <%= f_contents.label t('user.summaries.forms.url', kind:'Slack') %>
+          <%= f_contents.label t('user.summaries.forms.url', kind: 'Slack') %>
           <%= f_contents.text_area :slack_url, {:class => 'form-control', :rows => 10} %>
       <% end %>
     </div>
 
     <div class="actions">
       <%= f.submit :class => 'btn btn-primary btn-sm' %>
-      <%= link_to t('user.summaries.forms.cancel'), summaries_path %>
+      <%= link_to t('user.summaries.forms.cancel'), summaries_path(current_user.nickname) %>
     </div>
 
 <% end %>

@@ -1,29 +1,25 @@
 require 'slack'
-require 'member'
-
 module GrapeSlack
   module Api
+    module ReplyGetable
 
-    refine String do
-      def to_unixtime
-        delete('p').insert(-7,'.')
+      refine String do
+        def to_unixtime
+          #p123456789 => 123.456789
+          delete('p').insert(-7,'.')
+        end
       end
-    end
 
-    class Reply
-
-      attr_reader :reply
-
-      def initialize (slack_url, member)
+      def reply(slack_url, member)
         @slack_url = slack_url
         @member = member
-      end
-
-      def reply
         user_id2name Slack.client.channels_replies(channel: channel, thread_ts: thread_ts)
       end
 
-      def user_id2name reply
+
+      private
+      def user_id2name(reply)
+        #TODO: 認証ができなかった時の処理をかく
         reply_message = Marshal.load(Marshal.dump(reply['messages'].first))
         reply_message.merge!({
                                  'id'   => reply_message['user'],
@@ -35,11 +31,10 @@ module GrapeSlack
         @slack_url.split('/')[4]
       end
 
-      using GrapeSlack::Api
+      using GrapeSlack::Api::ReplyGetable
       def thread_ts
         @slack_url.split('/')[5].to_unixtime
       end
-
     end
   end
 end
