@@ -1,0 +1,23 @@
+---
+ja:
+  user:
+    summaries:
+      forms:
+        back: 戻る
+        cancel: キャンセル
+        create: まとめ作成
+        title: タイトル
+        url: "%{kind} URL"
+      messages:
+        create: まとめを作成しました。
+        destroy: まとめを削除しました。
+        update: まとめを更新しました。
+      tables:
+        create: Summary Create
+        create_title: まとめ作成
+        row_1_title: タイトル
+        row_2_count: 個数
+        rows:
+          count: Counts
+          title: Title
+      title: まとめ一覧

@@ -1,0 +1,8 @@
+---
+ja:
+  user:
+    contents:
+      messages:
+        create: 投稿を作成しました。
+        destroy: 投稿を削除しました。
+      title: 投稿一覧
