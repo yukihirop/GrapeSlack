@@ -66,7 +66,8 @@ describe 'Summariesページ', type: :feature, vcr: { cassette_name: 'create_sum
 
 end
 
-describe 'Summariesページ', type: :feature, vcr: { cassette_name: 'add_content' } do
+# [参考] http://kazuooooo.hatenablog.com/entry/2015/12/05/225708
+describe 'Summariesページ', type: :feature, vcr: { cassette_name: 'add_content', record: :new_episodes } do
   include_context 'add_summary_content'
 
   subject { page }
