@@ -7,6 +7,10 @@ ja:
     login: "%{kind}で新規登録/ログイン"
     logout: ログアウト
     required_login: ログインしてください
+  errors:
+    timeout:
+      slack_channel: Slackメンバー取得タイムアウトエラー
+      slack_member: Slackチャンネル取得タイムアウトエラー
   user:
     info: User Info
     others_summaries:

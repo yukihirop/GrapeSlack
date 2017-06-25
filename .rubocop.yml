@@ -181,6 +181,11 @@ Layout/IndentHash:
     - 'config/routes.rb'
     - 'spec/support/omniauth_helper.rb'
 
+Layout/IndentHeredoc:
+  Exclude:
+    - 'spec/support/create_summary.rb'
+    - 'spec/support/add_content.rb'
+
 # Offense count: 30
 # Cop supports --auto-correct.
 Layout/LeadingCommentSpace:
@@ -326,6 +331,9 @@ Metrics/AbcSize:
 # Configuration parameters: CountComments, ExcludedMethods.
 Metrics/BlockLength:
   Max: 44
+  Exclude:
+  - 'spec/rails_helper.rb'
+  - 'spec/features/summaries/summary_page_spec.rb'
 
 # Offense count: 101
 # Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
@@ -337,6 +345,8 @@ Metrics/LineLength:
 # Configuration parameters: CountComments.
 Metrics/MethodLength:
   Max: 18
+  Exclude:
+    - 'spec/support/omniauth_helper.rb'
 
 # Offense count: 54
 Style/AsciiComments:
@@ -367,6 +377,8 @@ Style/BracesAroundHashParameters:
   Exclude:
     - 'app/models/concerns/grape_slack/api/reply_getable.rb'
     - 'spec/support/omniauth_helper.rb'
+    - 'spec/features/contents/*.rb'
+    - 'spec/features/summaries/*.rb'
 
 # Offense count: 2
 # Configuration parameters: EnforcedStyle, SupportedStyles.
@@ -421,6 +433,11 @@ Style/EmptyMethod:
 # SupportedStyles: when_needed, always, never
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+Style/FormatStringToken:
+  Exclude:
+  - 'spec/features/contents/*.rb'
+  - 'spec/features/summaries/*.rb'
 
 # Offense count: 16
 # Cop supports --auto-correct.

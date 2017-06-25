@@ -7,6 +7,7 @@ development:
 
 test:
   <<: *default
+  port: 9736
 
 production:
   <<: *default

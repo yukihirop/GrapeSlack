@@ -6,9 +6,15 @@ locales:
 data:
   adapter: I18n::Tasks::Data::FileSystem
   read:
-  - config/locales/*/%{locale}.yml
+  - config/locales/%{locale}.yml
+  - config/locales/content/%{locale}.yml
+  - config/locales/other/%{locale}.yml
+  - config/locales/summary/%{locale}.yml
   write:
-  - config/locales/*/%{locale}.yml
+  - config/locales/%{locale}.yml
+  - config/locales/content/%{locale}.yml
+  - config/locales/other/%{locale}.yml
+  - config/locales/summary/%{locale}.yml
 search:
   paths:
   - app/

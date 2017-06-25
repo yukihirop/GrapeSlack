@@ -7,6 +7,10 @@ en:
     login: "%{kind} SignUp/Login"
     logout: Logout
     required_login: Please login
+  errors:
+    timeout:
+      slack_channel: Slackメンバー取得タイムアウトエラー
+      slack_member: Slackチャンネル取得タイムアウトエラー
   user:
     info: User Info
     others_summaries:

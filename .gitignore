@@ -21,6 +21,8 @@
 vendor/
 .idea/
 /dump.rdb
+reports/
+spec/fixtures/vcr/
 
 config/settings.local.yml
 config/settings/*.local.yml

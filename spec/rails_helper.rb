@@ -110,6 +110,38 @@ RSpec.configure do |config|
     end
   end
 
+  # ResqueとRedisをRspecで使う設定
+  REDIS_PID = "#{Rails.root}/tmp/pids/redis-test.pid".freeze
+  REDIS_CACHE_PATH = "#{Rails.root}/tmp/cache/".freeze
+
+  config.before(:suite) do
+    redis_options = {
+      'daemonize'     => 'yes',
+      'pidfile'       => REDIS_PID,
+      'port'          => 9_736,
+      'timeout'       => 300,
+      'dbfilename'    => 'dump.rdb',
+      'dir'           => REDIS_CACHE_PATH
+    }.map { |k, v| "#{k} \"#{v}\"" }.join("\n")
+    `echo '#{redis_options}' | redis-server -`
+
+    redis_config = YAML.load_file(Rails.root + 'config/redis.yml')[Rails.env]
+    namespace = [Rails.application.class.parent_name, Rails.env].join ':'
+    Resque.redis = Redis.new(redis_config)
+    Resque.after_fork = proc { ActiveRecord::Base.establish_connection }
+    Redis.current = Redis::Namespace.new(namespace, redis: Redis.new(redis_config))
+  end
+
+  config.after(:suite) do
+    `
+      cat "#{REDIS_PID}" | xargs kill -QUIT
+      rm -f "#{REDIS_CACHE_PATH}dump.rdb"
+    `
+  end
+
+  # 各 example で読み込まれ、 activejob.queue_adapter を ActiveJob::QueueAdapter::TestAdapter にセットする
+  # perform_enqueued_jobs などのテストヘルパーが使えるようになる
+  config.include ActiveJob::TestHelper
 end
 
 

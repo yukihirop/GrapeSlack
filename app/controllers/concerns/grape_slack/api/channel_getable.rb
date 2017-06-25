@@ -37,7 +37,7 @@ module GrapeSlack
       def list_from_redis_with_rescue
         if kind_of?(ApplicationController)
           @list_from_redis = nil
-          flash[:danger_channel_timeout] = 'Slackチャンネル取得タイムアウトエラー'
+          flash[:danger_channel_timeout] = I18n.t('errors.timeout.slack_channel')
         else
           #TODO: loggerで次回プルリクの際警告を出す。
         end
