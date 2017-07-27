@@ -1,0 +1,22 @@
+language: ruby
+
+rvm:
+ - 2.4.1
+
+services:
+ - mysql
+ - redis-server
+
+gemfile:
+ - Gemfile
+
+bundler_args: "--without development --deployment"
+cache: bundler
+
+before_script:
+ - PIDFILE=./resque.pid BACKGROUND=yes QUEUE="*" rake resque:work >>  worker1.log &
+
+script:
+ - RAILS_ENV=test bundle exec rake --trace db:create db:migrate
+ - bundle exec rake db:test:prepare
+ - bundle exec rspec spec
