@@ -7,6 +7,7 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
 require 'shoulda/matchers'
+require 'mock_redis'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -111,32 +112,39 @@ RSpec.configure do |config|
   end
 
   # ResqueとRedisをRspecで使う設定
-  REDIS_PID = "#{Rails.root}/tmp/pids/redis-test.pid".freeze
-  REDIS_CACHE_PATH = "#{Rails.root}/tmp/cache/".freeze
+  # REDIS_PID = "#{Rails.root}/tmp/pids/redis-test.pid".freeze
+  # REDIS_CACHE_PATH = "#{Rails.root}/tmp/cache/".freeze
+  #
+  # config.before(:suite) do
+  #   redis_options = {
+  #     'daemonize'     => 'yes',
+  #     'pidfile'       => REDIS_PID,
+  #     'port'          => 9_736,
+  #     'timeout'       => 300,
+  #     'dbfilename'    => 'dump.rdb',
+  #     'dir'           => REDIS_CACHE_PATH
+  #   }.map { |k, v| "#{k} \"#{v}\"" }.join("\n")
+  #   `echo '#{redis_options}' | redis-server -`
+  #
+  #   redis_config = YAML.load_file(Rails.root + 'config/redis.yml')[Rails.env]
+  #   namespace = [Rails.application.class.parent_name, Rails.env].join ':'
+  #   Resque.redis = Redis.new(redis_config)
+  #   Resque.after_fork = proc { ActiveRecord::Base.establish_connection }
+  #   Redis.current = Redis::Namespace.new(namespace, redis: Redis.new(redis_config))
+  # end
+  #
+  # config.after(:suite) do
+  #   `
+  #     cat "#{REDIS_PID}" | xargs kill -QUIT
+  #     rm -f "#{REDIS_CACHE_PATH}dump.rdb"
+  #   `
+  # end
 
-  config.before(:suite) do
-    redis_options = {
-      'daemonize'     => 'yes',
-      'pidfile'       => REDIS_PID,
-      'port'          => 9_736,
-      'timeout'       => 300,
-      'dbfilename'    => 'dump.rdb',
-      'dir'           => REDIS_CACHE_PATH
-    }.map { |k, v| "#{k} \"#{v}\"" }.join("\n")
-    `echo '#{redis_options}' | redis-server -`
-
-    redis_config = YAML.load_file(Rails.root + 'config/redis.yml')[Rails.env]
-    namespace = [Rails.application.class.parent_name, Rails.env].join ':'
-    Resque.redis = Redis.new(redis_config)
-    Resque.after_fork = proc { ActiveRecord::Base.establish_connection }
-    Redis.current = Redis::Namespace.new(namespace, redis: Redis.new(redis_config))
-  end
-
-  config.after(:suite) do
-    `
-      cat "#{REDIS_PID}" | xargs kill -QUIT
-      rm -f "#{REDIS_CACHE_PATH}dump.rdb"
-    `
+  # redisをmockする
+  config.before(:each) do
+    redis_instance = MockRedis.new
+    Redis.stub(:new).and_return(redis_instance)
+    Redis.current = Redis.new
   end
 
   # 各 example で読み込まれ、 activejob.queue_adapter を ActiveJob::QueueAdapter::TestAdapter にセットする

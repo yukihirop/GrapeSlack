@@ -103,6 +103,7 @@ group :test do
   # HTTP requests用のモックアップを作ってくれる
   gem 'webmock'
   gem 'vcr'
+  gem 'mock_redis'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

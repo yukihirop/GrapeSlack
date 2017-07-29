@@ -5,16 +5,15 @@ rvm:
 
 services:
  - mysql
- - redis-server
 
 gemfile:
  - Gemfile
 
+before_script:
+ - /bin/bash ./travis.sh
+
 bundler_args: "--without development --deployment"
 cache: bundler
-
-before_script:
- - PIDFILE=./resque.pid BACKGROUND=yes QUEUE="*" rake resque:work >>  worker1.log &
 
 script:
  - RAILS_ENV=test bundle exec rake --trace db:create db:migrate
