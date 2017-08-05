@@ -11,4 +11,3 @@ test:
 production:
   <<: *default
   host: <%= GRAPESLACK_REDIS_HOST %>
-  password: <%= GRAPESLACK_REDIS_PASSWORD %>
