@@ -50,5 +50,6 @@ test:
 production:
   <<: *default
   database: GrapeSlack_production
-  username: GrapeSlack
+  username: root
   password: <%= ENV['GRAPESLACK_DATABASE_PASSWORD'] %>
+  host: <%= ENV['GRAPESLACK_DATABASE_HOST'] %>
