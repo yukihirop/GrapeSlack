@@ -100,9 +100,6 @@ GEM
       capistrano
       resque
       resque-scheduler
-    capistrano3-foreman (0.2.5)
-      capistrano (~> 3.0)
-      sshkit (>= 1.2.0)
     capybara (2.13.0)
       addressable
       mime-types (>= 1.16)
@@ -467,7 +464,6 @@ DEPENDENCIES
   capistrano-rails-db
   capistrano-rbenv
   capistrano-resque (= 0.2.1)
-  capistrano3-foreman
   capybara (~> 2.13.0)
   capybara-webkit (~> 1.14.0)
   coffee-rails (~> 4.2)

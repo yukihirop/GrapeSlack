@@ -65,7 +65,6 @@ gem 'capistrano-bundler'
 gem 'capistrano-rbenv'
 gem 'capistrano-resque', '0.2.1', require: false # cf) https://github.com/sshingler/capistrano-resque/issues/101
 gem 'capistrano-rails-db'
-gem 'capistrano3-foreman'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

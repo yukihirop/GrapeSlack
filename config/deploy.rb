@@ -30,7 +30,7 @@ set :deploy_to, '/var/www/GrapeSlack'
 
 # logを詳細表示
 set :format, :pretty
-set :log_level, :info
+set :log_level, :debug
 # ssh -tで実行
 set :pty, true
 
@@ -47,6 +47,7 @@ set :keep_releases, 5
 set :rbenv_type, :user
 set :rbenv_ruby, File.read('.ruby-version').strip
 # rbenv_path use $HOME/.rbenv by default
+# http://nograve.hatenadiary.jp/entry/2015/10/19/155508
 set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
 set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 set :rbenv_roles, :all # default value
