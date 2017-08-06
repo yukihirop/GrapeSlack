@@ -10,4 +10,4 @@ test:
 
 production:
   <<: *default
-  host: <%= GRAPESLACK_REDIS_HOST %>
+  host: <%= ENV['GRAPESLACK_REDIS_HOST'] %>

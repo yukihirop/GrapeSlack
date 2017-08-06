@@ -55,13 +55,13 @@ set :rbenv_roles, :all # default value
 set :bundle_jobs, 4
 
 # Gemfileの場所
-# set :bundle_gemfile,  "Gemfile"
+set :bundle_gemfile,  "Gemfile"
 
 # unicornの設定
 # set :unicorn_pid, "#{shared_path}/tmp/pids/unicorn.pid"
 
 # rakeをbundle exec rakeにしてくれる設定
-# SSHKit.config.command_map[:rake] = 'bundle exec rake'
+SSHKit.config.command_map[:rake] = 'bundle exec rake'
 
 namespace :deploy do
 
@@ -74,7 +74,6 @@ namespace :deploy do
       end
       upload!('config/database.yml', "#{shared_path}/config/database.yml")
       upload!('config/secrets.yml', "#{shared_path}/config/secrets.yml")
-      upload!('./.envrc', "#{shared_path}/.envrc")
     end
   end
 
@@ -86,6 +85,7 @@ namespace :deploy do
     end
   end
 
+  # redis-serverをデーモン起動
   desc 'redis-server start demonize'
   task :redis_server do
     on roles(:app) do |host|
@@ -109,7 +109,7 @@ end
 #   end
 # end
 
-before 'deploy:check', 'deploy:bundle'
+#before 'deploy:check', 'deploy:bundle'
 
 # db:migrateの前にdb:createが走るようになる
 before 'deploy:migrate', 'deploy:db:create'
@@ -120,3 +120,4 @@ before 'deploy:starting', 'deploy:upload'
 after 'deploy:publishing', 'deploy:restart'
 
 after 'deploy:finished', 'deploy:redis_server'
+after 'deploy:redis_server', 'resque:restart'
