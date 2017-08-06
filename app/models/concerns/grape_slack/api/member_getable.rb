@@ -57,7 +57,6 @@ module GrapeSlack
           #TODO: loggerで次回プルリクの際警告を出す。
         end
       end
-
     end
   end
 end

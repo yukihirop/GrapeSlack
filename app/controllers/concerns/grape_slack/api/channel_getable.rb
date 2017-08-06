@@ -7,6 +7,7 @@ module GrapeSlack
       def channel_list
         @list = {}
         channels_list ||= Slack.client.channels_list
+        puts channels_list
         @list = channels_list['channels'].map{|channel| [channel['name'], channel['id']]}.to_h
       end
 
