@@ -35,7 +35,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 gem 'omniauth-slack'
-gem 'devise', git: 'https://github.com/gogovan/devise.git', branch: 'rails-5.1'
+gem 'devise'
 
 gem 'rails-i18n'
 
@@ -58,7 +58,8 @@ gem 'twitter-bootstrap-rails'
 gem 'kaminari'
 gem 'listen', '>= 3.0.5', '< 3.2'
 
-# deplayツール
+# NOTE: ?Dockerで動かすならCapistoranoいらないんじゃないかと思った
+# deployツール
 gem 'capistrano'
 gem 'capistrano-rails'
 gem 'capistrano-bundler'
