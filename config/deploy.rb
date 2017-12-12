@@ -10,7 +10,9 @@ set :default_env, {
   GRAPESLACK_DATABASE_PASSWORD: ENV['GRAPESLACK_DATABASE_PASSWORD'],
   GRAPESLACK_DATABASE_HOST: ENV['GRAPESLACK_DATABASE_HOST'],
   GRAPESLACK_REDIS_HOST: ENV['GRAPESLACK_REDIS_HOST'],
-  GRAPESLACK_HOST: ENV['GRAPESLACK_HOST']
+  GRAPESLACK_HOST: ENV['GRAPESLACK_HOST'],
+  RAILS_SERVE_STATIC_FILES: true,
+  RAILS_LOG_TO_STDOUT: true
 }
 
 set :application, 'GrapeSlack'
@@ -41,7 +43,7 @@ append :linked_files, 'config/database.yml', 'config/secrets.yml', '.envrc'
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system', 'vendor/bundle'
 
 # Default value for keep_releases is 5
-set :keep_releases, 5
+set :keep_releases, 2
 
 # rubyの設定
 set :rbenv_type, :user
@@ -54,12 +56,15 @@ set :rbenv_roles, :all # default value
 
 # bundlerのジョブ数
 set :bundle_jobs, 4
-
+set :bundle_path, -> { shared_path.join('vendor/bundle') }
 # Gemfileの場所
-set :bundle_gemfile,  "Gemfile"
+#set :bundle_gemfile, -> { release_path.join('Gemfile') }
 
 # unicornの設定
 # set :unicorn_pid, "#{shared_path}/tmp/pids/unicorn.pid"
+
+# resqueのログ
+set :resque_log_file, "#{current_path}/log/resque.log"
 
 # rakeをbundle exec rakeにしてくれる設定
 SSHKit.config.command_map[:rake] = 'bundle exec rake'

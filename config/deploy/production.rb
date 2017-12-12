@@ -17,11 +17,16 @@
 # property set. Specify the username and a domain or IP for the server.
 # Don't use `:all`, it's a meta role.
 
-role :app, %w{ grape-slack@35.194.238.205 }
-role :web, %w{ grape-slack@35.194.238.205 }
-role :db,  %w{ grape-slack@35.194.238.205 }
+set :host, ENV['GRAPESLACK_HOST']
+role :app, %W{ grape-slack@#{fetch(:host)} }
+role :web, %W{ grape-slack@#{fetch(:host)} }
+role :db,  %W{ grape-slack@#{fetch(:host)} }, primary: true
+# https://stackoverflow.com/questions/29471439/capistrano-resque-error-with-remote-redis-db
+# このroleを追加しないと、SocketError (getaddrinfo: Name or service not known)
+# redis://...のようなホストでtcpで接続しようとしてエラー
+role :resque_worker, %W{ grape-slack@#{fetch(:host)} }
 
-server '35.194.238.205', user: 'grape-slack', roles: %w{web app db}
+server fetch(:host), user: 'grape-slack', roles: %w{web app db resque_worker}
 
 # この設定がないと、デプロイ先でdb:migrateされない
 set :migration_role, 'db'

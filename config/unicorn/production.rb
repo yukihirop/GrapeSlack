@@ -25,6 +25,8 @@ preload_app true
 
 # fork前に行うことを定義。
 before_fork do | server, worker|
+  # http://qiita.com/zaru/items/ddbb0c029d6c5760dc54
+  ENV['BUNDLE_GEMFILE'] = $app_dir + "/Gemfile"
   defined?(ActiveRecord::Base) and ActiveRecord::Base.connection.disconnect!
   old_pid = "#{server.config[:pid]}.oldbin"
   if old_pid != server.pid
