@@ -32,7 +32,7 @@ set :deploy_to, '/var/www/GrapeSlack'
 
 # logを詳細表示
 set :format, :pretty
-set :log_level, :info
+set :log_level, :debug
 # ssh -tで実行
 set :pty, true
 

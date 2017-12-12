@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 20170531031640) do
 
-  create_table "contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.bigint "summary_id"
     t.string "name", null: false
     t.string "first_name"
@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 20170531031640) do
     t.index ["summary_id"], name: "index_contents_on_summary_id"
   end
 
-  create_table "summaries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "summaries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string "title", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 20170531031640) do
     t.index ["user_id"], name: "index_summaries_on_user_id"
   end
 
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string "first_name", null: false
     t.string "last_name", null: false
     t.string "profile_img_url", null: false
