@@ -1,0 +1,46 @@
+version: '2'
+
+volumes:
+  redis-data: {}
+  mysql: {}
+
+services:
+  grape-slack-db:
+    image: mysql
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: grapepass
+      MYSQL_DATABASE: grape_slack
+    ports:
+      - '3306'
+    volumes:
+      - mysql:/var/lib/mysql
+
+  grape-slack-redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes --requirepass foobared
+    volumes:
+       - redis-data:/data
+
+  grape-slack:
+    image: grape_slack
+    build: .
+    ports:
+      - '3000:3000'
+    depends_on:
+      - grape-slack-db
+    environment:
+      DATABASE_URL: mysql2://root:grapepass@grape-slack-db/grape_slack
+      SLACK_API_KEY: 'slack_api_key'
+      SLACK_API_SECRET: 'slack_secret_key'
+      SLACK_API_TOKEN: 'slack_api_token'
+      DEVISE_KEY_BASE: 'devise_token_base'
+      SECRET_KEY_BASE: 'secret_key_base'
+      GRAPESLACK_DATABASE_PASSWORD: 'grapeslack_db_password'
+      GRAPESLACK_DATABASE_HOST: 'grapeslac_database_host'
+      GRAPESLACK_REDIS_PASSWORD: 'grapeslack_redis_password'
+      GRAPESLACK_REDIS_HOST: 'grapeslack_redis_host'
+    volumes:
+      - .:/grape_slack
