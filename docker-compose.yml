@@ -33,6 +33,7 @@ services:
       - grape-slack-db
     environment:
       DATABASE_URL: mysql2://root:grapepass@grape-slack-db/grape_slack
+      REDIS_URL: 'redis://url'
       SLACK_API_KEY: 'slack_api_key'
       SLACK_API_SECRET: 'slack_secret_key'
       SLACK_API_TOKEN: 'slack_api_token'
