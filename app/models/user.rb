@@ -23,8 +23,8 @@ class User < ApplicationRecord
     user = User.find_by(:provider => auth.provider, :uid => auth.uid)
     unless user
       user = User.create(
-          first_name:     auth.info.first_name,
-           last_name:     auth.info.last_name,
+          first_name:     auth.info.first_name || 'unknown',
+           last_name:     auth.info.last_name || 'unknown',
                 name:     auth.info.name,
             nickname:     auth.info.nickname,
                email:     auth.info.email,
