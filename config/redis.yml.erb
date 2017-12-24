@@ -1,13 +1,14 @@
 default: &default
-  host: 127.0.0.1
+  host: grape-slack-redis
   port: 6379
 
 development:
   <<: *default
+  host: <%= ENV['REDIS_URL'] %>
 
 test:
   <<: *default
 
 production:
   <<: *default
-  host: <%= ENV['GRAPESLACK_REDIS_HOST'] %>
+  host: <%= ENV['REDIS_URL'] %>
