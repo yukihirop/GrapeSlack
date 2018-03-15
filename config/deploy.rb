@@ -99,6 +99,14 @@ namespace :deploy do
     end
   end
 
+  # nginxの起動
+  desc 'ngix start'
+  task :nginx_start do
+    on roles(:app) do |host|
+      execute 'sudo /usr/sbin/nginx'
+    end
+  end
+
   # unicorn再起動
   desc 'Restart application'
   task :restart do
@@ -127,3 +135,4 @@ after 'deploy:publishing', 'deploy:restart'
 
 after 'deploy:finished', 'deploy:redis_server'
 after 'deploy:redis_server', 'resque:restart'
+after 'resque:restart', 'deploy:nginx_start'
