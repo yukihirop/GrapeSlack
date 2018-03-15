@@ -1,0 +1,17 @@
+---
+- name: install nginx
+  apt: name={{ item }} state=latest
+  with_items:
+    - nginx
+
+- name: put nginx.conf
+  template: src=roles/nginx-web_server/templates/grape-slack.conf.j2 dest=/etc/nginx/conf.d/grape-slack.conf
+
+- name: set auto start nginx
+  command: chkconfig nginx on
+  ignore_errors: true
+
+# デプロイしていないのでweb_serverに /var/wwww/GrapeSlack/current/logディレクトリがないと怒られる
+#- name: restart nginx
+#  command: service nginx restart
+

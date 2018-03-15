@@ -1,0 +1,42 @@
+- include_vars: main.yml
+
+- name: Install dependencies
+  sudo: yes
+  apt: name={{ item }} state=latest
+  with_items:
+    - git
+    - curl
+    - g++
+    - make
+    - zlib1g-dev
+    - libssl-dev
+    - libreadline-dev
+    - libyaml-dev
+    - libxslt-dev
+    - mysql-server # mysqlをつかうのでmysql-server
+    - libmysqlclient-dev # gem mysqlが libmysqlclient-devに依存している
+
+- name: check rbenv
+  stat: path=/etc/profile.d/rbenv.sh
+  register: rbenv_sh
+
+- name: get rbenv
+  git: repo=https://github.com/sstephenson/rbenv.git dest=/usr/local/rbenv
+  when: not rbenv_sh.stat.exists
+
+- name: get ruby-build
+  git: repo=https://github.com/sstephenson/ruby-build.git dest=/usr/local/rbenv/plugins/ruby-build
+  when: not rbenv_sh.stat.exists
+
+- name: copy global profile for rbenv
+  copy: src=rbenv.sh dest=/etc/profile.d/rbenv.sh
+  when: not rbenv_sh.stat.exists
+
+- name: check ruby
+  shell: /bin/bash -lc "rbenv versions | grep {{ ruby_version }}"
+  register: ruby_installed
+  failed_when: ruby_installed.rc not in[0,1]
+
+- name: install ruby
+  shell: /bin/bash -lc "RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install {{ ruby_version }} && rbenv rehash && rbenv global {{ ruby_version }}"
+  when: ruby_installed | failed

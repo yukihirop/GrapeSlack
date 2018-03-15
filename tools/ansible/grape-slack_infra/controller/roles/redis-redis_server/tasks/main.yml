@@ -1,0 +1,10 @@
+- name: Install dependencies
+  sudo: yes
+  apt: name={{ item }} state=latest
+  with_items:
+    - gcc
+    - redis-server
+
+- name: redis-server start
+  sudo: yes
+  shell: /usr/local/bin/redis-server --protected-mode no /etc/redis/redis.conf

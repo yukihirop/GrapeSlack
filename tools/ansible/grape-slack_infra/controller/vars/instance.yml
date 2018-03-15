@@ -1,0 +1,5 @@
+# Cloud SDK) https://cloud.google.com/sdk/gcloud/reference/compute/machine-types/list
+names: grape-slack-ansible
+machine_type: f1-micro # gcloud compute machine-types list
+image: ubuntu-1604-lts # gcloud compute images list
+zone: asia-northeast1-a

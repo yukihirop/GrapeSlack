@@ -1,0 +1,14 @@
+version: "2"
+services:
+  ansible_gce:
+    build: .
+    image: 'ubuntu_ansible'
+    container_name: 'ansible_controller'
+    network_mode: 'host'
+    volumes:
+      - ${HOME}/.ssh:/ssh
+      # controller:/.gcp/ansible
+      - ..:/.gcp/ansible
+#      - ../gce.yml:/.gcp/gce.yml
+#      - ./credentials/MyProject-ansible.json:/.gcp/ansible.json
+#      - ./credentials/secrets.py:/.gcp/secrets.py

@@ -1,0 +1,33 @@
+# 各種ディレクトリ
+error_log /var/www/GrapeSlack/current/log/nginx.error.log;
+access_log /var/www/GrapeSlack/current/log/nginx.access.log;
+
+# 処理を受け取る
+client_max_body_size 2G;
+upstream app_server {
+    # 連携するunicornのソケット
+    server unix:/var/wwww/GrapeSalack/current/tmp/sockets/.unicorn.sock fail_timeout=0;
+    }
+    server {
+    # tcp:80(http)通信に
+    listen 80;
+    server_name {{ external_ip }}
+    # 次のリクエストが来る
+    keepalive_timeout 5;
+    # 静的ファイルを読み込む
+    root /var/www/GrapeSlack/current/public;
+    # キャッシュのディレクトリ
+    try_files $uri/index.html $uri.html $uri @app;
+    location @app {
+        # HTTP headers
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+        proxy_pass http://app_server;
+    }
+    # エラーページを設置する場所
+    error_page 500 502 503 504 /500.html;
+    location = /500.html {
+        root /var/www/GrapeSlack/current/public;
+    }
+}

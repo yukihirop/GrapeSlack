@@ -1,0 +1,51 @@
+---
+# 参考 https://stackoverflow.com/questions/35115976/ansible-to-create-a-google-cloud-sql-instance
+- include_vars: instance.yml
+
+# 一度つくったインスタンス名と同名のcloud sqlは1週間はつくれない
+# https://cloud.google.com/sql/faq?hl=en#reuse
+- name: create google-cloud sql instance
+  shell: >
+    gcloud sql instances create \
+      --assign-ip \
+      --tier="{{ tier }}" \
+      --region="{{ region }}" \
+      --gce-zone="{{ zone }}" \
+      --database-version="{{ mysql_version }}" \
+      "{{ instance_id }}"
+  ignore_errors: true
+
+- name: patch authorized networks
+  shell: >
+    gcloud sql instances patch \
+      --authorized-networks "{{ external_ip }}" \
+      "{{ instance_id }}"
+
+- name: get cloud sql instance ip
+  shell: >
+    gcloud sql instances list | grep -e "{{ instance_id }}" | awk 'NR==1 {print $5}'
+  register: cloud_sql_instance_address
+
+- name: set cloud sql instance ip
+  set_fact: instance_ip={{ cloud_sql_instance_address.stdout }}
+
+# 参考 https://books.google.co.jp/books?id=BGYnCgAAQBAJ&pg=PA163&lpg=PA163&dq=gcloud+sql+instances+patch+authorized+networks+name&source=bl&ots=M1itzU06PQ&sig=HFMWrGpdEbIC0axsghooj83-h2U&hl=ja&sa=X&ved=0ahUKEwj8m9X3g6DWAhWLn5QKHc1FDwgQ6AEIUzAF#v=onepage&q=gcloud%20sql%20instances%20patch%20authorized%20networks%20name&f=false
+- name: create user & set password for cloud sql
+  shell: >
+    gcloud sql users create \
+    "{{ username }}" \
+    "{{ external_ip }}" \
+    --instance="{{ instance_id }}" \
+    --password="{{ password }}"
+
+- name: update root user passward for cloud sql
+  shell: >
+    gcloud sql users set-password \
+    root \
+    "{{ external_ip }}" \
+    --instance="{{ instance_id }}" \
+    --password=="{{ password }}"
+
+# https://cloud.google.com/sdk/gcloud/reference/sql/users/set-password
+# https://thinkit.co.jp/story/2015/09/02/6372?page=0%2C1
+# https://cloud.google.com/sdk/gcloud/reference/sql/users/create

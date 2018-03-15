@@ -1,0 +1,30 @@
+# 参考)http://docs.ansible.com/ansible/latest/gce_module.html 
+- name: Create new GCE instances
+  hosts: localhost
+  connection: local #ssh接続しなくなる
+  gather_facts: no
+  
+  roles:
+    - create-web_server
+    - create-redis_server
+    - create-cloud_sql
+
+# これを一回実行する
+# gcloud compute --project myproject-163302 ssh --zone asia-northeast1-a grape-slack@grape-slack-ansible
+# ~/.ssh/google_compute_engineが生成されるので
+# gcloud compute --project myproject-163302 ssh --zone asia-northeast1-a --ssh-key-file=~/.ssh/google_compute_engine grape-slack@grape-slack-ansible(-redis)
+# でアクセスできるようになる
+
+- name: Configure in GCE instances
+  vars_files:
+    - vars/gce_auth.yml
+    - vars/instance.yml
+  hosts: grape-slack
+  connection: ssh
+  gather_facts: no
+  sudo: True
+
+  roles:
+    - rbenv-web_server
+    - nginx-web_server
+    - redis-redis_server

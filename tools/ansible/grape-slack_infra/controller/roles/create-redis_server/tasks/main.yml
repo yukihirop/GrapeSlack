@@ -1,0 +1,28 @@
+- include_vars: gce_auth.yml
+- include_vars: instance.yml
+
+- name: Launch instances (grape-slack-ansible-redis)
+  gce:
+    instance_names: "{{ names }}"
+    machine_type: "{{ machine_type }}"
+    image: "{{ image }}"
+    service_account_email: "{{ service_account_email }}"
+    credentials_file: "{{ credentials_file }}"
+    project_id: "{{ project_id }}"
+    zone: "{{ zone }}"
+    metadata : '{ "startup-script" : "apt-get update" }'
+    tags: ['webserver','http-server', 'https-server', 'redis', 'redis-db']
+  register: gce
+
+- name: Http Config
+  gce_net:
+    name: default
+    subnet_name: default
+
+- name: Wait for SHH to come up
+  wait_for: host={{ item.public_ip }} port=22 delay=10 timeout=60
+  with_items: "{{ gce.instance_data }}"
+
+- name: Add host to groupname
+  add_host: hostname={{ item.public_ip }} groupname=grape-slack
+  with_items: "{{ gce.instance_data }}"

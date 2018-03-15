@@ -1,0 +1,70 @@
+- include_vars: gce_auth.yml
+- include_vars: instance.yml
+
+- name: ユーザーにsudo権限を付与
+  lineinfile:
+    path: '/etc/sudoers'
+    backup: yes
+    line: '{{ ansible_ssh_user }} ALL=(ALL:ALL) NOPASSWD: ALL'
+
+# 参考 http://qiita.com/CsFactoryitter/items/0dbbe54aef0b787cb8f2
+- name: Rubyの存在確認
+  shell: which ruby
+  register: ruby_install
+  failed_when: ruby_install.rc not in [0, 1]
+
+# 参考 http://qiita.com/superbrothers/items/99d444e76deacae4985d
+- name: Get ansible_user home directory
+  shell: 'getent passwd "{{ ansible_ssh_user }}" | cut -d: -f6'
+  register: ansible_home_result
+
+- name: Set the fact for the other scripts to use
+  set_fact: ansible_home='{{ ansible_home_result.stdout }}'
+
+- name: Install rbenv
+  git: repo=https://github.com/sstephenson/rbenv.git dest={{ ansible_home }}/.rbenv
+  when: ruby_install.rc == 1
+
+- name: Install ruby-build
+  git: repo=https://github.com/sstephenson/ruby-build.git dest={{ ansible_home }}/.rbenv/plugins/ruby-build
+  when: ruby_install.rc == 1
+
+#- name: .bashrcにrbenvのパスを追加する
+- lineinfile:
+    path: '"{{ ansible_home }}"/.bashrc'
+    state: present
+    line: 'export PATH="$HOME/.rbenv/bin:$PATH"'
+    create: yes
+
+#- name: .bashrcにrbenv initを追加
+- lineinfile:
+    path: '"{{ ansible_home }}"/.bashrc'
+    state: present
+    line: 'eval "$(rbenv init -)"'
+    create: yes
+
+- name: bashの実行
+  shell: /bin/bash -lc "exec $SHELL"
+  when: ruby_install.rc == 1
+
+#- name: .rbenvの所有者をrootから替える
+- file: path='"{{ ansible_home }}"/.rbenv'
+        owner={{ ansible_ssh_user }}
+        group={{ ansible_ssh_user }}
+        state=directory
+
+- name: 2.4.1のインストール
+  shell: /bin/bash -lc "rbenv install 2.4.1"
+  when: ruby_install.rc == 1
+
+- name: rehashを行う
+  shell: /bin/bash -lc "rbenv rehash"
+  when: ruby_install.rc == 1
+
+- name: 2.1.8をデフォルトに設定
+  shell: /bin/bash -lc "rbenv global 2.4.1"
+  when: ruby_install.rc == 1
+
+- name: rehashを行う
+  shell: /bin/bash -lc "rbenv rehash"
+  when: ruby_install.rc == 1

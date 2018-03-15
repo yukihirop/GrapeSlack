@@ -1,0 +1,5 @@
+PermitEmptyPasswords yes
+PasswordAuthentication yes
+UsePAM no
+# need sftp server to run Ansible
+Subsystem sftp /usr/lib/openssh/sftp-server
